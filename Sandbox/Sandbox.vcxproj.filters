@@ -15,12 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\test.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\test.c">
+    <ClCompile Include="src\main.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
