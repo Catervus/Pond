@@ -2,22 +2,22 @@
 
 #include "frog_engine.h"
 
-
 void FrogEngine_Init(void (*_init)(), void (*_update)(), void (_draw)())
 {
-	engine.Init = _init;
-	engine.Update = _update;
-	engine.Draw = _draw;
+
+	EngineInit = _init;
+	EngineUpdate = _update;
+	EngineDraw = _draw;
 }
 
 void FrogEngine_Run(int _fps)
 {
-	engine.Init();
+	EngineInit();
 
 	while (1)
 	{
-		engine.Update();
-		engine.Draw();
+		EngineUpdate();
+		EngineDraw();
 	}
 }
 
