@@ -11,6 +11,11 @@ workspace "FrogEngine2D"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDirs = {}
+IncludeDirs["SDL2"] = "%{prj.name}/vendor/SDL2/include"
+
+include "FrogEngine2D/vendor/SDL2/premake5.lua"
+
 project "FrogEngine2D"
 
 	location "FrogEngine2D"
@@ -31,7 +36,23 @@ project "FrogEngine2D"
 	includedirs -- no includes yet
 	{
 		-- "%{prj.name}/vendor/xx/include"
+		--"%{IncludeDirs.SDL2}",
+		--"%{prj.name}/vendor/SDL2/include"
+		--"dependencies/SDL2/include"
+		"%{prj.name}/vendor/SDL2/include"
 	}
+
+	libdirs
+	{
+		"%{prj.name}/vendor/SDL2/Binaries/Debug-windows-x86_64"
+		--"dependencies/SDL2/lib/x64"
+	}
+
+	links
+	{
+		"SDL2.lib"
+	}
+
 
 	filter "system:windows"
 		-- C dialect cdialect "C bla"
@@ -50,7 +71,7 @@ project "FrogEngine2D"
 		postbuildcommands
 		{
 			-- copies FrogEngine2D dll into Sandbox exe folder
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox") 
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/../bin/" .. outputdir .. "/Sandbox"),
 		}
 
 		filter "configurations:Debug"
@@ -58,16 +79,12 @@ project "FrogEngine2D"
 			symbols "On"
 
 		filter "configurations:Release"
-			defines "FE_Releasy"
+			defines "FE_Release"
 			optimize "On"
 
 		filter "configurations:Dist"
 			defines "FE_Dist"
 			optimize "On"
-
-		-- example of multiple filter
-		--filter {"system:windows", "configuration:Release"}
-		--	buildoptions "/MT" -- uses Multithreaded runtime library
 
 
 project "Sandbox"
@@ -90,12 +107,21 @@ project "Sandbox"
 	includedirs -- no includes yet
 	{
 		-- "%{prj.name}/vendor/xx/include"
-		"FrogEngine2D/src"
+		"FrogEngine2D/src",
+		--"dependencies/SDL2/include"
+		"FrogEngine2D/vendor/SDL2/include"
+	}
+
+	libdirs
+	{
+		--"dependencies/SDL2/lib/x64"
+		"FrogEngine2D/vendor/SDL2/Binaries/Debug-windows-x86_64"
 	}
 
 	links
 	{
-		"FrogEngine2D"
+		"FrogEngine2D",
+		"SDL2.lib"
 	}
 
 	filter "system:windows"
@@ -110,14 +136,20 @@ project "Sandbox"
 			"FE_PLATFORM_WINDOWS"
 		}
 
+		
+
 		filter "configurations:Debug"
 			defines "FE_DEBUG"
 			symbols "On"
 
 		filter "configurations:Release"
-			defines "FE_Releasy"
+			defines "FE_Release"
 			optimize "On"
 
 		filter "configurations:Dist"
 			defines "FE_Dist"
 			optimize "On"
+
+
+			
+---------------------------------------------------------------------
