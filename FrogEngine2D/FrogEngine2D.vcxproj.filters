@@ -12,10 +12,16 @@
     <ClInclude Include="src\core\includes.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\init.h">
+      <Filter>core</Filter>
+    </ClInclude>
     <ClInclude Include="src\frog_engine.h" />
     <ClInclude Include="src\test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\init.c">
+      <Filter>core</Filter>
+    </ClCompile>
     <ClCompile Include="src\frog_engine.c" />
     <ClCompile Include="src\test.c" />
   </ItemGroup>
