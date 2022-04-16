@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{4E40957C-3A77-960D-E363-7C10CF79120F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\core\pond_core.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\pond_includes.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\pond_init_sdl.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pond.h" />
+    <ClInclude Include="src\test.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\pond_init_sdl.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pond.c" />
+    <ClCompile Include="src\test.c" />
+  </ItemGroup>
+</Project>
