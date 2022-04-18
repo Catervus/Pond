@@ -11,7 +11,7 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 
 void Pond_Run(int _fps)
 {
-	initsdl();
+	// initsdl();
 
 	EngineInit();
 
@@ -24,9 +24,6 @@ void Pond_Run(int _fps)
 	}
 }
 
-void Pond_Print(char* _text)
-{
-	printf(_text);
-}
+
 
 

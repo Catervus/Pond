@@ -20,6 +20,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Pond</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Pond</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -146,16 +147,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\modules\console_output\pond_print.h" />
     <ClInclude Include="src\core\pond_core.h" />
     <ClInclude Include="src\core\pond_includes.h" />
     <ClInclude Include="src\core\pond_init_sdl.h" />
     <ClInclude Include="src\pond.h" />
-    <ClInclude Include="src\test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\modules\console_output\pond_print.c" />
     <ClCompile Include="src\core\pond_init_sdl.c" />
     <ClCompile Include="src\pond.c" />
-    <ClCompile Include="src\test.c" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\SDL2\Intermediate\ProjectFiles\vs2019\SDL2.vcxproj">

@@ -1,9 +1,11 @@
-#include <frog_engine.h>
-#include <stdio.h>
+#include "pond.h"
 
 void Init(void) 
 {
-	FrogEngine_Print("Initialising FrogEngine2D!\n");
+	Pond_Console_PrintLine("Initialising FrogEngine2D!");
+	Pond_Console_PrintWarning("Oh oh");
+	Pond_Console_Print("Oh oh!");
+
 }
 
 void Update(void)
@@ -19,8 +21,8 @@ void Draw(void)
 
 int main(void)
 {
-	FrogEngine_Init(&Init, &Update, &Draw);
-	FrogEngine_Run(60);
+	Pond_Init(&Init, &Update, &Draw);
+	Pond_Run(60);
 
 	return 0;
 }
