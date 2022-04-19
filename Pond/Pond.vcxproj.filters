@@ -5,13 +5,16 @@
       <UniqueIdentifier>{4E40957C-3A77-960D-E363-7C10CF79120F}</UniqueIdentifier>
     </Filter>
     <Filter Include="core\modules">
-      <UniqueIdentifier>{7f833f96-57ea-49ee-af6a-2aedb13b5c67}</UniqueIdentifier>
+      <UniqueIdentifier>{36D3A10C-2236-31B1-CBBB-6967B7FDFC33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core\modules\ConsoleOutput">
-      <UniqueIdentifier>{42f93a06-28c7-47ae-8658-b3e3a3e3d104}</UniqueIdentifier>
+    <Filter Include="core\modules\console_output">
+      <UniqueIdentifier>{C805ADB6-3413-DB9C-BDF9-D6872906A753}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\modules\console_output\pond_print.h">
+      <Filter>core\modules\console_output</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\pond_core.h">
       <Filter>core</Filter>
     </ClInclude>
@@ -22,17 +25,14 @@
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\pond.h" />
-    <ClInclude Include="src\core\modules\console_output\pond_print.h">
-      <Filter>core\modules\ConsoleOutput</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\modules\console_output\pond_print.c">
+      <Filter>core\modules\console_output</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\pond_init_sdl.c">
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="src\pond.c" />
-    <ClCompile Include="src\core\modules\console_output\pond_print.c">
-      <Filter>core\modules\ConsoleOutput</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
