@@ -8,5 +8,6 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
+#include <stdlib.h>
 
-#include "pond_init_sdl.h"
+

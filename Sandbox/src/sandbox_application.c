@@ -20,7 +20,8 @@ void Update(void)
 
 void Draw(void)
 {
-
+	SDL_Color red = { 255, 0, 0, 255 };
+	Pond_DrawPixel(50, 50, red);
 }
 
 
