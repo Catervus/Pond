@@ -1,5 +1,8 @@
 #include "pond.h"
 
+// POST BUILD COMMAND TO COPY SDL2.DLL
+// xcopy /y "..\dependencies\SDL2\bin\x64\SDL2.dll" "$(OutDir)"
+
 void Init(void) 
 {
 	Pond_Console_PrintLine("Initialising FrogEngine2D!");

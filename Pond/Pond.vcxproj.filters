@@ -10,12 +10,21 @@
     <Filter Include="core\modules\console_output">
       <UniqueIdentifier>{C805ADB6-3413-DB9C-BDF9-D6872906A753}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\modules\rendering">
+      <UniqueIdentifier>{23B8556C-0FB2-7EBE-F81E-15CFE4B7E42A}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\modules\console_output\pond_console.h">
       <Filter>core\modules\console_output</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\modules\rendering\pond_rendering.h">
+      <Filter>core\modules\rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\pond_core.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\pond_engine_includes.h">
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\pond_extern_includes.h">
@@ -25,17 +34,17 @@
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\pond.h" />
-    <ClInclude Include="src\core\pond_engine_includes.h" />
-    <ClInclude Include="src\core\modules\rendering\pond_rendering.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\modules\console_output\pond_console.c">
       <Filter>core\modules\console_output</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\modules\rendering\pond_rendering.c">
+      <Filter>core\modules\rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\pond_init_sdl.c">
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="src\pond.c" />
-    <ClCompile Include="src\core\modules\rendering\pond_rendering.c" />
   </ItemGroup>
 </Project>
