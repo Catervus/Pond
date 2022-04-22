@@ -2,20 +2,21 @@
 //and may not be redistributed without written permission.*/
 //
 ////Using SDL and standard IO
-#include "pond_init_sdl.h"
+#include "pond_sdl.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-
-int initsdl(void)
+int Init_SDL(void)
 {
 	//The window we'll be rendering to
-	app.p_window = NULL;
-
 	//The surface contained by the window
-	SDL_Surface* screenSurface = NULL;
+
+	int rendererflag, windowflag;
+
+	rendererflag = SDL_RENDERER_ACCELERATED;
+	windowflag = 0;
 
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -25,20 +26,27 @@ int initsdl(void)
 		
 	}
 	
-	app.p_window = SDL_CreateWindow("Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	app.p_window = SDL_CreateWindow("Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowflag);
 	if (!app.p_window)
 	{
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		exit(1);
 	}
+	SDL_SetWindowBordered(app.p_window, SDL_ENABLE);
+	SDL_ShowCursor(SDL_ENABLE);
 
-	app.p_renderer = SDL_CreateRenderer(app.p_window, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0); // ??
+
+	app.p_renderer = SDL_CreateRenderer(app.p_window, -1, rendererflag);
 	if (!app.p_renderer)
 	{
 		printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
 		exit(1);
 	}
-	
+	SDL_SetRenderDrawBlendMode(app.p_renderer, SDL_BLENDMODE_BLEND);
+
+
+	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
 	return 0;
 }

@@ -1,7 +1,6 @@
 // For use by engine applications
 #include "pond.h"
 
-
 void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 {
 	EngineInit = _init;
@@ -11,7 +10,11 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 
 void Pond_Run(int _fps)
 {
-	initsdl();
+
+
+	engineFPS = _fps;
+
+	Init_SDL();
 
 	EngineInit();
 
@@ -19,18 +22,22 @@ void Pond_Run(int _fps)
 
 	while (1)
 	{
+		Uint64 start = SDL_GetPerformanceCounter();
 		SDL_RenderClear(app.p_renderer);
+		// PrepareRenderingScene();
 
 		EngineUpdate();
 		EngineDraw();
 
-		SDL_RenderPresent(app.p_renderer);
+		RenderScene();
 
-		SDL_Delay(1000);
+		Uint64 frametime = SDL_GetPerformanceCounter();
+		SDL_Delay(floor(1000.0 / _fps - 1.0 / frametime));
+		Uint64 end = SDL_GetPerformanceCounter();
+		float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
+		printf("FPS: %f\n", 1.0 / elapsed);
+
 	}
-
-
-	
 }
 
 

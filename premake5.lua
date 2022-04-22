@@ -125,6 +125,7 @@ project "Sandbox"
 			--("{COPY} stuff") --  .. outputdir .. "/Sandbox"
 			--("{COPY} Stuff/Stuff.txt ../Stuff2")
 			("{COPY} ../dependencies/SDL2/bin/x64/SDL2.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/SDL2_image.dll $(OutDir)"),
 			--("{COPY} ../bin/Debug-windows-x86_64/Pond/Pond.dll %{cfg.buildtarget.relpath}")
 	}
 

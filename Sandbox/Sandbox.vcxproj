@@ -91,7 +91,8 @@
       <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)</Command>
+      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -115,7 +116,8 @@
       <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)</Command>
+      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -139,7 +141,8 @@
       <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)</Command>
+      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

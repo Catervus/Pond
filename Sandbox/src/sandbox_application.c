@@ -3,6 +3,8 @@
 // POST BUILD COMMAND TO COPY SDL2.DLL
 // xcopy /y "..\dependencies\SDL2\bin\x64\SDL2.dll" "$(OutDir)"
 
+Pond_Sprite* p_testSprite;
+
 void Init(void) 
 {
 	Pond_Console_PrintLine("Initialising FrogEngine2D!");
@@ -13,6 +15,8 @@ void Init(void)
 	Pond_Console_ResetColour();
 	Pond_Console_PrintLine("Not anymore...");
 
+	SDL_Color col = { 0,0,0, 255 };
+	p_testSprite = Pond_LoadSprite("assets/Ledian.png", 200, 200, col);
 
 }
 
@@ -37,7 +41,10 @@ void Draw(void)
 		{120, 50},
 	};
 
-	Pond_DrawPolygon(points,  sizeof(points) / sizeof(Pond_Point),red);
+	Pond_DrawPolygon(points,  Pond_GetArraySize(points),red);
+
+	Pond_DrawSprite(p_testSprite, 0, 0, 255);
+
 }
 
 
