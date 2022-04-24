@@ -91,8 +91,13 @@
       <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)
-IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)</Command>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets $(OutDir)\assets &gt; nul) ELSE (xcopy /Q /Y /I assets $(OutDir)\assets &gt; nul)
+IF EXIST ..\dependencies\SDL2\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -116,8 +121,13 @@ IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I .
       <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)
-IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)</Command>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets $(OutDir)\assets &gt; nul) ELSE (xcopy /Q /Y /I assets $(OutDir)\assets &gt; nul)
+IF EXIST ..\dependencies\SDL2\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -141,8 +151,13 @@ IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I .
       <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\dependencies\SDL2\bin\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\bin\x64\SDL2.dll $(OutDir) &gt; nul)
-IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)</Command>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets $(OutDir)\assets &gt; nul) ELSE (xcopy /Q /Y /I assets $(OutDir)\assets &gt; nul)
+IF EXIST ..\dependencies\SDL2\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

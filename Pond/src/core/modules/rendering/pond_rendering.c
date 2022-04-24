@@ -1,26 +1,46 @@
 #include "pond_rendering.h"
 
 
-void RenderScene()
+int PrepareScene()
 {
-	SDL_RenderPresent(app.p_renderer);
+	SDL_SetRenderDrawColor(app.p_renderer, renderClearColour.r, renderClearColour.g, renderClearColour.b, renderClearColour.a);
+	SDL_RenderClear(app.p_renderer);
+
+	return 1;
 }
 
-void Pond_DrawPixel(int x, int y, SDL_Color _col)
+int RenderScene()
+{
+	SDL_RenderPresent(app.p_renderer);
+
+	return 1;
+}
+
+int Pond_SetRenderClearColour(Pond_Colour _col)
+{
+	renderClearColour = _col;
+
+	return 1;
+}
+
+
+int Pond_DrawPixel(int x, int y, Pond_Colour _col)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
 	SDL_RenderDrawPoint(app.p_renderer, x, y);
-	SDL_SetRenderDrawColor(app.p_renderer, 0, 0, 0, 0);
+
+	return 1;
 }
 
-void Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, SDL_Color _col)
+int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
 	SDL_RenderDrawLine(app.p_renderer, _x1, _y1, _x2, _y2);
-	SDL_SetRenderDrawColor(app.p_renderer, 0, 0, 0, 0);
+
+	return 1;
 }
 
-void Pond_DrawPolygon(Pond_Point _points[], int _arraysize, SDL_Color _col)
+int Pond_DrawPolygon(Pond_Vector2Int _points[], int _arraysize, Pond_Colour _col)
 {
 	for (int i = 0; i < _arraysize; i++)
 	{
@@ -35,9 +55,104 @@ void Pond_DrawPolygon(Pond_Point _points[], int _arraysize, SDL_Color _col)
 
 		}
 	}
+
+	return 1;
 }
 
-void Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, int _alpha)
+int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col, int _fill)
+{
+	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
+
+	int width = _x2 - _x1;
+	int height = _y2 - _y1;
+
+	SDL_Rect rect = { _x1, _y1, width, height };
+
+	if (_fill)
+	{
+		SDL_RenderFillRect(app.p_renderer, &rect);
+		return 1;
+	}
+
+	SDL_RenderDrawRect(app.p_renderer, &rect);
+
+	return 1;
+}
+
+int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, int _fill)
+{
+	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
+
+	const int d = _radius * 2;
+
+	int32_t x = _radius - 1;
+	int32_t y = 0;
+	int32_t tx = 1;
+	int32_t ty = 1;
+	int32_t error = (tx - d);
+
+	while (x >= y)
+	{
+		SDL_RenderDrawPoint(app.p_renderer, _x + x, _y - y);
+		SDL_RenderDrawPoint(app.p_renderer, _x + x, _y + y);
+		SDL_RenderDrawPoint(app.p_renderer, _x - x, _y - y);
+		SDL_RenderDrawPoint(app.p_renderer, _x - x, _y + y);
+
+		SDL_RenderDrawPoint(app.p_renderer, _x + y, _y - x);
+		SDL_RenderDrawPoint(app.p_renderer, _x + y, _y + x);
+		SDL_RenderDrawPoint(app.p_renderer, _x - y, _y - x);
+		SDL_RenderDrawPoint(app.p_renderer, _x - y, _y + x);
+		
+
+
+
+		if (error > 0)
+		{
+			x--;
+			tx += 2;
+			error += tx - d;
+		}
+		else
+		{
+			y++;
+			error += ty;
+			ty += 2;
+		}
+	}
+
+
+}
+
+//int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, int _fill)
+//{
+//	float t1 = _radius / 16;
+//	int x = _radius + _x;
+//	int y = _y;
+//	float t2 = 0;
+//
+//
+//	while (x >= y)
+//	{
+//		Pond_DrawPixel(x, y, _col);
+//
+//		y = y + 1;
+//		t1 = t1 + y;
+//		t2 = t1 + x;
+//
+//		if (t2 >= 0)
+//		{
+//			t1 = t2;
+//			x = x - 1;
+//		}
+//	}
+//
+//
+//	return 1;
+//}
+
+
+
+int Pond_DrawTexture(Pond_Texture* _sprite, int _x, int _y, int _alpha)
 {
 	SDL_Rect rect;
 
@@ -49,6 +164,8 @@ void Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, int _alpha)
 	SDL_QueryTexture(_sprite->p_texture, NULL, NULL, &rect.w, &rect.h);
 
 	SDL_RenderCopy(app.p_renderer, _sprite->p_texture, NULL, &rect);
+
+	return 1;
 }
 
 static SDL_Texture* LoadTexture(char* _filename) 
@@ -63,9 +180,9 @@ static SDL_Texture* LoadTexture(char* _filename)
 	
 }
 
-Pond_Sprite* Pond_LoadSprite(char* _filename, float _w, float _h, SDL_Color _col)
+Pond_Texture* Pond_LoadTexture(char* _filename, float _w, float _h, SDL_Color _col)
 {
-	Pond_Sprite* p_sprite = (Pond_Sprite*) malloc(sizeof(Pond_Sprite));
+	Pond_Texture* p_sprite = (Pond_Texture*) malloc(sizeof(Pond_Texture));
 
 	p_sprite->p_texture = LoadTexture(_filename);
 

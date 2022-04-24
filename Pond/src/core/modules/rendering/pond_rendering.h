@@ -1,46 +1,33 @@
 #pragma once
 
 #include <SDL.h>
-#include "../../pond_sdl.h"
+#include "../../sdl/pond_sdl.h"
 #include "../../pond_core.h"
-
-POND_API typedef struct Pond_Point
-{
-	int x;
-	int y;
-
-} Pond_Point;
-
-POND_API typedef struct Pond_Colour
-{
-	Uint8 r;
-	Uint8 g;
-	Uint8 b;
-	Uint8 a;
-
-} Pond_Colour;
+#include "../../pond_basic_structs.h"
 
 POND_API typedef struct Pond_Sprite
 {
 	SDL_Texture* p_texture;
-	Pond_Colour* col;
-	Uint32 width;
-	Uint32 height;
 
-} Pond_Sprite;
+} Pond_Texture;
 
+static Pond_Colour renderClearColour = { 0,0,0,255 };
 
-
-void RenderScene();
-
-POND_API void Pond_DrawPixel(int x, int y, SDL_Color _col);
-POND_API void Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, SDL_Color _col);
-POND_API void Pond_DrawPolygon(Pond_Point _points[], int _arraysize, SDL_Color _col);
+int RenderScene(void);
+int PrepareScene(void);
 
 
-POND_API void Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, int _alpha);
+POND_API int Pond_SetRenderClearColour(Pond_Colour _col);
+POND_API int Pond_DrawPixel(int x, int y, Pond_Colour _col);
+POND_API int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col);
+POND_API int Pond_DrawPolygon(Pond_Vector2Int _points[], int _arraysize, Pond_Colour _col);
+POND_API int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col, int _fill);
+POND_API int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, int _fill);
+
+
+POND_API int Pond_DrawTexture(Pond_Texture* _sprite, int _x, int _y, int _alpha);
 static SDL_Texture* LoadTexture(char* _filename);
-POND_API Pond_Sprite* Pond_LoadSprite(char* _filename, float _w, float _h, SDL_Color _col);
+POND_API Pond_Texture* Pond_LoadTexture(char* _filename, float _w, float _h, SDL_Color _col);
 
 extern App app;
 

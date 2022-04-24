@@ -1,6 +1,6 @@
 #pragma once
-#include <stdio.h>
 #include "../../pond_core.h"
+#include "../../pond_extern_includes.h"
 
 enum
 {
