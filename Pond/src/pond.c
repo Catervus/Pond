@@ -3,21 +3,19 @@
 
 void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 {
-	EngineInit = _init;
+	ClientInit = _init;
 	ClientUpdate = _update;
 	ClientDraw = _draw;
 }
 
 void Pond_Run(int _fpscap)
 {
-
-
 	engineFPS = _fpscap;
 	newEngineFPS = engineFPS;
 
-	Init_SDL();
+	Init_SDL(Pond_GetWindowSize().x, Pond_GetWindowSize().y);
 
-	EngineInit();
+	ClientInit();
 
 	atexit(Cleanup);
 
@@ -39,7 +37,7 @@ void Pond_Run(int _fpscap)
 		SDL_Delay(floor((1000.0 / engineFPS) - 1.0 / frametime));
 		Uint64 end = SDL_GetPerformanceCounter();
 		float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
-		printf("FPS: %f\n", 1.0 / elapsed);
+		// printf("FPS: %f\n", 1.0 / elapsed);
 
 		engineFPS = newEngineFPS;
 	}
@@ -78,6 +76,7 @@ void Pond_Run(int _fpscap)
 //		engineFPS = newEngineFPS;
 //	}
 //}
+
 
 
 static void Cleanup(void)

@@ -1,6 +1,6 @@
 #pragma once
 
-int Init_SDL(void);
+int Init_SDL(Screen_Width, Screen_Height);
 
 #include <SDL.h>
 #include <SDL_image.h>

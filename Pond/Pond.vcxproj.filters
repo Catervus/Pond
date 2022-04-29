@@ -50,6 +50,7 @@
     </ClInclude>
     <ClInclude Include="src\pond.h" />
     <ClInclude Include="src\core\pond_basic_structs.h" />
+    <ClInclude Include="src\core\modules\window\pond_window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\modules\console_output\pond_console.c">
@@ -65,5 +66,6 @@
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="src\pond.c" />
+    <ClCompile Include="src\core\modules\window\pond_window.c" />
   </ItemGroup>
 </Project>

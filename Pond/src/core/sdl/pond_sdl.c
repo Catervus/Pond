@@ -5,10 +5,7 @@
 #include "pond_sdl.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 700;
-const int SCREEN_HEIGHT = 700;
-
-int Init_SDL(void)
+int Init_SDL(int _screenheight, int _screenwidth)
 {
 	//The window we'll be rendering to
 	//The surface contained by the window
@@ -26,7 +23,7 @@ int Init_SDL(void)
 		
 	}
 	
-	app.p_window = SDL_CreateWindow("Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowflag);
+	app.p_window = SDL_CreateWindow("Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _screenheight, _screenwidth, windowflag);
 	if (!app.p_window)
 	{
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -51,3 +48,4 @@ int Init_SDL(void)
 
 	return 0;
 }
+

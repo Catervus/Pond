@@ -150,6 +150,7 @@
     <ClInclude Include="src\core\modules\misc\pond_helper_functions.h" />
     <ClInclude Include="src\core\modules\rendering\pond_rendering.h" />
     <ClInclude Include="src\core\modules\time\pond_time.h" />
+    <ClInclude Include="src\core\modules\window\pond_window.h" />
     <ClInclude Include="src\core\pond_basic_structs.h" />
     <ClInclude Include="src\core\pond_core.h" />
     <ClInclude Include="src\core\pond_extern_includes.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="src\core\modules\console_output\pond_console.c" />
     <ClCompile Include="src\core\modules\rendering\pond_rendering.c" />
     <ClCompile Include="src\core\modules\time\pond_time.c" />
+    <ClCompile Include="src\core\modules\window\pond_window.c" />
     <ClCompile Include="src\core\sdl\pond_sdl.c" />
     <ClCompile Include="src\pond.c" />
   </ItemGroup>
