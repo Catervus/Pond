@@ -15,26 +15,21 @@ void Init(void)
 	Pond_Console_ResetColour();
 	Pond_Console_PrintLine("Not anymore...");
 
-	SDL_Color col = { 0,0,0, 255 };
-	p_testSprite = Pond_LoadTexture("assets/Ledian.png", 200, 200, col);
+	SDL_Color col = { 255, 255, 255, 255 };
+	p_testSprite = Pond_LoadTexture("assets/ledian_pixel.png", 0, 0, col);
 
+	Pond_Colour white = { 255, 255, 255, 255 };
+	
+	Pond_SetRenderClearColour(white);
 }
 
-int i = 120;
-int switchIt = 0;
-int x = 0;
 
 void Update(void)
 {
-	if (--i <= 0)
-	{
-		switchIt = 1;
-		// Pond_ChangeFPS(100);
-		x = 100;
-		Pond_Colour col = { 255, 100, 20, 255 };
-		// Pond_SetRenderClearColour(col);
-	}
+
 }
+
+int x = 0;
 
 void Draw(void)
 {
@@ -54,17 +49,17 @@ void Draw(void)
 	};
 
 	Pond_DrawPolygon(points,  Pond_GetArraySize(points),red);
-
-	Pond_DrawTexture(p_testSprite, x, 0, 255);
-
-	Pond_Colour col = { 100, 255, 255, 255 };
-	Pond_DrawRect(300, 300, 500, 500, col, 0);*/
+	*/
 
 	Pond_Colour green = { 0, 255, 100, 255 };
-	Pond_DrawCircle(350, 350, 101, green, 0);
+	// Pond_DrawCircle(350, 350, 100, green, 1);
+	// Pond_DrawCircle(x, 350, 100, red, 0);
 
 
+	// Pond_DrawTexture(p_testSprite, x, 0, 1, 1, 255);
 
+	Pond_Rect portion = { 150, 150, 50, 50};
+	Pond_DrawTexturePortion(p_testSprite, portion, 200, 200, 1, 1, 255);
 
 }
 

@@ -35,7 +35,8 @@ int Init_SDL(void)
 	SDL_SetWindowBordered(app.p_window, SDL_ENABLE);
 	SDL_ShowCursor(SDL_ENABLE);
 
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0); // ??
+
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); // ??
 
 	app.p_renderer = SDL_CreateRenderer(app.p_window, -1, rendererflag);
 	if (!app.p_renderer)
