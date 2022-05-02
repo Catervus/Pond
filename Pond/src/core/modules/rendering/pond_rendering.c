@@ -199,8 +199,11 @@ int Pond_DrawTexture(Pond_Texture* _tex, int _x, int _y, float _xscale, float _y
 	rect.w *= _xscale;
 	rect.h *= _yscale;
 
-	SDL_RenderCopy(app.p_renderer, _tex->p_texture, NULL, &rect);
 
+
+	// SDL_RenderCopy(app.p_renderer, _tex->p_texture, NULL, &rect);
+
+	SDL_RenderCopyEx(app.p_renderer, _tex->p_texture, NULL, &rect, _tex->rotationAngle, NULL, _tex->flipX);
 	return 1;
 }
 
@@ -235,9 +238,10 @@ static SDL_Texture* LoadTexture(char* _filename)
 	
 }
 
-Pond_Texture* Pond_LoadTexture(char* _filename, float _w, float _h, SDL_Color _col)
+Pond_Texture* Pond_LoadTexture(char* _filename)
 {
 	Pond_Texture* p_sprite = (Pond_Texture*) malloc(sizeof(Pond_Texture));
+	memset(p_sprite, 0, sizeof(Pond_Texture));
 
 	p_sprite->p_texture = LoadTexture(_filename);
 

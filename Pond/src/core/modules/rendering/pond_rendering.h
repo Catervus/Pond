@@ -4,10 +4,15 @@
 #include "../../sdl/pond_sdl.h"
 #include "../../pond_core.h"
 #include "../../pond_basic_structs.h"
+#include <memory.h>
 
-POND_API typedef struct Pond_Sprite
+POND_API typedef struct Pond_Texture
 {
 	SDL_Texture* p_texture;
+	double rotationAngle;
+	SDL_Point center;
+	int flipX;
+	int flipY;
 
 } Pond_Texture;
 
@@ -45,7 +50,7 @@ static int DrawCircleAlgorithm(int _x, int _y, int _radius);
 POND_API int Pond_DrawTexture(Pond_Texture* _tex, int _x, int _y, float _xscale, float _yscale, int _alpha);
 POND_API int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, int _alpha);
 static SDL_Texture* LoadTexture(char* _filename);
-POND_API Pond_Texture* Pond_LoadTexture(char* _filename, float _w, float _h, SDL_Color _col);
+POND_API Pond_Texture* Pond_LoadTexture(char* _filename);
 
 extern App app;
 
