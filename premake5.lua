@@ -14,7 +14,8 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDirs = {}
 IncludeDirs["SDL2"] = "%{prj.name}/vendor/SDL2/include"
 
-include "Pond/vendor/SDL2/premake5.lua"
+-- SDL2 premake file	
+-- include "Pond/vendor/SDL2/premake5.lua" 
 
 project "Pond"
 
@@ -35,26 +36,25 @@ project "Pond"
 
 	includedirs -- no includes yet
 	{
-		-- "%{prj.name}/vendor/xx/include"
-		--"%{IncludeDirs.SDL2}",
-		--"%{prj.name}/vendor/SDL2/include"
-		--"dependencies/SDL2/include"
-		"%{prj.name}/vendor/SDL2/include",
+		--"%{prj.name}/vendor/SDL2/include",
+		"dependencies/SDL2/include",
 		"dependencies/SDL2_image/include",
 		"dependencies/SDL2_mixer/include"
 	}
 
 	libdirs
 	{
-		"%{prj.name}/vendor/SDL2/Binaries/Debug-windows-x86_64",
+		--"%{prj.name}/vendor/SDL2/Binaries/Debug-windows-x86_64",
 		"dependencies/SDL2_image/lib/x64",
-		"dependencies/SDL2_mixer/lib/x64"
+		"dependencies/SDL2_mixer/lib/x64",
+		"dependencies/SDL2/lib/x64"
 
 	}
 
 	links
 	{
-		"SDL2",
+		--"SDL2",
+		"SDL2.lib",
 		"SDL2_image.lib",
 		"SDL2_mixer.lib"
 	}
@@ -97,7 +97,7 @@ project "Sandbox"
 
 	location "Sandbox"
 
-	kind "ConsoleApp" --dll
+	kind "ConsoleApp"
 
 	language "C"
 
@@ -114,16 +114,35 @@ project "Sandbox"
 	{
 		-- "%{prj.name}/vendor/xx/include"
 		"Pond/src",
-		--"dependencies/SDL2/include"
-		"Pond/vendor/SDL2/include",
+		--"Pond/vendor/SDL2/include",
+		"dependencies/SDL2/include",
 		"dependencies/SDL2_image/include",
 		"dependencies/SDL2_mixer/include"
 	}
 
+	postbuildcommands
+	{
+			--("{COPY} stuff") --  .. outputdir .. "/Sandbox"
+			--("{COPY} Stuff/Stuff.txt ../Stuff2")
+
+			("{COPY} assets/ $(OutDir)/assets"),
+
+			("{COPY} ../dependencies/SDL2/lib/x64/SDL2.dll $(OutDir)"),
+
+			("{COPY} ../dependencies/SDL2_image/lib/x64/SDL2_image.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/libjpeg-9.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/libpng16-16.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/libwebp-7.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/zlib1.dll $(OutDir)"),
+			--("{COPY} ../bin/Debug-windows-x86_64/Pond/Pond.dll %{cfg.buildtarget.relpath}")
+	}
+
+	
+
 	libdirs
 	{
-		--"dependencies/SDL2/lib/x64"
-		"Pond/vendor/SDL2/Binaries/Debug-windows-x86_64",
+		--"Pond/vendor/SDL2/Binaries/Debug-windows-x86_64",
+		"dependencies/SDL2/lib/x64",
 		"dependencies/SDL2_image/lib/x64",
 		"dependencies/SDL2_mixer/lib/x64"
 	}
@@ -131,7 +150,8 @@ project "Sandbox"
 	links
 	{
 		"Pond",
-		"SDL2",
+		-- "SDL2",
+		"SDL2.lib",
 		"SDL2_image.lib",
 		"SDL2_mixer.lib"
 	}

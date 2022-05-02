@@ -1,29 +1,93 @@
 // For use by engine applications
 #include "pond.h"
 
-
 void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 {
-	EngineInit = _init;
-	EngineUpdate = _update;
-	EngineDraw = _draw;
+	ClientInit = _init;
+	ClientUpdate = _update;
+	ClientDraw = _draw;
 }
 
-void Pond_Run(int _fps)
+void Pond_Run(int _fpscap)
 {
-	// initsdl();
+	engineFPS = _fpscap;
+	newEngineFPS = engineFPS;
 
-	EngineInit();
+	Init_SDL(Pond_GetWindowSize().x, Pond_GetWindowSize().y);
+
+	ClientInit();
+
+	atexit(Cleanup);
 
 	while (1)
 	{
-		EngineUpdate();
-		EngineDraw();
+		Uint64 start = SDL_GetPerformanceCounter();
+		// PrepareRenderingScene();
 
-		SDL_Delay(10);
+		PrepareScene();
+
+		ClientUpdate();
+		ClientDraw();
+
+		RenderScene();
+
+
+
+		Uint64 frametime = SDL_GetPerformanceCounter();
+		SDL_Delay(floor((1000.0 / engineFPS) - 1.0 / frametime));
+		Uint64 end = SDL_GetPerformanceCounter();
+		float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
+		// printf("FPS: %f\n", 1.0 / elapsed);
+
+		engineFPS = newEngineFPS;
 	}
 }
 
+//void Pond_Run(int _fpscap)
+//{
+//
+//
+//	InitTime(_fpscap);
+//
+//	InitSDL();
+//
+//	EngineInit();
+//
+//	atexit(Cleanup);
+//
+//	while (1)
+//	{
+//		Uint64 start = SDL_GetPerformanceCounter();
+//		SDL_RenderClear(app.p_renderer);
+//		// PrepareRenderingScene();
+//
+//		EngineUpdate();
+//		EngineDraw();
+//
+//		RenderScene();
+//
+//
+//		Uint64 frametime = SDL_GetPerformanceCounter();
+//		SDL_Delay(floor(engineFPS - 1.0 / frametime));
+//		Uint64 end = SDL_GetPerformanceCounter();
+//		float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
+//		printf("FPS: %f\n", 1.0 / elapsed);
+//
+//		engineFPS = newEngineFPS;
+//	}
+//}
+
+
+
+static void Cleanup(void)
+{
+	printf("Cleanup!");
+
+	SDL_DestroyWindow(app.p_window);
+	SDL_DestroyRenderer(app.p_renderer);
+
+	SDL_Quit();
+}
 
 
 

@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>POND_PLATFORM_WINDOWS;POND_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Pond\src;..\Pond\vendor\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Pond\src;..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -87,16 +87,25 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Pond\vendor\SDL2\Binaries\Debug-windows-x86_64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets $(OutDir)\assets &gt; nul) ELSE (xcopy /Q /Y /I assets $(OutDir)\assets &gt; nul)
+IF EXIST ..\dependencies\SDL2\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>POND_PLATFORM_WINDOWS;POND_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Pond\src;..\Pond\vendor\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Pond\src;..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -108,16 +117,25 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Pond\vendor\SDL2\Binaries\Debug-windows-x86_64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets $(OutDir)\assets &gt; nul) ELSE (xcopy /Q /Y /I assets $(OutDir)\assets &gt; nul)
+IF EXIST ..\dependencies\SDL2\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>POND_PLATFORM_WINDOWS;POND_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Pond\src;..\Pond\vendor\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Pond\src;..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -129,9 +147,18 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Pond\vendor\SDL2\Binaries\Debug-windows-x86_64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets $(OutDir)\assets &gt; nul) ELSE (xcopy /Q /Y /I assets $(OutDir)\assets &gt; nul)
+IF EXIST ..\dependencies\SDL2\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2\lib\x64\SDL2.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\sandbox_application.h" />
@@ -142,9 +169,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Pond\Pond.vcxproj">
       <Project>{96D48A7C-820B-8C0D-2BF8-7110170E080F}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Pond\vendor\SDL2\Intermediate\ProjectFiles\vs2019\SDL2.vcxproj">
-      <Project>{3ABE8B7C-26F5-8C0D-CFE1-7210BBF7080F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

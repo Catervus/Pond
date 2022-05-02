@@ -4,3 +4,5 @@
 bin
 bin-int
 
+*.filters
+*.vcxproj

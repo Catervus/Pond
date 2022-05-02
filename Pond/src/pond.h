@@ -1,17 +1,22 @@
 #pragma once
-#include "core/pond_core.h"
 #include "core/pond_includes.h"
-#include "core/Modules/ConsoleOutput/pond_print.h"
 
-
+#define Pond_GetArraySize(Array) sizeof(Array)/sizeof(Array[0])
 
 POND_API void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void));
 POND_API void Pond_Run(int _fps);
 
+static void Cleanup(void);
+static void (*ClientInit)(void);
+static void (*ClientUpdate)(void);
+static void (*ClientDraw)(void);
 
+// -----------------------------
+// - SETTINGS -
+// fps
 
+// window settings
 
-static void (*EngineInit)(void);
-static void (*EngineUpdate)(void);
-static void (*EngineDraw)(void);
+// POST BUILD COMMAND TO COPY SDL2.DLL
+// xcopy /y "..\dependencies\SDL2\bin\x64\SDL2.dll" "$(OutDir)"
 
