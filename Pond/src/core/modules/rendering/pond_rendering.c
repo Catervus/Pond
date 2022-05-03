@@ -157,35 +157,6 @@ static int DrawCircleAlgorithm(int _x, int _y, int _radius)
 	}
 }
 
-//int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, int _fill)
-//{
-//	float t1 = _radius / 16;
-//	int x = _radius + _x;
-//	int y = _y;
-//	float t2 = 0;
-//
-//
-//	while (x >= y)
-//	{
-//		Pond_DrawPixel(x, y, _col);
-//
-//		y = y + 1;
-//		t1 = t1 + y;
-//		t2 = t1 + x;
-//
-//		if (t2 >= 0)
-//		{
-//			t1 = t2;
-//			x = x - 1;
-//		}
-//	}
-//
-//
-//	return 1;
-//}
-
-
-
 int Pond_DrawTexture(Pond_Texture* _tex, int _x, int _y, float _xscale, float _yscale, int _alpha)
 {
 	SDL_Rect rect;
@@ -193,17 +164,38 @@ int Pond_DrawTexture(Pond_Texture* _tex, int _x, int _y, float _xscale, float _y
 	rect.x = _x;
 	rect.y = _y;
 
-	SDL_SetTextureAlphaMod(_tex->p_texture, _alpha);
+	SDL_SetTextureAlphaMod(_tex->p_tex, _alpha);
 
-	SDL_QueryTexture(_tex->p_texture, NULL, NULL, &rect.w, &rect.h);
+	SDL_QueryTexture(_tex->p_tex, NULL, NULL, &rect.w, &rect.h);
 	rect.w *= _xscale;
 	rect.h *= _yscale;
 
+	SDL_RenderCopy(app.p_renderer, _tex->p_tex, NULL, &rect);
+
+	// SDL_RenderCopyEx(app.p_renderer, _tex->p_texture, NULL, &rect, _tex->rotationAngle, NULL, _tex->flipX);
+	return 1;
+}
+
+int Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, float _xscale, float _yscale)
+{
+	SDL_Rect portion = { _sprite->spriteRect.x, _sprite->spriteRect.y, _sprite->spriteRect.w, _sprite->spriteRect.h};
+	SDL_Rect rect;
+
+	rect.x = _x;
+	rect.y = _y;
+
+	SDL_SetTextureAlphaMod(_sprite->p_texture->p_tex, _sprite->colour.a);
+
+	SDL_QueryTexture(_sprite->p_texture->p_tex, NULL, NULL, &rect.w, &rect.h);
+
+	
+	rect.w = portion.w * _xscale;
+	rect.h = portion.h * _yscale;
 
 
-	// SDL_RenderCopy(app.p_renderer, _tex->p_texture, NULL, &rect);
+	// SDL_RenderCopy(app.p_renderer, _tex->p_tex, NULL, &rect);
 
-	SDL_RenderCopyEx(app.p_renderer, _tex->p_texture, NULL, &rect, _tex->rotationAngle, NULL, _tex->flipX);
+	SDL_RenderCopyEx(app.p_renderer, _sprite->p_texture->p_tex, &portion, &rect, _sprite->rotationAngle, NULL, _sprite->flipX);
 	return 1;
 }
 
@@ -220,10 +212,10 @@ int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int _x, int 
 
 	rect.w = portion.w * _xscale;
 	rect.h = portion.h * _yscale;
-	SDL_SetTextureAlphaMod(_tex->p_texture, _alpha);
+	SDL_SetTextureAlphaMod(_tex->p_tex, _alpha);
 
 
-	SDL_RenderCopy(app.p_renderer, _tex->p_texture, &portion, &rect);
+	SDL_RenderCopy(app.p_renderer, _tex->p_tex, &portion, &rect);
 }
 
 static SDL_Texture* LoadTexture(char* _filename) 
@@ -238,13 +230,36 @@ static SDL_Texture* LoadTexture(char* _filename)
 	
 }
 
-Pond_Texture* Pond_LoadTexture(char* _filename)
+Pond_Texture* Pond_LoadTexture(char* _filename, E_ImportQuality _quality)
 {
-	Pond_Texture* p_sprite = (Pond_Texture*) malloc(sizeof(Pond_Texture));
-	memset(p_sprite, 0, sizeof(Pond_Texture));
+	Pond_Texture* p_tex = (Pond_Texture*) malloc(sizeof(Pond_Texture));
+	memset(p_tex, 0, sizeof(Pond_Texture));
 
-	p_sprite->p_texture = LoadTexture(_filename);
+	p_tex->p_tex = LoadTexture(_filename);
+
+	return p_tex;
+
+}
+
+Pond_Sprite* Pond_InitSprite(char* _filename, E_ImportQuality _quality)
+{
+	Pond_Sprite* p_sprite = malloc(sizeof(Pond_Sprite));
+	memset(p_sprite, 0, sizeof(Pond_Sprite));
+
+	p_sprite->p_texture = Pond_LoadTexture(_filename, _quality);
+	Pond_Colour white = { 255, 255, 255, 255 };
+	p_sprite->colour = white;
+
+	p_sprite->spriteRect = GetTextureSize(p_sprite->p_texture);
 
 	return p_sprite;
+}
 
+Pond_Rect GetTextureSize(Pond_Texture* _p_texture) 
+{
+	SDL_Point size;
+	SDL_QueryTexture(_p_texture->p_tex, NULL, NULL, &size.x, &size.y);
+	Pond_Rect rect = {0, 0, size.x, size.y};
+
+	return rect;
 }
