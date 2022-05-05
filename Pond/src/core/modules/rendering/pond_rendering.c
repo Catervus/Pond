@@ -241,18 +241,34 @@ Pond_Texture* Pond_LoadTexture(char* _filename, E_ImportQuality _quality)
 
 }
 
-Pond_Sprite* Pond_InitSprite(char* _filename, E_ImportQuality _quality)
+int Pond_FreeTexture(Pond_Texture* _p_texture)
+{
+	SDL_DestroyTexture(_p_texture->p_tex);
+
+	free(_p_texture);
+
+	return 1;
+}
+
+Pond_Sprite* Pond_InitSprite(Pond_Texture* _p_texture)
 {
 	Pond_Sprite* p_sprite = malloc(sizeof(Pond_Sprite));
 	memset(p_sprite, 0, sizeof(Pond_Sprite));
 
-	p_sprite->p_texture = Pond_LoadTexture(_filename, _quality);
+	p_sprite->p_texture = _p_texture;
 	Pond_Colour white = { 255, 255, 255, 255 };
 	p_sprite->colour = white;
 
 	p_sprite->spriteRect = GetTextureSize(p_sprite->p_texture);
 
 	return p_sprite;
+}
+
+int Pond_FreeSprite(Pond_Sprite* _p_sprite)
+{
+	free(_p_sprite);
+
+	return 1;
 }
 
 Pond_Rect GetTextureSize(Pond_Texture* _p_texture) 
