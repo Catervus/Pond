@@ -4,7 +4,7 @@
 #define Pond_GetArraySize(Array) sizeof(Array)/sizeof(Array[0])
 
 POND_API void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void));
-POND_API void Pond_Run(int _fps);
+POND_API void Pond_Run(int _fpscap, int _screenwidth, int _screenheight);
 
 static void Cleanup(void);
 static void (*ClientInit)(void);
