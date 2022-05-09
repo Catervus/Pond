@@ -106,6 +106,24 @@ int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col, bool _fi
 	return 1;
 }
 
+int Pond_DrawRectByDimensions(int _x, int _y, int _w, int _h, Pond_Colour _col, bool _fill)
+{
+	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
+
+
+	SDL_Rect rect = { _x, _y, _w, _h };
+
+	if (_fill)
+	{
+		SDL_RenderFillRect(app.p_renderer, &rect);
+		return 1;
+	}
+
+	SDL_RenderDrawRect(app.p_renderer, &rect);
+
+	return 1;
+}
+
 int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, bool _fill)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);

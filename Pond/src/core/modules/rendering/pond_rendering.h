@@ -55,6 +55,7 @@ POND_API int Pond_DrawPixel(int x, int y, Pond_Colour _col);
 POND_API int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col);
 POND_API int Pond_DrawPolygon(Pond_Vector2Int _points[], int _arraysize, Pond_Colour _col);
 POND_API int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col, bool _fill);
+POND_API int Pond_DrawRectByDimensions(int _x, int _y, int _w, int _h, Pond_Colour _col, bool _fill);
 POND_API int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, bool _fill);
 static int DrawCircleAlgorithm(int _x, int _y, int _radius);
 
