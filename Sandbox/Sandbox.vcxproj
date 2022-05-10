@@ -161,9 +161,13 @@ IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dep
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="src\sandbox_application.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="entity.c" />
+    <ClCompile Include="main.c" />
     <ClCompile Include="src\sandbox_application.c" />
   </ItemGroup>
   <ItemGroup>

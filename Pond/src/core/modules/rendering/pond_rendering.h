@@ -3,6 +3,7 @@
 #include "../../sdl/pond_sdl.h"
 #include "../../pond_core.h"
 #include "../../pond_basic_structs.h"
+#include <memory.h>
 
 POND_API typedef struct Pond_Texture
 {
@@ -43,8 +44,8 @@ int PrepareScene(void);
 
 typedef enum POND_TEXTURE_BLEND_MODE
 {
-	POND_TEXTURE_BLENDMODE_NO_BLENDING = 0,
-	POND_TEXTURE_BLENDMODE_BLENDING,
+	POND_TEXTURE_BLEND_MODE_NO_BLENDING = 0,
+	POND_TEXTURE_BLEND_MODE_BLENDING,
 
 } POND_TEXTURE_BLEND_MODE;
 

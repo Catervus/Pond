@@ -3,7 +3,6 @@
 int InitRandomSystem(void)
 {
 	srand(time(NULL));
-	printf("Initialised Pond-Module Random!\n");
 	return 1;
 }
 

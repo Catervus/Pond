@@ -280,10 +280,10 @@ static int SetTextureBlendMode(POND_TEXTURE_BLEND_MODE _quality)
 
 	switch (_quality)
 	{
-		case POND_TEXTURE_BLENDMODE_NO_BLENDING:
+		case POND_TEXTURE_BLEND_MODE_NO_BLENDING:
 			value = "0";
 			break;
-		case POND_TEXTURE_BLENDMODE_BLENDING:
+		case POND_TEXTURE_BLEND_MODE_BLENDING:
 			value = "1";
 			break;
 	}
