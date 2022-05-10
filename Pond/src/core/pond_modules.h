@@ -6,3 +6,4 @@
 #include "modules/time/pond_time.h"
 #include "modules/window/pond_window.h"
 #include "modules/input/pond_input.h"
+#include "modules/random/pond_random.h"

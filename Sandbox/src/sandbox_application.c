@@ -11,6 +11,8 @@ Pond_Colour drawColour;
 
 int drawSize = 10;
 
+#include <time.h>
+
 int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
@@ -19,13 +21,34 @@ int main(void)
 	return 0;
 }
 
+int RandomNum(void)
+{
+	return rand() % 5;
+}
+
 void Init(void) 
 {
 	Pond_SetRenderClearColour(white);
 
 	drawColour = red;
 
-	printf("Number of Rects: %i\n", entityCounter);
+	int i;
+
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
+	
+	
 }
 
 xPos = 10;

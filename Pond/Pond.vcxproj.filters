@@ -52,6 +52,7 @@
     <ClInclude Include="src\core\pond_basic_structs.h" />
     <ClInclude Include="src\core\modules\window\pond_window.h" />
     <ClInclude Include="src\core\modules\input\pond_input.h" />
+    <ClInclude Include="src\core\modules\random\pond_random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\modules\console_output\pond_console.c">
@@ -69,5 +70,6 @@
     <ClCompile Include="src\pond.c" />
     <ClCompile Include="src\core\modules\window\pond_window.c" />
     <ClCompile Include="src\core\modules\input\pond_input.c" />
+    <ClCompile Include="src\core\modules\random\pond_random.c" />
   </ItemGroup>
 </Project>
