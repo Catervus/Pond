@@ -12,15 +12,14 @@ Pond_Colour drawColour;
 
 int drawSize = 10;
 
-Mix_Chunk* p_audioChunk;
-
+Pond_Sound* p_testSound;
+Pond_Music* p_testMusic;
 
 int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
 	Pond_Run(60, 700, 700);
 
-	
 
 	return 0;
 }
@@ -36,7 +35,11 @@ void Init(void)
 
 	drawColour = red;
 
-	p_audioChunk = Pond_LoadWav("assets/sound.wav");
+	p_testSound = Pond_LoadSound("assets/sound.wav", POND_AUDIO_FILE_TYPE_WAV);
+	p_testMusic = Pond_LoadMusic("assets/music.mp3", -1);
+
+	Pond_PlaySound(p_testSound, 0);
+	Pond_PlayMusic(p_testMusic);
 
 	int counter0 = 0;
 	int counter1 = 0;
