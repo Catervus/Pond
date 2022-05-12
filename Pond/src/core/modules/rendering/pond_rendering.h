@@ -52,7 +52,7 @@ typedef enum POND_TEXTURE_BLEND_MODE
 
 POND_API int Pond_SetRenderClearColour(Pond_Colour _col);
 POND_API Pond_Colour Pond_GetColour(int _r, int _g, int _b, int _a);
-POND_API int Pond_DrawPixel(int x, int y, Pond_Colour _col);
+POND_API int Pond_DrawPixel(int _x, int _y, Pond_Colour _col);
 POND_API int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col);
 POND_API int Pond_DrawPolygon(Pond_Vector2Int _points[], int _arraysize, Pond_Colour _col);
 POND_API int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col, bool _fill);

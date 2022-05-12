@@ -7,3 +7,4 @@
 #include "modules/window/pond_window.h"
 #include "modules/input/pond_input.h"
 #include "modules/random/pond_random.h"
+#include "modules/audio/pond_audio.h"

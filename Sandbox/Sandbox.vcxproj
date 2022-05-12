@@ -97,7 +97,8 @@ IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I .
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
-IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,7 +128,8 @@ IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I .
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
-IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -157,17 +159,14 @@ IF EXIST ..\dependencies\SDL2_image\lib\x64\SDL2_image.dll\ (xcopy /Q /E /Y /I .
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libjpeg-9.dll $(OutDir) &gt; nul)
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libpng16-16.dll $(OutDir) &gt; nul)
 IF EXIST ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\libwebp-7.dll $(OutDir) &gt; nul)
-IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)</Command>
+IF EXIST ..\dependencies\SDL2_image\lib\x64\zlib1.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_image\lib\x64\zlib1.dll $(OutDir) &gt; nul)
+IF EXIST ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll\ (xcopy /Q /E /Y /I ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll $(OutDir) &gt; nul) ELSE (xcopy /Q /Y /I ..\dependencies\SDL2_mixer\lib\x64\SDL2_mixer.dll $(OutDir) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="src\sandbox_application.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="entity.c" />
-    <ClCompile Include="main.c" />
     <ClCompile Include="src\sandbox_application.c" />
   </ItemGroup>
   <ItemGroup>

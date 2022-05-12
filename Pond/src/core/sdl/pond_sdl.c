@@ -34,7 +34,6 @@ int Init_SDL(int _screenheight, int _screenwidth)
 
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); // ??
-
 	app.p_renderer = SDL_CreateRenderer(app.p_window, -1, rendererflag);
 	if (!app.p_renderer)
 	{
@@ -42,9 +41,19 @@ int Init_SDL(int _screenheight, int _screenwidth)
 		exit(1);
 	}
 	SDL_SetRenderDrawBlendMode(app.p_renderer, SDL_BLENDMODE_BLEND);
-
-
 	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024))
+	{
+		exit(1);
+	}
+	Mix_AllocateChannels(24); // 24 = MAX_SND_CHANNELS
+
+	for (int i = 0; i < 24; i++)
+	{
+		Mix_Volume(i, 1); // 1 = SFX_VOLUME
+	}
+	Mix_VolumeMusic(2);
 
 	return 0;
 }

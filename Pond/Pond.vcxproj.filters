@@ -10,8 +10,14 @@
     <Filter Include="core\modules\console_output">
       <UniqueIdentifier>{C805ADB6-3413-DB9C-BDF9-D6872906A753}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\modules\input">
+      <UniqueIdentifier>{D5A38933-C187-4A89-2AE8-44DC16EB340B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="core\modules\misc">
       <UniqueIdentifier>{D15744CB-3D6E-4261-86E5-CD82F23A13E9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\modules\random">
+      <UniqueIdentifier>{46ECCFB8-B24D-ADC6-3BBB-F378A71BE485}</UniqueIdentifier>
     </Filter>
     <Filter Include="core\modules\rendering">
       <UniqueIdentifier>{23B8556C-0FB2-7EBE-F81E-15CFE4B7E42A}</UniqueIdentifier>
@@ -19,19 +25,37 @@
     <Filter Include="core\modules\time">
       <UniqueIdentifier>{B42D48CB-2044-4661-69BB-D182D51017E9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\modules\window">
+      <UniqueIdentifier>{7D7B0AC5-E9DC-E7D2-724A-2E85DEAA1E92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\sdl">
+      <UniqueIdentifier>{A073D44A-8C40-2F56-B559-1DFEA18564E4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\modules\console_output\pond_console.h">
       <Filter>core\modules\console_output</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\modules\input\pond_input.h">
+      <Filter>core\modules\input</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\modules\misc\pond_helper_functions.h">
       <Filter>core\modules\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\modules\random\pond_random.h">
+      <Filter>core\modules\random</Filter>
     </ClInclude>
     <ClInclude Include="src\core\modules\rendering\pond_rendering.h">
       <Filter>core\modules\rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\core\modules\time\pond_time.h">
       <Filter>core\modules\time</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\modules\window\pond_window.h">
+      <Filter>core\modules\window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\pond_basic_structs.h">
+      <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\pond_core.h">
       <Filter>core</Filter>
@@ -46,17 +70,20 @@
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\sdl\pond_sdl.h">
-      <Filter>core</Filter>
+      <Filter>core\sdl</Filter>
     </ClInclude>
     <ClInclude Include="src\pond.h" />
-    <ClInclude Include="src\core\pond_basic_structs.h" />
-    <ClInclude Include="src\core\modules\window\pond_window.h" />
-    <ClInclude Include="src\core\modules\input\pond_input.h" />
-    <ClInclude Include="src\core\modules\random\pond_random.h" />
+    <ClInclude Include="src\core\modules\audio\pond_audio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\modules\console_output\pond_console.c">
       <Filter>core\modules\console_output</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\modules\input\pond_input.c">
+      <Filter>core\modules\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\modules\random\pond_random.c">
+      <Filter>core\modules\random</Filter>
     </ClCompile>
     <ClCompile Include="src\core\modules\rendering\pond_rendering.c">
       <Filter>core\modules\rendering</Filter>
@@ -64,12 +91,13 @@
     <ClCompile Include="src\core\modules\time\pond_time.c">
       <Filter>core\modules\time</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\modules\window\pond_window.c">
+      <Filter>core\modules\window</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\sdl\pond_sdl.c">
-      <Filter>core</Filter>
+      <Filter>core\sdl</Filter>
     </ClCompile>
     <ClCompile Include="src\pond.c" />
-    <ClCompile Include="src\core\modules\window\pond_window.c" />
-    <ClCompile Include="src\core\modules\input\pond_input.c" />
-    <ClCompile Include="src\core\modules\random\pond_random.c" />
+    <ClCompile Include="src\core\modules\audio\pond_audio.c" />
   </ItemGroup>
 </Project>

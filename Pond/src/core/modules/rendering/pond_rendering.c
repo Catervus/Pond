@@ -15,6 +15,12 @@ int RenderScene()
 	return 1;
 }
 
+/// <summary>
+/// Sets the Render Clear Colour.
+/// The Renderer clears the screen at the start of each frame with the Render Clear Colour.
+/// </summary>
+/// <param name="_col">- the colour to set as Render Clear Colour</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_SetRenderClearColour(Pond_Colour _col)
 {
 	renderClearColour = _col;
@@ -44,21 +50,44 @@ int Pond_SetTextureScaleQuality(int _rendermode)
 	return 1;
 }
 
-
+/// <summary>
+/// Returns a Pond_Colour with given RGBA-values.
+/// </summary>
+/// <param name="_r">- R value</param>
+/// <param name="_g">- G value</param>
+/// <param name="_b">- B value</param>
+/// <param name="_a">- A value</param>
+/// <returns>returns the Pond_Colour</returns>
 Pond_Colour Pond_GetColour(int _r, int _g, int _b, int _a)
 {
 	Pond_Colour col = { _r, _g, _b, _a };
 	return col;
 }
 
-int Pond_DrawPixel(int x, int y, Pond_Colour _col)
+/// <summary>
+/// Renders a pixel at x and y with colour to the screen.
+/// </summary>
+/// <param name="_x">- the x-pos of the pixel to render</param>
+/// <param name="_y">- the y-pos of the pixel to render</param>
+/// <param name="_col">- the colour of the pixel</param>
+/// <returns>returns 1 if successful</returns>
+int Pond_DrawPixel(int _x, int _y, Pond_Colour _col)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
-	SDL_RenderDrawPoint(app.p_renderer, x, y);
+	SDL_RenderDrawPoint(app.p_renderer, _x, _y);
 
 	return 1;
 }
 
+/// <summary>
+/// Renders a line between two coordinates with colour to the screen.
+/// </summary>
+/// <param name="_x1">- x pos of 1. coordinate of line</param>
+/// <param name="_y1">- y pos of 1. coordinate of line</param>
+/// <param name="_x2">- x pos of 2. coordinate of line</param>
+/// <param name="_y2">- x pos of 2. coordinate of line</param>
+/// <param name="_col">- the colour of the line</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
@@ -86,6 +115,16 @@ int Pond_DrawPolygon(Pond_Vector2Int _points[], int _arraysize, Pond_Colour _col
 	return 1;
 }
 
+/// <summary>
+/// Renders a rectangle by giving top-left and bottom-right coordinates with colour to the screen.
+/// </summary>
+/// <param name="_x1">- x pos of the top-left coordinate of the rectangle</param>
+/// <param name="_y1">- y pos of the top-left coordinate of the rectangle</param>
+/// <param name="_x2">- x pos of the bottom-right coordinate of the rectangle</param>
+/// <param name="_y2">- y pos of the bottom-right coordinate of the rectangle</param>
+/// <param name="_col">- the colour of the rectangle</param>
+/// <param name="_fill">- true or 1 if the rectangle should be filled, false or 0 if not</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col, bool _fill)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
@@ -106,6 +145,16 @@ int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col, bool _fi
 	return 1;
 }
 
+/// <summary>
+/// Renders a rectangle by giving a coordinate, width and height values.
+/// </summary>
+/// <param name="_x">- x pos of the rectangle, corresponds to the top-left position of the rectangle</param>
+/// <param name="_y">- y pos of the rectangle, corresponds to the top-left position of the rectangle</param>
+/// <param name="_w">- width of the rectangle</param>
+/// <param name="_h">- height of the rectangle</param>
+/// <param name="_col">- the colour of the rectangle</param>
+/// <param name="_fill">- true or 1 if the rectangle should be filled, false or 0 if not</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_DrawRectByDimensions(int _x, int _y, int _w, int _h, Pond_Colour _col, bool _fill)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
@@ -123,6 +172,7 @@ int Pond_DrawRectByDimensions(int _x, int _y, int _w, int _h, Pond_Colour _col, 
 
 	return 1;
 }
+
 
 int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, bool _fill)
 {

@@ -146,6 +146,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\modules\audio\pond_audio.h" />
     <ClInclude Include="src\core\modules\console_output\pond_console.h" />
     <ClInclude Include="src\core\modules\input\pond_input.h" />
     <ClInclude Include="src\core\modules\misc\pond_helper_functions.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="src\pond.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\modules\audio\pond_audio.c" />
     <ClCompile Include="src\core\modules\console_output\pond_console.c" />
     <ClCompile Include="src\core\modules\input\pond_input.c" />
     <ClCompile Include="src\core\modules\random\pond_random.c" />

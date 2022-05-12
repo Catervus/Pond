@@ -135,6 +135,8 @@ project "Sandbox"
 			("{COPY} ../dependencies/SDL2_image/lib/x64/libwebp-7.dll $(OutDir)"),
 			("{COPY} ../dependencies/SDL2_image/lib/x64/zlib1.dll $(OutDir)"),
 			--("{COPY} ../bin/Debug-windows-x86_64/Pond/Pond.dll %{cfg.buildtarget.relpath}")
+			("{COPY} ../dependencies/SDL2_mixer/lib/x64/SDL2_mixer.dll $(OutDir)"),
+
 	}
 
 	
