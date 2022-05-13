@@ -32,12 +32,18 @@ POND_API int Pond_PlaySound(Pond_Sound* _p_sound, int _soundchannel);
 POND_API int Pond_FreeSound(Pond_Sound* _p_sound);
 
 POND_API int Pond_SetChannelVolume(int _soundchannel, int _volume);
-POND_API int Pond_GetChannelVolume(int _soundchannel, int _volume);
+POND_API int Pond_GetChannelVolume(int _soundchannel);
 POND_API int Pond_SetAllChannelVolume(int _volume);
 POND_API int Pond_PauseChannel(int _soundchannel);
+POND_API int Pond_PauseAllChannels(void);
 POND_API int Pond_ResumeChannel(int _soundchannel);
+POND_API int Pond_ResumeAllChannels(void);
+POND_API int Pond_StopChannel(int _soundchannel);
+POND_API int Pond_StopAllChannels(void);
 POND_API int Pond_IsChannelPaused(int _soundchannel);
 POND_API int Pond_SetChannelCount(int _numberofchannels);
+POND_API int Pond_GetChannelCount(void);
+POND_API int Pond_TerminateAllChannels(void);
 
 POND_API Pond_Music* Pond_LoadMusic(char* _filename, POND_AUDIO_FILE_TYPE _filetype, bool _loop);
 POND_API int Pond_PlayMusic(Pond_Music* _p_music);
