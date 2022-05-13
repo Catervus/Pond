@@ -1,11 +1,11 @@
 #pragma once
-
-int Init_SDL(Screen_Width, Screen_Height);
-
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <stdio.h>
+
+int InitSDL(void);
+int OpenSDLWindow(int _screenheight, int _screenwidth);
 
 typedef struct
 {

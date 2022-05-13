@@ -15,80 +15,38 @@ int drawSize = 10;
 Pond_Sound* p_testSound;
 Pond_Music* p_testMusic;
 
+
+
 int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
+	Pond_InitAudioSystem(24, 1, 1);
 	Pond_Run(60, 700, 700);
-
 
 	return 0;
 }
 
-int RandomNum(void)
-{
-	return rand() % 5;
-}
-
+Pond_Vector2Int points[5];
 void Init(void) 
 {
 	Pond_SetRenderClearColour(white);
 
 	drawColour = red;
 
+	for (int i = 0; i < 5; i++)
+	{
+		int x = Pond_GetRandomInt(0, 699);
+		int y = Pond_GetRandomInt(0, 699);
+		Pond_Vector2Int point = { x, y };
+		points[i] = point;
+	}
+
 	p_testSound = Pond_LoadSound("assets/sound.wav", POND_AUDIO_FILE_TYPE_WAV);
-	p_testMusic = Pond_LoadMusic("assets/music.mp3", -1);
+	p_testMusic = Pond_LoadMusic("assets/music.mp3", -1, 1);
 
 	Pond_PlaySound(p_testSound, 0);
 	Pond_PlayMusic(p_testMusic);
 
-	int counter0 = 0;
-	int counter1 = 0;
-	int counter2 = 0;
-	int counter3 = 0;
-	int counter4 = 0;
-	int counter5 = 0;
-	for (int i = 0; i < 100000; i++)
-	{
-		int rnd;
-		rnd = Pond_GetRandomInt(0, 5);
-		if (rnd == 0)
-			counter0++;
-		else if (rnd == 1)
-			counter1++;
-		else if (rnd == 2)
-			counter2++;
-		else if (rnd == 3)
-			counter3++;
-		else if (rnd == 4)
-			counter4++;
-		else if (rnd == 5)
-			counter5++;
-	}
-	
-	printf("0: %i\n", counter0);
-	printf("1: %i\n", counter1);
-	printf("2: %i\n", counter2);
-	printf("3: %i\n", counter3);
-	printf("4: %i\n", counter4);
-	printf("5: %i\n", counter5);
-
-	float floatnum = Pond_GetRandomFloat(0.0, 1.0);
-	printf("Random Float: %d\n", floatnum);
-
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	//i = Pond_GetRandomInt(-5, 0); printf("Random Int: %i\n", i);
-	
 	
 }
 
@@ -141,11 +99,23 @@ void Update(void)
 		drawColour = white;
 
 
+	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			int x = Pond_GetRandomInt(0, 699);
+			int y = Pond_GetRandomInt(0, 699);
+			Pond_Vector2Int point = { x, y };
+			points[i] = point;
+		}
+	}
+
+
 }
 
 void Draw(void)
 {
-
+	Pond_DrawPolygon(points, Pond_GetArrayLength(points), red);
 
 	for (int i = 0; i < entityCounter; i++)
 	{
@@ -170,7 +140,7 @@ Entity CreateEntity(Pond_Vector2Int _pos, Pond_Colour _col, int _size)
 	return entity;
 }
 
-void ClearAllEntities()
+void ClearAllEntities(void)
 {
 	entityCounter = 0;
 	entityIndex = 0;
