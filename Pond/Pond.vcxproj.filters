@@ -7,6 +7,9 @@
     <Filter Include="core\modules">
       <UniqueIdentifier>{36D3A10C-2236-31B1-CBBB-6967B7FDFC33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\modules\audio">
+      <UniqueIdentifier>{D781FC32-C365-BD88-2CC6-B7DB18C9A70A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="core\modules\console_output">
       <UniqueIdentifier>{C805ADB6-3413-DB9C-BDF9-D6872906A753}</UniqueIdentifier>
     </Filter>
@@ -33,6 +36,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\modules\audio\pond_audio.h">
+      <Filter>core\modules\audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\modules\console_output\pond_console.h">
       <Filter>core\modules\console_output</Filter>
     </ClInclude>
@@ -73,9 +79,11 @@
       <Filter>core\sdl</Filter>
     </ClInclude>
     <ClInclude Include="src\pond.h" />
-    <ClInclude Include="src\core\modules\audio\pond_audio.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\modules\audio\pond_audio.c">
+      <Filter>core\modules\audio</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\modules\console_output\pond_console.c">
       <Filter>core\modules\console_output</Filter>
     </ClCompile>
@@ -98,6 +106,5 @@
       <Filter>core\sdl</Filter>
     </ClCompile>
     <ClCompile Include="src\pond.c" />
-    <ClCompile Include="src\core\modules\audio\pond_audio.c" />
   </ItemGroup>
 </Project>
