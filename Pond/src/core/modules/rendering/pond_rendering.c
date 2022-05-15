@@ -343,25 +343,25 @@ static int SetTextureBlendMode(POND_TEXTURE_BLEND_MODE _quality)
 	return 1;
 }
 
-static SDL_Texture* LoadTexture(char* _filename, POND_TEXTURE_BLEND_MODE _quality)
+static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _quality)
 {
 	SDL_Texture* p_tex;
 
-	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", _filename);
-	p_tex = IMG_LoadTexture(app.p_renderer, _filename);
+	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", _filepath);
+	p_tex = IMG_LoadTexture(app.p_renderer, _filepath);
 
 	return p_tex;
 	
 }
 
-Pond_Texture* Pond_LoadTexture(char* _filename, POND_TEXTURE_BLEND_MODE _quality)
+Pond_Texture* Pond_LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _quality)
 {
 	SetTextureBlendMode(_quality);
 
 	Pond_Texture* p_tex = (Pond_Texture*) malloc(sizeof(Pond_Texture));
 	memset(p_tex, 0, sizeof(Pond_Texture));
 
-	p_tex->p_textureData = LoadTexture(_filename, _quality);
+	p_tex->p_textureData = LoadTexture(_filepath, _quality);
 
 	return p_tex;
 

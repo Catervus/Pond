@@ -65,15 +65,15 @@ POND_API int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int
 POND_API int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, Pond_Colour _colour, int _rotationangle, Pond_Vector2Int _rotation);
 
 
-static SDL_Texture* LoadTexture(char* _filename, POND_TEXTURE_BLEND_MODE _quality);
-POND_API Pond_Texture* Pond_LoadTexture(char* _filename, POND_TEXTURE_BLEND_MODE _quality);
+static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _quality);
+POND_API Pond_Texture* Pond_LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _quality);
 POND_API int Pond_FreeTexture(Pond_Texture* _p_texture);
 
 POND_API int Pond_SetTextureScaleQuality(int _rendermode);
 static int SetTextureBlendMode(POND_TEXTURE_BLEND_MODE _quality);
 
 POND_API Pond_Sprite* Pond_InitSprite(Pond_Texture* _p_texture);
-// POND_API Pond_Sprite* Pond_InitSprite(char* _filename, E_ImportQuality _quality);
+// POND_API Pond_Sprite* Pond_InitSprite(char* _filepath, E_ImportQuality _quality);
 POND_API int Pond_FreeSprite(Pond_Sprite* _p_sprite);
 POND_API int Pond_DrawSprite(Pond_Sprite* _tex, int _x, int _y, float _xscale, float _yscale);
 POND_API int Pond_SetSpriteValues(Pond_Rect _spriterect, Pond_Colour _colour, double _rotationangle, SDL_Point _rotationanchor, bool _flipx, bool _flipy);

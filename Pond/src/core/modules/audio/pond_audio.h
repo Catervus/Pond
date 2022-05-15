@@ -3,6 +3,8 @@
 #include "../../pond_core.h"
 #include "../../pond_extern_includes.h"
 
+#define POND_SOUND_CHANNELS_MAX 100
+
 typedef struct Pond_Sound
 {
 	Mix_Chunk* p_audioChunk;
@@ -27,7 +29,7 @@ typedef enum POND_AUDIO_FILE_TYPE
 
 POND_API int Pond_InitAudioSystem(int _numberofchannels, int _soundvolume, int _musicvolume);
 
-POND_API Pond_Sound* Pond_LoadSound(char* _filename, POND_AUDIO_FILE_TYPE _filetype);
+POND_API Pond_Sound* Pond_LoadSound(char* _filepath, POND_AUDIO_FILE_TYPE _filetype);
 POND_API int Pond_PlaySound(Pond_Sound* _p_sound, int _soundchannel);
 POND_API int Pond_FreeSound(Pond_Sound* _p_sound);
 
@@ -45,7 +47,7 @@ POND_API int Pond_SetChannelCount(int _numberofchannels);
 POND_API int Pond_GetChannelCount(void);
 POND_API int Pond_TerminateAllChannels(void);
 
-POND_API Pond_Music* Pond_LoadMusic(char* _filename, POND_AUDIO_FILE_TYPE _filetype, bool _loop);
+POND_API Pond_Music* Pond_LoadMusic(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, bool _loop);
 POND_API int Pond_PlayMusic(Pond_Music* _p_music);
 POND_API int Pond_FreeMusic(Pond_Music* _p_music);
 
