@@ -98,6 +98,7 @@ static void Cleanup(void)
 
 	SDL_DestroyWindow(app.p_window);
 	SDL_DestroyRenderer(app.p_renderer);
+	Mix_CloseAudio();
 
 	SDL_Quit();
 }

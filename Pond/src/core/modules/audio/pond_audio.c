@@ -6,10 +6,10 @@
 /// Initialises the Pond-Audio System.
 /// </summary>
 /// <param name="_soundchannelcount">- amount of channels to open, can be changed later (max defined with POND_SOUND_CHANNELS_MAX)</param>
-/// <param name="_soundvolume">- default volume for all the soundchannels (range is 0-128), can be changed later</param>
+/// <param name="_channelvolume">- default volume for all soundchannels (range is 0-128), can be changed later</param>
 /// <param name="_musicvolume">- default volume for music (range is 0-128), can be changed later</param>
 /// <returns>returns 1 if successful</returns>
-int Pond_InitAudioSystem(int _soundchannelcount, int _soundvolume, int _musicvolume)
+int Pond_InitAudioSystem(int _soundchannelcount, int _channelvolume, int _musicchannelvolume)
 {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024))
 	{
@@ -23,17 +23,17 @@ int Pond_InitAudioSystem(int _soundchannelcount, int _soundvolume, int _musicvol
 	
 	Mix_AllocateChannels(_soundchannelcount);
 
-	if (_soundvolume < 0)
-		_soundvolume = 0;
+	if (_channelvolume < 0)
+		_channelvolume = 0;
 
 	for (int i = 0; i < _soundchannelcount; i++)
 	{
-		Mix_Volume(i, _soundvolume); // 1 = SFX_VOLUME
+		Mix_Volume(i, _channelvolume); // 1 = SFX_VOLUME
 	}
 
-	if (_musicvolume < 0)
-		_musicvolume = 0;
-	Mix_VolumeMusic(_musicvolume); // 2 = MUSIC_VOLUME
+	if (_musicchannelvolume < 0)
+		_musicchannelvolume = 0;
+	Mix_VolumeMusic(_musicchannelvolume); // 2 = MUSIC_VOLUME
 
 	return 1;
 }
@@ -49,14 +49,20 @@ int Pond_InitAudioSystem(int _soundchannelcount, int _soundvolume, int _musicvol
 /// </summary>
 /// <param name="_filepath">- the filepath </param>
 /// <param name="_filetype">- the filetype of the sound to load (currently supports only WAV-files)</param>
-/// <returns></returns>
-Pond_Sound* Pond_LoadSound(char* _filepath, POND_AUDIO_FILE_TYPE _filetype)
+/// <returns>returns the pointer to allocated Pond_Sound</returns>
+Pond_Sound* Pond_LoadSound(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, int _volume)
 {
 	Pond_Sound* p_sound = malloc(sizeof(Pond_Sound));
 	memset(p_sound, 0, sizeof(Pond_Sound));
 
 	if (_filetype == POND_AUDIO_FILE_TYPE_WAV)
 		p_sound->p_audioChunk = Mix_LoadWAV(_filepath);
+
+	if (p_sound->p_audioChunk == NULL)
+		return; // ERROR
+
+	// p_sound->p_audioChunk->volume = _volume;
+	p_sound->volume = _volume;
 
 	return p_sound;
 }
@@ -66,12 +72,13 @@ Pond_Sound* Pond_LoadSound(char* _filepath, POND_AUDIO_FILE_TYPE _filetype)
 /// </summary>
 /// <param name="_p_sound">- the sound to play</param>
 /// <param name="_soundchannel">- the soundchannel to play through</param>
-/// <returns></returns>
+/// <returns>returns 1 if successful, 0 if not</returns>
 int Pond_PlaySound(Pond_Sound* _p_sound, int _soundchannel)
 {
 	if (_soundchannel < 0 || _soundchannel > Pond_GetChannelCount() - 1)
 		return 0;
 
+	_p_sound->p_audioChunk->volume = _p_sound->volume;
 	Mix_PlayChannel(_soundchannel, _p_sound->p_audioChunk, 0);
 
 	return 1;
@@ -79,9 +86,10 @@ int Pond_PlaySound(Pond_Sound* _p_sound, int _soundchannel)
 
 /// <summary>
 /// Frees allocated Pond_Sound pointer memory space.
+/// This HAS TO BE USED to free Pond_Music pointer, in comparison to doing it manually with free().
 /// </summary>
 /// <param name="_p_sound">- the pointer to free</param>
-/// <returns></returns>
+/// <returns>returns 1 if successful, 0 if not</returns>
 int Pond_FreeSound(Pond_Sound* _p_sound)
 {
 	// checks if pointer is not a null pointer, could be if memory was not freed for pointer, would throw error at free
@@ -93,6 +101,64 @@ int Pond_FreeSound(Pond_Sound* _p_sound)
 
 	return 1;
 }
+
+/// <summary>
+/// Changes the volume of passed sound by the amount of the passed value.
+/// Increases sound's volume if a positive value gets passed and decreases it if a negative value is passed.
+/// Volume is clamped between 0 and 128.
+/// </summary>
+/// <param name="_p_sound">- the sound to change the volume of</param>
+/// <param name="_value">- the value by which amount to change the volume</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
+int Pond_ChangeSoundVolume(Pond_Sound* _p_sound, int _value)
+{
+	if (_p_sound == NULL)
+		return 0;
+
+	_p_sound->volume += _value;
+	if (_p_sound->volume > POND_VOLUME_MAX)
+		_p_sound->volume = POND_VOLUME_MAX;
+	if (_p_sound->volume < 0)
+		_p_sound->volume = 0;
+
+	return 1;
+}
+
+/// <summary>
+/// Sets the volume of the passed sound to the passed volume.
+/// Volume is clamped between 0-128.
+/// </summary>
+/// <param name="_p_sound">- the sound to set the volume of</param>
+/// <param name="_volume">- the volume to set the sound volume to</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
+int Pond_SetSoundVolume(Pond_Sound* _p_sound, int _volume)
+{
+	if (_p_sound == NULL)
+		return 0;
+
+	if (_volume > POND_VOLUME_MAX)
+		_volume = POND_VOLUME_MAX;
+	else if (_volume < 0)
+		_volume = 0;
+
+	_p_sound->volume = _volume;
+
+	return 1;
+}
+
+/// <summary>
+/// Returns the volume of the passed sound.
+/// </summary>
+/// <param name="_p_sound">- the sound to get the volume from</param>
+/// <returns>returns the volume of the sound, returns -1 if an error occurs</returns>
+int Pond_GetSoundVolume(Pond_Sound* _p_sound)
+{
+	if (_p_sound == NULL)
+		return -1;
+
+	return _p_sound->volume;
+}
+
 #pragma endregion
 
 // ------------------------------------------------------------------------------------------------
@@ -101,7 +167,7 @@ int Pond_FreeSound(Pond_Sound* _p_sound)
 #pragma region Channel
 
 /// <summary>
-/// Sets the volume of the passed channel (volume ranges 0-128).
+/// Sets the volume of the passed channel (range is 0-128).
 /// Could fail if passed channel index is smaller then 0 or higher then highest channel index. 
 /// Channel count can be checked with Pond_GetChannelCount().
 /// </summary>
@@ -131,11 +197,59 @@ int Pond_GetChannelVolume(int _channelindex)
 }
 
 /// <summary>
-/// Sets the volume of all channels (volume ranges 0-128).
+/// Changes the volume of passed channel by the amount of the passed value.
+/// Increases channel's volume if a positive value gets passed and decreases it if a negative value is passed.
+/// Volume is clamped between 0 and 128.
+/// </summary>
+/// <param name="_p_sound">- the channel to change the volume of</param>
+/// <param name="_value">- the value by which amount to change the volume</param>
+/// <returns>returns 1 if successful, 0 if not (is the passed index in range of channel count?)</returns>
+int Pond_ChangeChannelVolume(int _channelindex, int _value)
+{
+	if (_channelindex < 0 || _channelindex > Pond_GetChannelCount() - 1)
+		return 0;
+
+
+	int volume = Pond_GetChannelVolume(_channelindex) + _value;
+	
+	if (volume > POND_VOLUME_MAX)
+		volume = POND_VOLUME_MAX;
+	if (volume < 0)
+		volume = 0;
+
+	Mix_Volume(_channelindex, volume);
+
+	return 1;
+}
+
+/// <summary>
+/// Changes the volume of all channels by the amount of the passed value.
+/// Increases channel's volume if a positive value gets passed and decreases it if a negative value is passed.
+/// Volume is clamped between 0 and 128.
+/// </summary>
+/// <param name="_value">- the value by which amount to change the volume</param>
+/// <returns>returns 1 if successful, 0 if not (are there channels? Channel count can be checked with Pond_GetChannelCount()</returns>
+int Pond_ChangeAllChannelVolumes(int _value)
+{
+	int channelcount = Pond_GetChannelCount();
+	if (channelcount <= 0)
+		return 0;
+
+	for (int i = 0; i < channelcount; i++)
+	{
+		Pond_ChangeChannelVolume(i, _value);
+	}
+	
+	return 1;
+}
+
+
+/// <summary>
+/// Sets the volume of all channels (range is 0-128).
 /// </summary>
 /// <param name="_volume">- the volume to set the channels volume to</param>
 /// <returns>returns 1 if successful, 0 if not (are there channels? Channel count can be checked with Pond_GetChannelCount())</returns>
-int Pond_SetAllChannelVolume(int _volume)
+int Pond_SetAllChannelVolumes(int _volume)
 {
 	if (Pond_GetChannelCount() <= 0)
 		return 0;
@@ -286,7 +400,17 @@ int Pond_TerminateAllChannels(void)
 // ------------------------------------------------------------------------------------------------
 // MUSIC
 #pragma region Music
-Pond_Music* Pond_LoadMusic(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, bool _loop)
+
+/// <summary>
+/// Loads a music file with given filetype and returns a Pond_Music pointer.
+/// Returned pointer is allocated in memory, can be freed with Pond_FreeMusic.
+/// </summary>
+/// <param name="_filepath">- the filepath </param>
+/// <param name="_filetype">- the filetype of the sound to load (currently supports only WAV-files)</param>
+/// /// <param name="_volume">- the volume of the loaded music (can be changed later)</param>
+/// /// <param name="_loop">- if the music should loop or not (can be changed later</param>
+/// <returns>returns the pointer to allocated Pond_Music</returns>
+Pond_Music* Pond_LoadMusic(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, int _volume, bool _loop)
 {
 	Pond_Music* p_music = malloc(sizeof(Pond_Music));
 	memset(p_music, 0, sizeof(Pond_Music));
@@ -295,11 +419,23 @@ Pond_Music* Pond_LoadMusic(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, bool
 	if (!p_music->p_musicChunk)
 		printf("Pond Error: Loading '%s' didn't work. Further info: %s\n", _filepath, Mix_GetError()); // ERROR-HANDLING
 
+	if (_volume > POND_VOLUME_MAX)
+		_volume = POND_VOLUME_MAX;
+	else if (_volume < 0)
+		_volume = 0;
+
+	p_music->volume = _volume;
 	p_music->loop = _loop;
 
 	return p_music;
 }
 
+/// <summary>
+/// Plays passed music through the music channel.
+/// Other music that is currently played will stop.
+/// </summary>
+/// <param name="_p_music">- the music to play</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
 int Pond_PlayMusic(Pond_Music* _p_music)
 {
 	if (_p_music == NULL)
@@ -307,10 +443,23 @@ int Pond_PlayMusic(Pond_Music* _p_music)
 	else if (_p_music->p_musicChunk == NULL)
 		return 0;
 
+	int channelvolume = Pond_GetMusicChannelVolume();
+	int volume = (_p_music->volume + channelvolume) / 2;
+
+	if (_p_music->volume <= 0 || channelvolume <= 0)
+		volume = 0;
+
+	Mix_VolumeMusic(volume);
 	Mix_PlayMusic(_p_music->p_musicChunk, (_p_music->loop) ? -1 : 0);
 	return 1;
 }
 
+/// <summary>
+/// Frees allocated Pond_Music pointer memory space.
+/// This HAS TO BE USED to free Pond_Music pointer, in comparison to doing it manually with free().
+/// </summary>
+/// <param name="_p_music">- the pointer to free</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
 int Pond_FreeMusic(Pond_Music* _p_music)
 {
 	if (_p_music == NULL)
@@ -320,6 +469,144 @@ int Pond_FreeMusic(Pond_Music* _p_music)
 	free(_p_music);
 
 	return 1;
+}
+
+/// <summary>
+/// Sets the passed music's loop setting by passed bool
+/// </summary>
+/// <param name="_p_music">- the music to configure loop setting</param>
+/// <param name="_loop">- the bool value to change music's loop setting to</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
+POND_API int Pond_SetMusicLoop(Pond_Music* _p_music, bool _loop)
+{
+	if (_p_music == NULL)
+		return 0;
+
+	_p_music->loop = _loop;
+
+	return 1;
+}
+
+/// <summary>
+/// Sets the volume of the passed music to the passed volume.
+/// Volume is clamped between 0-128.
+/// </summary>
+/// <param name="_p_music">- the sound to set the volume of</param>
+/// <param name="_volume">- the volume to set the sound volume to</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
+POND_API int Pond_SetMusicVolume(Pond_Music* _p_music, int _volume)
+{
+	if (_p_music == NULL)
+		return 0;
+
+	if (_volume > POND_VOLUME_MAX)
+		_volume = POND_VOLUME_MAX;
+	else if (_volume < 0)
+		_volume = 0;
+
+	_p_music->volume = _volume;
+
+	return 1;
+}
+
+/// <summary>
+/// Changes the volume of passed music by the amount of the passed value.
+/// Increases music's volume if a positive value gets passed, and decreases it if a negative value is passed.
+/// Volume is clamped between 0 and 128.
+/// </summary>
+/// <param name="_p_music">- the music to change the volume of</param>
+/// <param name="_value">- the value by which amount to change the volume</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
+POND_API int Pond_ChangeMusicVolume(Pond_Music* _p_music, int _value)
+{
+	if (_p_music == NULL)
+		return 0;
+
+	_p_music->volume += _value;
+	if (_p_music->volume > POND_VOLUME_MAX)
+		_p_music->volume = POND_VOLUME_MAX;
+	if (_p_music->volume < 0)
+		_p_music->volume = 0;
+
+	return 1;
+}
+
+/// <summary>
+/// Returns the volume of the passed music.
+/// </summary>
+/// <param name="_p_music">- the music to get the volume from</param>
+/// <returns>returns the volume of the music, returns -1 if an error occurs</returns>
+POND_API int Pond_GetMusicVolume(Pond_Music* _p_music)
+{
+	if (_p_music == NULL)
+		return -1;
+
+	return _p_music->volume;
+}
+
+/// <summary>
+/// Sets the volume of the music channel.
+/// Volume is clamped between 0-128.
+/// </summary>
+/// <param name="_volume">- the volume to set the music channel's volume to</param>
+/// <returns>returns 1 if successful</returns>
+POND_API int Pond_SetMusicChannelVolume(int _volume)
+{
+	if (_volume < 0)
+		_volume = 0;
+
+	Mix_VolumeMusic(_volume);
+
+	return 1;
+}
+
+/// <summary>
+/// Changes the volume of the music channel by the amount of the passed value.
+/// Increases music channel's volume if a positive value gets passed and decreases it if a negative value is passed.
+/// Volume is clamped between 0 and 128.
+/// </summary>
+/// <param name="_value">- the value by which amount to change the volume</param>
+/// <returns>returns 1 if successful</returns>
+POND_API int Pond_ChangeMusicChannelVolume(int _value)
+{
+
+	int volume = Pond_GetMusicChannelVolume() + _value;
+
+	if (volume > POND_VOLUME_MAX)
+		volume = POND_VOLUME_MAX;
+	if (volume < 0)
+		volume = 0;
+
+	Mix_VolumeMusic(volume);
+
+	return 1;
+}
+
+/// <summary>
+/// Returns the volume of the music channel.
+/// </summary>
+/// <returns>returns volume of music channel</returns>
+POND_API int Pond_GetMusicChannelVolume(void)
+{
+	return Mix_VolumeMusic(-1);
+}
+
+/// <summary>
+/// Returns the volume which is played and results from the volume of the music that is being played and that of the music channel.
+/// </summary>
+/// <returns>returns the actual music volume which is being played, returns -1 if an error occured</returns>
+POND_API int Pond_GetMusicCombinedVolume(Pond_Music* _p_music)
+{
+	if (_p_music == NULL)
+		return -1;
+
+	int channelvolume = Pond_GetMusicChannelVolume();
+	int volume = (_p_music->volume + channelvolume) / 2;
+
+	if (_p_music->volume <= 0 || channelvolume <= 0)
+		volume = 0;
+
+	return volume;
 }
 #pragma endregion
 
