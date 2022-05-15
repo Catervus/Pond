@@ -14,7 +14,7 @@ int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
 	Pond_InitAudioSystem(24, 10, 20);
- 	Pond_Run(60, 700, 700);
+ 	Pond_Run(60, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	return 0;
 }
