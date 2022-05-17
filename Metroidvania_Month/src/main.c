@@ -9,6 +9,8 @@ Pond_Colour blue = { 0, 0, 255, 255 };
 Pond_Colour lightBlue = { 137, 196, 244, 255 };
 
 Pond_Texture* p_playerTexture;
+Pond_Texture* p_fireballTexture;
+
 
 int main(void)
 {
@@ -19,14 +21,17 @@ int main(void)
 	return 0;
 }
 
+
 void Init(void) 
 {
 	printf("Hello Metroidvania Month!\n");
 	Pond_SetRenderClearColour(lightBlue);
 
 	p_playerTexture = Pond_LoadTexture("assets/playerSprite.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
-
+	p_fireballTexture = Pond_LoadTexture("assets/fireballSprite.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
 	p_player = CreateEntity(p_playerTexture, 100, 100);
+
+	CreateBox(100, 500, 200, 50);
 }
 
 
@@ -34,9 +39,33 @@ void Update(void)
 {
 	EntityUpdate();
 
+	Pond_Vector2Int mousePos = Pond_GetMousePosition();
+
+	if (Pond_GetMouseButtonDown(POND_MOUSE_BUTTON_LEFT))
+	{
+		CreateBox(mousePos.x - 100, mousePos.y - 25, 200, 50);
+	}
 }
 
 void Draw(void)
 {
 	Pond_DrawSprite(p_player->p_sprite, p_player->position.x, p_player->position.y, SCALE, SCALE);
+
+	Pond_Rect rect;
+	for (int i = 0; i < boxCount; i++)
+	{
+		rect = boxes[i];
+		Pond_DrawRectByDimensions(rect.x, rect.y, rect.w, rect.h, red, 1);
+	}
+}
+
+
+void CreateBox(int _x, int _y, int _w, int _h)
+{
+	if (boxCount >= 10)
+		return;
+	Pond_Rect rect = { _x, _y , _w, _h};
+	boxes[boxCount] = rect;
+
+	boxCount++;
 }
