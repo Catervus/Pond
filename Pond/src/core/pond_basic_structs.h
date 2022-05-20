@@ -16,6 +16,12 @@ POND_API typedef struct Pond_Vector2Float
 
 } Pond_Vector2Float;
 
+POND_API typedef struct Pond_Vector2Double
+{
+	double x;
+	double y;
+} Pond_Vector2Double;
+
 POND_API typedef struct Pond_Colour
 {
 	Uint8 r;

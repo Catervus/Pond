@@ -14,12 +14,9 @@
 #define GRAVITY 0.225 * SCALE
 #define GRAVITY_LIGHT 0.125 * SCALE;
 
-Entity* CreateEntity(Pond_Texture* _p_tex, int _x, int _y);
-void EntityUpdate(void);
 void PlayerWalkMovement(void);
 void GetPlayerInput(void);
+void PlayerUpdate(void);
+void PlayerLateUpdate(void);
 
-bool CheckForBoxCollision(Entity* _p_entity, Pond_Rect _box);
 
-Entity* p_player;
-Entity* p_fireball;

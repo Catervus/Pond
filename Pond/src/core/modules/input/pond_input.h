@@ -2,9 +2,15 @@
 #include "../../sdl/pond_sdl.h"
 #include "../../pond_core.h"
 #include "../../pond_basic_structs.h"
+#include "../../pond_extern_includes.h"
+#include <SDL_gamecontroller.h>
 
 #define NUMBER_OF_KEYS 283
 #define NUMBER_OF_MOUSE_BUTTONS 5
+#define POND_NUMBER_OF_CONTROLLER_BUTTONS 22
+
+#define POND_JOYSTICK_DEADZONE_DEFAULT 8000
+#define POND_JOYSTICK_DEADZONE_MAX 32767.0
 
 typedef enum Pond_KeyboardKey
 {
@@ -305,7 +311,52 @@ typedef enum Pond_MouseButton
 	POND_MOUSE_BUTTON_X2,
 } Pond_MouseButton;
 
+typedef enum Pond_JoystickAxis
+{
+	POND_JOYSTICK_AXIS_X = 0,
+	POND_JOYSTICK_AXIS_Y
+} Pond_JoystickAxis;
+
+typedef enum Pond_JoystickIndex
+{
+	POND_JOYSTICK_INDEX_MAIN = 0,
+	POND_JOYSTICK_INDEX_SECONDARY,
+
+} Pond_JoystickIndex;
+
+typedef enum Pond_ControllerButton
+{
+	POND_CONTROLLER_BUTTON_A = 0,
+	POND_CONTROLLER_BUTTON_B,
+	POND_CONTROLLER_BUTTON_X,
+	POND_CONTROLLER_BUTTON_Y,
+	POND_CONTROLLER_BUTTON_SELECT,
+	POND_CONTROLLER_BUTTON_GUIDE,
+	POND_CONTROLLER_BUTTON_START,
+	POND_CONTROLLER_BUTTON_LEFTSTICK,
+	POND_CONTROLLER_BUTTON_RIGHTSTICK,
+	POND_CONTROLLER_BUTTON_LEFTSHOULDER,
+	POND_CONTROLLER_BUTTON_RIGHTSHOULDER,
+	POND_CONTROLLER_BUTTON_DPAD_UP,
+	POND_CONTROLLER_BUTTON_DPAD_DOWN,
+	POND_CONTROLLER_BUTTON_DPAD_LEFT,
+	POND_CONTROLLER_BUTTON_DPAD_RIGHT,
+	POND_CONTROLLER_BUTTON_MISC1,
+	POND_CONTROLLER_BUTTON_PADDLE1,
+	POND_CONTROLLER_BUTTON_PADDLE2,
+	POND_CONTROLLER_BUTTON_PADDLE3,
+	POND_CONTROLLER_BUTTON_PADDLE4,
+	POND_CONTROLLER_BUTTON_TOUCHPAD,
+	POND_CONTROLLER_BUTTON_MAX,
+
+} Pond_ControllerButton;
+
+
+
 int GatherSystemInput(void);
+int GetKeyboardInputs(void);
+int GetMouseInputs(void);
+int GetJoystickInputs(void);
 int InitInputSystem(void);
 int SaveInputs(void);
 
@@ -316,3 +367,13 @@ POND_API bool Pond_GetMouseButton(Pond_MouseButton _button);
 POND_API bool Pond_GetMouseButtonDown(Pond_MouseButton _button);
 POND_API bool Pond_GetMouseButtonUp(Pond_MouseButton _button);
 POND_API Pond_Vector2Int Pond_GetMousePosition(void);
+
+POND_API double Pond_GetJoyStickAngle(Pond_JoystickIndex _index);
+POND_API Pond_Vector2Float Pond_GetJoystickAxisVector(Pond_JoystickIndex _index);
+POND_API float Pond_GetJoystickAxis(Pond_JoystickAxis _axis, Pond_JoystickIndex _index);
+POND_API int Pond_SetJoystickDeadzoneValue(unsigned int _value);
+POND_API unsigned int Pond_GetJoystickDeadzoneValue(void);
+
+POND_API bool Pond_GetControllerButton(Pond_ControllerButton _button);
+POND_API bool Pond_GetControllerButtonDown(Pond_ControllerButton _button);
+POND_API bool Pond_GetControllerButtonUp(Pond_ControllerButton _button);

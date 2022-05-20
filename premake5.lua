@@ -187,7 +187,7 @@ project "Sandbox"
 
 			
 ---------------------------------------------------------------------
-
+--[[
 project "Metroidvania_Month"
 
 	location "Metroidvania_Month"
@@ -277,3 +277,4 @@ project "Metroidvania_Month"
 		filter "configurations:Dist"
 			defines "POND_DIST"
 			optimize "On"
+]]
