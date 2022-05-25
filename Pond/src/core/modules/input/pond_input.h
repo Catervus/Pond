@@ -377,3 +377,5 @@ POND_API unsigned int Pond_GetJoystickDeadzoneValue(void);
 POND_API bool Pond_GetControllerButton(Pond_ControllerButton _button);
 POND_API bool Pond_GetControllerButtonDown(Pond_ControllerButton _button);
 POND_API bool Pond_GetControllerButtonUp(Pond_ControllerButton _button);
+
+POND_API int Pond_ControllerRumble(Uint32 _duration);

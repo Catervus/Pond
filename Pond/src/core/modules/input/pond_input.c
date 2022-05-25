@@ -13,6 +13,7 @@ Pond_Vector2Float joystickInputAxes[2];
 unsigned int joystickDeadzone = POND_JOYSTICK_DEADZONE_DEFAULT;
 // double joystickAngle;
 double joystickAngles[2];
+SDL_Joystick* p_joystick;
 SDL_GameController* p_controller;
 int controllerButtonInputs[POND_NUMBER_OF_CONTROLLER_BUTTONS];
 int lastFrameControllerButtonInputs[POND_NUMBER_OF_CONTROLLER_BUTTONS];
@@ -38,10 +39,9 @@ int InitInputSystem(void)
 	}
 
 	printf("%i joysticks were found:\n", SDL_NumJoysticks());
-
-	SDL_Joystick* p_joystick;
-	SDL_JoystickEventState(SDL_ENABLE);
 	p_joystick = SDL_JoystickOpen(0);
+	SDL_JoystickEventState(SDL_ENABLE);
+	
 
 	p_controller = SDL_GameControllerOpen(0);
 
@@ -327,3 +327,18 @@ bool Pond_GetControllerButtonUp(Pond_ControllerButton _button)
 	return false;
 }
 
+int Pond_ControllerRumble(Uint32 _duration)
+{
+	if (p_controller)
+	{
+		if (SDL_GameControllerRumble(p_controller, 0xFFFF, 0xFFFF, 500) == 0)
+			return 1;
+	}
+	else
+	{
+		if (SDL_JoystickRumble(p_joystick, 0xFFFF, 0xFFFF, 500) == 0)
+			return 1;
+	}
+
+	return 0;
+}
