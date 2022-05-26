@@ -6,6 +6,8 @@
 POND_API void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void));
 POND_API void Pond_Run(int _fpscap, int _screenwidth, int _screenheight);
 
+POND_API int Pond_Quit(void);
+
 static void Cleanup(void);
 static void (*ClientInit)(void);
 static void (*ClientUpdate)(void);

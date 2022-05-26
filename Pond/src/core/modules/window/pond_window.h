@@ -13,5 +13,5 @@ enum
 
 POND_API int Pond_SetWindowSize(int _width, int _height);
 POND_API Pond_Vector2Int Pond_GetWindowSize(void);
-// POND_API int Pond_SetWindowPosition(void);
+
 POND_API int Pond_SetWindowMode(int _windowmode);

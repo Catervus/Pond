@@ -29,7 +29,6 @@ int y = 100;
 void Init(void) 
 {
 	Pond_SetRenderClearColour(white);
-	
 
 	p_testSound = Pond_LoadSound("assets/sound.wav", POND_AUDIO_FILE_TYPE_WAV, 50);
 	p_testMusic = Pond_LoadMusic("assets/music.mp3", -1, 20, true);
@@ -42,70 +41,35 @@ void Init(void)
 
 	Pond_PlaySound(p_testSound, 0);
 
+	Pond_SetWindowSize(1200, 800);
+
+	int i = Pond_GetNumberOfControllers();
+	printf("%i Controller(s) has/have been found\n", i);
 }
 
 
 void Update(void)
 {
-	/*if (Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_Y) > 0)
-		y -= 3;
-	else if (Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_Y) < 0)
-		y += 3;
-	else if (Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_X) > 0)
-		x += 3;
-	else if (Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_X) < 0)
-		x -= 3;*/
 
-	// x += Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_X, POND_JOYSTICK_INDEX_SECONDARY) * 3;
-	// y -= Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_Y, POND_JOYSTICK_INDEX_SECONDARY) * 3;
-	
+	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
+		Pond_SetWindowSize(300, 300);
 
-	double d = Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_Y, POND_JOYSTICK_INDEX_MAIN);
-
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_LEFTSTICK))
-		Pond_PlaySound(p_testSound, 0);
-
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_A))
+	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_LSHIFT))
 	{
-		Pond_ControllerRumble(3000);
+		Pond_Vector2Int windowsize = Pond_GetWindowSize();
+		printf("Window Size:\nX: %i\nY: %i\n\n", windowsize.x, windowsize.y);
 	}
 
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_B))
-		printf("Pressed B!\n");
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_Y))
-		printf("Pressed Y!\n");
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_X))
-		printf("Pressed X!\n");
 
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_DPAD_DOWN))
-		printf("Pressed DOWN!\n");
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_DPAD_UP))
-		printf("Pressed UP!\n");
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_DPAD_LEFT))
-		printf("Pressed LEFT!\n");
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_DPAD_RIGHT))
-		printf("Pressed RIGHT!\n");
-
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_SELECT))
-		printf("Pressed SELECT!\n");
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_START))
-		printf("Pressed START!\n");
-
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_LEFTSHOULDER))
-		printf("Pressed LEFT SHOULDER!\n");
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_RIGHTSHOULDER))
-		printf("Pressed RIGHT SHOULDER!\n");
-
-
-	// printf("Value: %f\n", d);
-
+	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_ESCAPE))
+		Pond_Quit();
 }
 
 
 void Draw(void)
 {
-	// Pond_DrawTexture(p_texture, 100, 100, 1, 1, 255);
-	p_sprite->rotationAngle = 0;
 	Pond_DrawSprite(p_sprite, x, y, 1, 1);
+
+	Pond_DrawRectByDimensions(100, 100, 50, 50, red, false);
 }
 

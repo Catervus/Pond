@@ -12,6 +12,9 @@
 #define POND_JOYSTICK_DEADZONE_DEFAULT 8000
 #define POND_JOYSTICK_DEADZONE_MAX 32767.0
 
+#define POND_CONTROLLER_RUMBLE_INTENSITY_MAX 100
+#define POND_CONTROLLER_RUMBLE_DURATIN_MAX 500
+
 typedef enum Pond_KeyboardKey
 {
 	/*POND_INPUT_KEY_Q = 0,
@@ -352,30 +355,189 @@ typedef enum Pond_ControllerButton
 } Pond_ControllerButton;
 
 
+int InitInputSystem(void);
+int CloseInputSystem(void);
 
+#pragma region Internal_Input_Gathering
 int GatherSystemInput(void);
 int GetKeyboardInputs(void);
 int GetMouseInputs(void);
-int GetJoystickInputs(void);
-int InitInputSystem(void);
+int GetControllerButtonInputs(void);
 int SaveInputs(void);
+#pragma endregion
 
+#pragma region Input_Presses
+
+/// <summary>
+/// Checks if passed Keyboard Key is currently pressed or not.
+/// </summary>
+/// <param name="_key">- the Keyboard Key to check</param>
+/// <returns> true if Key is pressed, false if not</returns>
 POND_API bool Pond_GetKey(Pond_KeyboardKey _key);
+
+/// <summary>
+/// Checks if passed Keyboard Key has been pressed down.
+/// Does not check for continues pressing down.
+/// </summary>
+/// <param name="_key">- the Keyboard Key to check</param>
+/// <returns> true if Key is pressed down, false if not or when continuously pressing down</returns>
 POND_API bool Pond_GetKeyDown(Pond_KeyboardKey _key);
+
+/// <summary>
+/// Checks if passed Keyboard Key has been released.
+/// </summary>
+/// <param name="_key">- the Keyboard Key to check</param>
+/// <returns> true if Key has been released, false if not or if it has not been pressed</returns>
 POND_API bool Pond_GetKeyUp(Pond_KeyboardKey _key);
+
+/// <summary>
+/// Checks if passed Mouse Button is currently pressed or not.
+/// </summary>
+/// <param name="_key">- the Mouse Buttons to check</param>
+/// <returns> true if Button is pressed, false if not</returns>
 POND_API bool Pond_GetMouseButton(Pond_MouseButton _button);
+
+/// <summary>
+/// Checks if passed Mouse Button has been pressed down.
+/// Does not check for continues pressing down.
+/// </summary>
+/// <param name="_key">- the Mouse Button to check</param>
+/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
 POND_API bool Pond_GetMouseButtonDown(Pond_MouseButton _button);
+
+/// <summary>
+/// Checks if passed Mouse Button has been released.
+/// </summary>
+/// <param name="_key">- the Mouse Button to check</param>
+/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
 POND_API bool Pond_GetMouseButtonUp(Pond_MouseButton _button);
+
+/// <summary>
+/// Checks if passed Controller Button is currently pressed or not.
+/// </summary>
+/// <param name="_key">- the Controller Button to check</param>
+/// <returns> true if Button is pressed, false if not</returns>
+POND_API bool Pond_GetControllerButton(Pond_ControllerButton _button);
+
+/// <summary>
+/// Checks if passed Controller Button has been pressed down.
+/// Does not check for continues pressing down.
+/// </summary>
+/// <param name="_key">- the Controller Button to check</param>
+/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
+POND_API bool Pond_GetControllerButtonDown(Pond_ControllerButton _button);
+
+/// <summary>
+/// Checks if passed Controller Button has been released.
+/// </summary>
+/// <param name="_key">- the Controller Button to check</param>
+/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
+POND_API bool Pond_GetControllerButtonUp(Pond_ControllerButton _button);
+#pragma endregion
+
+#pragma region Mouse
+
+/// <summary>
+/// Gets the current Mouse Position relative to the Game Window's top-left corner.
+/// </summary>
+/// <returns> Mouse Position as Pond_Vector2Int</returns>
 POND_API Pond_Vector2Int Pond_GetMousePosition(void);
 
+/// <summary>
+/// Gets the current Mouse Position relative to the Desktop's top-left corner.
+/// (This function is less efficient than Pond_GetMousePosition)
+/// </summary>
+/// <returns> Mouse Position as Pond_Vector2Int</returns>
+POND_API Pond_Vector2Int Pond_GetMousePositionDesktop(void);
+
+/// <summary>
+/// Sets Mouse Position to passed coordinates relative to the Game Window.
+/// </summary>
+/// <param name="_x">- the x coordinate to set the mouse position to</param>
+/// <param name="_y">- the y coordinate to set the mouse position to</param>
+/// <returns>1 if successful</returns>
+POND_API int Pond_SetMousePosition(int _x, int _y);
+
+/// <summary>
+/// Sets Mouse Position to passed coordinates relative to the current Desktop.
+/// </summary>
+/// <param name="_x">- the x coordinate to set the mouse position to</param>
+/// <param name="_y">- the y coordinate to set the mouse position to</param>
+/// <returns>1 if successful</returns>
+POND_API int Pond_SetMousePositionDesktop(int _x, int _y);
+
+
+/// <summary>
+/// Toggles the Cursor.
+/// If true is passed the Cursor is shown, if false is passed the Cursor gets hidden.
+/// </summary>
+/// <param name="">- the boolean value deciding to set the cursor on or off</param>
+/// <returns>1 if successful</returns>
+POND_API int Pond_ToggleCursor(bool _toggle);
+
+/// <summary>
+/// Gets the Cursors Toggle State.
+/// True means the cursor is showing, false means the cursor is hiding.
+/// The default is true.
+/// </summary>
+/// <returns>if cursor is on or off</returns>
+POND_API bool Pond_GetCursorToggleState(void);
+
+#pragma endregion
+
+#pragma region Joystick
+
+/// <summary>
+/// Gets the Angle of Joystick with passed index in degrees where 0° is up, 90° right, 180° down and 270° left.
+/// </summary>
+/// <param name="">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns>angle of Joystick in degrees</returns>
 POND_API double Pond_GetJoyStickAngle(Pond_JoystickIndex _index);
+
+/// <summary>
+/// Gets the current position of Joystick with passed index as a Pond_Vector2Float. 
+/// Returns for example {0.5, 0.75}.
+/// </summary>
+/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns> the current joystick axis position</returns>
 POND_API Pond_Vector2Float Pond_GetJoystickAxisVector(Pond_JoystickIndex _index);
+
+/// <summary>
+/// Gets the current input (-1 to 1) on passed axis of Joystick with passed index.
+/// </summary>
+/// <param name="_axis">- the axis to get the input from (POND_JOYSTICK_AXIS_X or POND_JOYSTICK_AXIS_Y)</param>
+/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN for left Joystick or POND_JOYSTICK_INDEX_SECONDARY for right Joystick)</param>
+/// <returns> the input of joystick on axis between -1 and 1</returns>
 POND_API float Pond_GetJoystickAxis(Pond_JoystickAxis _axis, Pond_JoystickIndex _index);
+
+/// <summary>
+/// Sets the current Joystick Deadzone Value. Any Input less than the Deadzone Value is not registered. Min for Deadzone Value is 0, Max is 32767 (POND_JOYSTICK_DEADZONE_MAX).
+/// </summary>
+/// <param name="_value">- value to set Deadzone Value to</param>
+/// <returns> 1 if successful</returns>
 POND_API int Pond_SetJoystickDeadzoneValue(unsigned int _value);
+
+/// <summary>
+/// Gets the current Joystick Deadzone Value.
+/// </summary>
+/// <returns> current Joystick Deadzone Value</returns>
 POND_API unsigned int Pond_GetJoystickDeadzoneValue(void);
 
-POND_API bool Pond_GetControllerButton(Pond_ControllerButton _button);
-POND_API bool Pond_GetControllerButtonDown(Pond_ControllerButton _button);
-POND_API bool Pond_GetControllerButtonUp(Pond_ControllerButton _button);
+#pragma endregion
 
-POND_API int Pond_ControllerRumble(Uint32 _duration);
+#pragma region Controller
+
+POND_API int Pond_GetNumberOfControllers(void);
+
+/// <summary>
+/// When called gives feedback via Controller Rumble.
+/// Any successful call to this function will stop the current rumble effect.
+/// Calling this function with 0 intensity stops the current rumble effect.
+/// </summary>
+/// <param name="_msduration">- the amount of time to rumble in Milliseconds (ms), min is 0 and max is 500</param>
+/// <param name="_lowfrequenceintensity">- the intensity of the low frequence rumble, min is 0 and max is 100</param>
+/// <param name="_highfrequenceintensity">- the intensity of the high frequence rumble, min is 0 and max is 100</param>
+/// <returns> 1 if successful, 0 if not</returns>
+POND_API int Pond_ControllerRumble(int _msduration, float _lowfrequenceintensity, int _highfrequenceintensity);
+
+#pragma endregion

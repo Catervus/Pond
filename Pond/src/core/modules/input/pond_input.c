@@ -1,5 +1,6 @@
 #include "pond_input.h"
 
+#pragma region Global_Variables
 static Pond_Vector2Int mousePosition;
 
 int keyboardInputs[NUMBER_OF_KEYS];
@@ -8,16 +9,20 @@ int lastFrameKeyboardInputs[NUMBER_OF_KEYS];
 int mouseButtonInputs[NUMBER_OF_MOUSE_BUTTONS];
 int lastFrameMouseButtonInputs[NUMBER_OF_MOUSE_BUTTONS];
 
-// Pond_Vector2Float joystickInputAxis = { 0.0, 0.0 };
 Pond_Vector2Float joystickInputAxes[2];
 unsigned int joystickDeadzone = POND_JOYSTICK_DEADZONE_DEFAULT;
-// double joystickAngle;
 double joystickAngles[2];
 SDL_Joystick* p_joystick;
 SDL_GameController* p_controller;
 int controllerButtonInputs[POND_NUMBER_OF_CONTROLLER_BUTTONS];
 int lastFrameControllerButtonInputs[POND_NUMBER_OF_CONTROLLER_BUTTONS];
 
+
+bool mouseToggleState = true;
+
+#pragma endregion
+
+#pragma region Internal_Input_Gathering
 int InitInputSystem(void)
 {
 	for (int i = 0; i < NUMBER_OF_KEYS; i++)
@@ -38,14 +43,24 @@ int InitInputSystem(void)
 		lastFrameControllerButtonInputs[i] = 0;
 	}
 
-	printf("%i joysticks were found:\n", SDL_NumJoysticks());
+	printf("POND INFO: %i joysticks were found:\n", SDL_NumJoysticks());
 	p_joystick = SDL_JoystickOpen(0);
 	SDL_JoystickEventState(SDL_ENABLE);
-	
+
 
 	p_controller = SDL_GameControllerOpen(0);
 
+
 	return 1;
+}
+
+int CloseInputSystem(void)
+{
+	SDL_JoystickClose(p_joystick);
+	p_joystick = NULL;
+
+	SDL_GameControllerClose(p_controller);
+	p_controller = NULL;
 }
 
 int SaveInputs(void)
@@ -78,81 +93,81 @@ int GatherSystemInput(void)
 		GetMouseInputs();
 		switch (event.type)
 		{
-			case SDL_JOYAXISMOTION:
-				if (event.jaxis.axis == 0)
+		case SDL_JOYAXISMOTION:
+			if (event.jaxis.axis == 0)
+			{
+				if ((event.jaxis.value < (Sint16)-joystickDeadzone))
 				{
-					if ((event.jaxis.value < (Sint16)-joystickDeadzone))
-					{
-						joystickInputAxes[0].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[0].x < -1)
-							joystickInputAxes[0].x = -1;
-					}
-					else if (event.jaxis.value > (Sint16)joystickDeadzone)
-					{
-						joystickInputAxes[0].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[0].x > 1)
-							joystickInputAxes[0].x = 1;
-					}
-					else
-						joystickInputAxes[0].x = 0;
+					joystickInputAxes[0].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[0].x < -1)
+						joystickInputAxes[0].x = -1;
 				}
-				if (event.jaxis.axis == 1)
+				else if (event.jaxis.value > (Sint16)joystickDeadzone)
 				{
-					if ((event.jaxis.value < (Sint16)-joystickDeadzone))
-					{
-						joystickInputAxes[0].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[0].y > 1)
-							joystickInputAxes[0].y = 1;
-					}
-					else if (event.jaxis.value > (Sint16)joystickDeadzone)
-					{
-						joystickInputAxes[0].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[0].y < -1)
-							joystickInputAxes[0].y = -1;
-					}
-					else
-						joystickInputAxes[0].y = 0;
+					joystickInputAxes[0].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[0].x > 1)
+						joystickInputAxes[0].x = 1;
 				}
-				// secondary (right) stick on controller
-				if (event.jaxis.axis == 2)
+				else
+					joystickInputAxes[0].x = 0;
+			}
+			if (event.jaxis.axis == 1)
+			{
+				if ((event.jaxis.value < (Sint16)-joystickDeadzone))
 				{
-					if ((event.jaxis.value < (Sint16)-joystickDeadzone))
-					{
-						joystickInputAxes[1].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[1].x < -1)
-							joystickInputAxes[1].x = -1;
-					}
-					else if (event.jaxis.value > (Sint16)joystickDeadzone)
-					{
-						joystickInputAxes[1].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[1].x > 1)
-							joystickInputAxes[1].x = 1;
-					}
-					else
-						joystickInputAxes[1].x = 0;
+					joystickInputAxes[0].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[0].y > 1)
+						joystickInputAxes[0].y = 1;
 				}
-				if (event.jaxis.axis == 3)
+				else if (event.jaxis.value > (Sint16)joystickDeadzone)
 				{
-					if ((event.jaxis.value < (Sint16)-joystickDeadzone))
-					{
-						joystickInputAxes[1].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[1].y > 1)
-							joystickInputAxes[1].y = 1;
-					}
-					else if (event.jaxis.value > (Sint16)joystickDeadzone)
-					{
-						joystickInputAxes[1].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
-						if (joystickInputAxes[1].y < -1)
-							joystickInputAxes[1].y = -1;
-					}
-					else
-						joystickInputAxes[1].y = 0;
+					joystickInputAxes[0].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[0].y < -1)
+						joystickInputAxes[0].y = -1;
 				}
+				else
+					joystickInputAxes[0].y = 0;
+			}
+			// secondary (right) stick on controller
+			if (event.jaxis.axis == 2)
+			{
+				if ((event.jaxis.value < (Sint16)-joystickDeadzone))
+				{
+					joystickInputAxes[1].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[1].x < -1)
+						joystickInputAxes[1].x = -1;
+				}
+				else if (event.jaxis.value > (Sint16)joystickDeadzone)
+				{
+					joystickInputAxes[1].x = ((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[1].x > 1)
+						joystickInputAxes[1].x = 1;
+				}
+				else
+					joystickInputAxes[1].x = 0;
+			}
+			if (event.jaxis.axis == 3)
+			{
+				if ((event.jaxis.value < (Sint16)-joystickDeadzone))
+				{
+					joystickInputAxes[1].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[1].y > 1)
+						joystickInputAxes[1].y = 1;
+				}
+				else if (event.jaxis.value > (Sint16)joystickDeadzone)
+				{
+					joystickInputAxes[1].y = -((double)event.jaxis.value / (double)POND_JOYSTICK_DEADZONE_MAX);
+					if (joystickInputAxes[1].y < -1)
+						joystickInputAxes[1].y = -1;
+				}
+				else
+					joystickInputAxes[1].y = 0;
+			}
 
-				break;
+			break;
 
 		}
-		GetJoystickInputs();
+		GetControllerButtonInputs();
 	}
 
 	joystickAngles[0] = atan2((double)-joystickInputAxes[0].y, (double)joystickInputAxes[0].x) * (180.0 / M_PI) + 90.0;
@@ -166,49 +181,13 @@ int GatherSystemInput(void)
 	return 1;
 }
 
-int GetJoystickInputs(void)
+int GetControllerButtonInputs(void)
 {
 	for (int i = 0; i < POND_NUMBER_OF_CONTROLLER_BUTTONS; i++)
 	{
 		controllerButtonInputs[i] = SDL_GameControllerGetButton(p_controller, i);
-		
 	}
-
 	return 1;
-}
-
-double Pond_GetJoyStickAngle(Pond_JoystickIndex _index)
-{
-	return joystickAngles[_index];
-}
-
-Pond_Vector2Float Pond_GetJoystickAxisVector(Pond_JoystickIndex _index)
-{
-	return joystickInputAxes[_index];
-}
-
-float Pond_GetJoystickAxis(Pond_JoystickAxis _axis, Pond_JoystickIndex _index)
-{
-	if (_axis == POND_JOYSTICK_AXIS_X)
-		return joystickInputAxes[_index].x;
-	else if (_axis == POND_JOYSTICK_AXIS_Y)
-		return joystickInputAxes[_index].y;
-
-	return 0;
-}
-
-int Pond_SetJoystickDeadzoneValue(unsigned int _value)
-{
-	if (_value > POND_JOYSTICK_DEADZONE_MAX)
-		_value = POND_JOYSTICK_DEADZONE_MAX;
-
-	joystickDeadzone = _value;
-	return 1;
-}
-
-unsigned int Pond_GetJoystickDeadzoneValue(void)
-{
-	return joystickDeadzone;
 }
 
 int GetKeyboardInputs(void)
@@ -252,7 +231,78 @@ int GetMouseInputs(void)
 	else if (!(buttons & SDL_BUTTON_X2MASK))
 		mouseButtonInputs[POND_MOUSE_BUTTON_X2] = 0;
 }
+#pragma endregion
 
+#pragma region Joystick
+
+/// <summary>
+/// Gets the Angle of Joystick with passed index in degrees where 0° is up, 90° right, 180° down and 270° left.
+/// </summary>
+/// <param name="">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns>angle of Joystick in degrees</returns>
+double Pond_GetJoyStickAngle(Pond_JoystickIndex _index)
+{
+	return joystickAngles[_index];
+}
+
+/// <summary>
+/// Gets the current position of Joystick with passed index as a Pond_Vector2Float. 
+/// Returns for example {0.5, 0.75}.
+/// </summary>
+/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns>the current joystick axis position</returns>
+Pond_Vector2Float Pond_GetJoystickAxisVector(Pond_JoystickIndex _index)
+{
+	return joystickInputAxes[_index];
+}
+
+/// <summary>
+/// Gets the current input (-1 to 1) on passed axis of Joystick with passed index.
+/// </summary>
+/// <param name="_axis">- the axis to get the input from (POND_JOYSTICK_AXIS_X or POND_JOYSTICK_AXIS_Y)</param>
+/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN for left Joystick or POND_JOYSTICK_INDEX_SECONDARY for right Joystick)</param>
+/// <returns> the input of joystick on axis between -1 and 1</returns>
+float Pond_GetJoystickAxis(Pond_JoystickAxis _axis, Pond_JoystickIndex _index)
+{
+	if (_axis == POND_JOYSTICK_AXIS_X)
+		return joystickInputAxes[_index].x;
+	else if (_axis == POND_JOYSTICK_AXIS_Y)
+		return joystickInputAxes[_index].y;
+
+	return 0;
+}
+
+/// <summary>
+/// Sets the current Joystick Deadzone Value. Any Input less than the Deadzone Value is not registered. Min for Deadzone Value is 0, Max is 32767 (POND_JOYSTICK_DEADZONE_MAX).
+/// </summary>
+/// <param name="_value">- value to set Deadzone Value to</param>
+/// <returns> 1 if successful</returns>
+int Pond_SetJoystickDeadzoneValue(unsigned int _value)
+{
+	if (_value > POND_JOYSTICK_DEADZONE_MAX)
+		_value = POND_JOYSTICK_DEADZONE_MAX;
+
+	joystickDeadzone = _value;
+	return 1;
+}
+
+/// <summary>
+/// Gets the current Joystick Deadzone Value.
+/// </summary>
+/// <returns> current Joystick Deadzone Value</returns>
+unsigned int Pond_GetJoystickDeadzoneValue(void)
+{
+	return joystickDeadzone;
+}
+#pragma endregion
+
+#pragma region Input_Presses
+
+/// <summary>
+/// Checks if passed Keyboard Key is currently pressed or not.
+/// </summary>
+/// <param name="_key">- the Keyboard Key to check</param>
+/// <returns> true if Key is pressed, false if not</returns>
 bool Pond_GetKey(Pond_KeyboardKey _key)
 {
 	if (keyboardInputs[_key])
@@ -261,6 +311,12 @@ bool Pond_GetKey(Pond_KeyboardKey _key)
 	return false;
 }
 
+/// <summary>
+/// Checks if passed Keyboard Key has been pressed down.
+/// Does not check for continues pressing down.
+/// </summary>
+/// <param name="_key">- the Keyboard Key to check</param>
+/// <returns> true if Key is pressed down, false if not or when continuously pressing down</returns>
 bool Pond_GetKeyDown(Pond_KeyboardKey _key)
 {
 	if (keyboardInputs[_key] && !lastFrameKeyboardInputs[_key])
@@ -269,6 +325,11 @@ bool Pond_GetKeyDown(Pond_KeyboardKey _key)
 	return false;
 }
 
+/// <summary>
+/// Checks if passed Keyboard Key has been released.
+/// </summary>
+/// <param name="_key">- the Keyboard Key to check</param>
+/// <returns> true if Key has been released, false if not or if it has not been pressed</returns>
 bool Pond_GetKeyUp(Pond_KeyboardKey _key)
 {
 	if (!keyboardInputs[_key] && lastFrameKeyboardInputs[_key])
@@ -277,6 +338,11 @@ bool Pond_GetKeyUp(Pond_KeyboardKey _key)
 	return false;
 }
 
+/// <summary>
+/// Checks if passed Mouse Button is currently pressed or not.
+/// </summary>
+/// <param name="_key">- the Mouse Buttons to check</param>
+/// <returns> true if Button is pressed, false if not</returns>
 bool Pond_GetMouseButton(Pond_MouseButton _button)
 {
 	if (mouseButtonInputs[_button])
@@ -285,6 +351,12 @@ bool Pond_GetMouseButton(Pond_MouseButton _button)
 	return false;
 }
 
+/// <summary>
+/// Checks if passed Mouse Button has been pressed down.
+/// Does not check for continues pressing down.
+/// </summary>
+/// <param name="_key">- the Mouse Button to check</param>
+/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
 bool Pond_GetMouseButtonDown(Pond_MouseButton _button)
 {
 	if (mouseButtonInputs[_button] && !lastFrameMouseButtonInputs[_button])
@@ -293,6 +365,11 @@ bool Pond_GetMouseButtonDown(Pond_MouseButton _button)
 	return false;
 }
 
+/// <summary>
+/// Checks if passed Mouse Button has been released.
+/// </summary>
+/// <param name="_key">- the Mouse Button to check</param>
+/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
 bool Pond_GetMouseButtonUp(Pond_MouseButton _button)
 {
 	if (!mouseButtonInputs[_button] && lastFrameMouseButtonInputs[_button])
@@ -301,17 +378,22 @@ bool Pond_GetMouseButtonUp(Pond_MouseButton _button)
 	return false;
 }
 
-Pond_Vector2Int Pond_GetMousePosition(void)
-{
-	SDL_GetMouseState(&mousePosition.x, &mousePosition.y);
-	return mousePosition;
-}
-
+/// <summary>
+/// Checks if passed Controller Button is currently pressed or not.
+/// </summary>
+/// <param name="_key">- the Controller Button to check</param>
+/// <returns> true if Button is pressed, false if not</returns>
 bool Pond_GetControllerButton(Pond_ControllerButton _button)
 {
 	return controllerButtonInputs[_button];
 }
 
+/// <summary>
+/// Checks if passed Controller Button has been pressed down.
+/// Does not check for continues pressing down.
+/// </summary>
+/// <param name="_key">- the Controller Button to check</param>
+/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
 bool Pond_GetControllerButtonDown(Pond_ControllerButton _button)
 {
 	if (controllerButtonInputs[_button] && !lastFrameControllerButtonInputs[_button])
@@ -319,6 +401,12 @@ bool Pond_GetControllerButtonDown(Pond_ControllerButton _button)
 
 	return false;
 }
+
+/// <summary>
+/// Checks if passed Controller Button has been released.
+/// </summary>
+/// <param name="_key">- the Controller Button to check</param>
+/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
 bool Pond_GetControllerButtonUp(Pond_ControllerButton _button)
 {
 	if (!controllerButtonInputs[_button] && lastFrameControllerButtonInputs[_button])
@@ -326,19 +414,145 @@ bool Pond_GetControllerButtonUp(Pond_ControllerButton _button)
 
 	return false;
 }
+#pragma endregion
 
-int Pond_ControllerRumble(Uint32 _duration)
+#pragma region Mouse
+
+/// <summary>
+/// Gets the current Mouse Position relative to the Game Window.
+/// </summary>
+/// <returns>returns Mouse Position as Pond_Vector2Int</returns>
+Pond_Vector2Int Pond_GetMousePosition(void)
 {
+	SDL_GetMouseState(&mousePosition.x, &mousePosition.y);
+	return mousePosition;
+}
+
+/// <summary>
+/// Gets the current Mouse Position relative to the Desktop's top-left corner.
+/// (This function is less efficient than Pond_GetMousePosition)
+/// </summary>
+/// <returns> Mouse Position as Pond_Vector2Int</returns>
+Pond_Vector2Int Pond_GetMousePositionDesktop(void)
+{
+	Pond_Vector2Int pos = { 0, 0 };
+	SDL_GetGlobalMouseState(&pos.x, &pos.y);
+	return pos;
+}
+
+/// <summary>
+/// Sets Mouse Position to passed coordinates relative to the Game Window.
+/// </summary>
+/// <param name="_x">- the x coordinate to set the mouse position to</param>
+/// <param name="_y">- the y coordinate to set the mouse position to</param>
+/// <returns>1 if successful</returns>
+int Pond_SetMousePosition(int _x, int _y)
+{
+	SDL_WarpMouseInWindow(app.p_window, _x, _y);
+
+	return 1;
+}
+
+/// <summary>
+/// Sets Mouse Position to passed coordinates relative to the current Desktop.
+/// </summary>
+/// <param name="_x">- the x coordinate to set the mouse position to</param>
+/// <param name="_y">- the y coordinate to set the mouse position to</param>
+/// <returns>1 if successful</returns>
+int Pond_SetMousePositionDesktop(int _x, int _y)
+{
+	SDL_WarpMouseGlobal(_x, _y);
+
+	return 1;
+}
+
+/// <summary>
+/// Toggles the Cursor by passed value.
+/// If true is passed the Cursor is shown, if false is passed the Cursor gets hidden.
+/// </summary>
+/// <param name="">- the boolean value deciding to set the cursor on or off</param>
+/// <returns>1 if successful</returns>
+int Pond_ToggleCursor(bool _toggle)
+{
+	if (_toggle > 0 || _toggle > 1)
+		_toggle = 1;
+	mouseToggleState = _toggle;
+
+	SDL_ShowCursor(mouseToggleState);
+	
+	return 1;
+}
+
+/// <summary>
+/// Gets the Cursors Toggle State.
+/// True means the cursor is showing, false means the cursor is hiding.
+/// The default is true.
+/// </summary>
+/// <returns>if cursor is on or off</returns>
+bool Pond_GetCursorToggleState(void)
+{
+	return mouseToggleState;
+}
+
+
+#pragma endregion
+
+#pragma region Controller
+
+POND_API int Pond_GetNumberOfControllers(void) 
+{
+	return SDL_NumJoysticks();
+}
+
+/// <summary>
+/// When called gives feedback via Controller Rumble.
+/// Any successful call to this function will stop the current rumble effect.
+/// Calling this function with 0 intensity stops the current rumble effect.
+/// </summary>
+/// <param name="_msduration">- the amount of time to rumble in Milliseconds (ms), min is 0 and max is 500</param>
+/// <param name="_lowfrequenceintensity">- the intensity of the low frequence rumble, min is 0 and max is 100</param>
+/// <param name="_highfrequenceintensity">- the intensity of the high frequence rumble, min is 0 and max is 100</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
+int Pond_ControllerRumble(int _msduration, float _lowfrequenceintensity, int _highfrequenceintensity)
+{
+	if (_msduration > 500)
+		_msduration = 500;
+	else if (_msduration < 0)
+		_msduration = 0;
+
+	if (_lowfrequenceintensity > 100)
+		_lowfrequenceintensity = 100;
+	else if (_lowfrequenceintensity < 0)
+		_lowfrequenceintensity = 0;
+
+	if (_highfrequenceintensity > 100)
+		_highfrequenceintensity = 100;
+	else if (_highfrequenceintensity < 0)
+		_highfrequenceintensity = 0;
+
+	float l = (float)_lowfrequenceintensity / 100;
+	float h = (float)_highfrequenceintensity / 100;
+
+	Uint16 lstrength = l * 0xFFFF;
+	Uint16 hstrength = h * 0xFFFF;
+
+	printf("L: %d\n", lstrength);
+	printf("R: %d\n", hstrength);
+
 	if (p_controller)
 	{
-		if (SDL_GameControllerRumble(p_controller, 0xFFFF, 0xFFFF, 500) == 0)
+		if (SDL_GameControllerRumble(p_controller, lstrength, hstrength, _msduration) == 0)
 			return 1;
 	}
 	else
 	{
-		if (SDL_JoystickRumble(p_joystick, 0xFFFF, 0xFFFF, 500) == 0)
+		if (SDL_JoystickRumble(p_joystick, lstrength, hstrength, _msduration) == 0)
 			return 1;
 	}
 
 	return 0;
 }
+#pragma endregion
+
+
+

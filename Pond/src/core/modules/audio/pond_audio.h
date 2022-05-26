@@ -29,9 +29,23 @@ typedef enum POND_AUDIO_FILE_TYPE
 
 } POND_AUDIO_FILE_TYPE;
 
+/// <summary>
+/// Initialises the Pond-Audio System.
+/// </summary>
+/// <param name="_soundchannelcount">- amount of channels to open, can be changed later (max defined with POND_SOUND_CHANNELS_MAX)</param>
+/// <param name="_channelvolume">- default volume for all soundchannels (range is 0-128), can be changed later</param>
+/// <param name="_musicvolume">- default volume for music (range is 0-128), can be changed later</param>
+/// <returns>returns 1 if successful</returns>
 POND_API int Pond_InitAudioSystem(int _numberofchannels, int _channelvolume, int _musicvolume);
 
 POND_API Pond_Sound* Pond_LoadSound(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, int _volume);
+
+/// <summary>
+/// Plays passed sound through passed soundchannel.
+/// </summary>
+/// <param name="_p_sound">- the sound to play</param>
+/// <param name="_soundchannel">- the soundchannel to play through</param>
+/// <returns>returns 1 if successful, 0 if not</returns>
 POND_API int Pond_PlaySound(Pond_Sound* _p_sound, int _soundchannel);
 POND_API int Pond_FreeSound(Pond_Sound* _p_sound);
 
