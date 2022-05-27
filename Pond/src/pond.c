@@ -10,7 +10,7 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 	InitSDL();
 }
 
-void Pond_Run(int _fpscap, int _screenwidth, int _screenheight)
+void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
 {
 	engineFPS = _fpscap;
 	newEngineFPS = engineFPS;
@@ -23,10 +23,11 @@ void Pond_Run(int _fpscap, int _screenwidth, int _screenheight)
 	InitInputSystem();
 	InitRandomSystem();
 
-	OpenSDLWindow(_screenwidth, _screenheight);
+	OpenSDLWindow(_screenwidth, _screenheight, _title);
 
 	ClientInit();
 
+	// SDL_RenderSetScale(app.p_renderer, 2, 2);
 
 	while (1)
 	{

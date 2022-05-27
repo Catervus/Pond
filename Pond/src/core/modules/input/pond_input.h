@@ -527,6 +527,10 @@ POND_API unsigned int Pond_GetJoystickDeadzoneValue(void);
 
 #pragma region Controller
 
+/// <summary>
+/// Returns the number of Controller registered.
+/// </summary>
+/// <returns> number of registered Controllers</returns>
 POND_API int Pond_GetNumberOfControllers(void);
 
 /// <summary>

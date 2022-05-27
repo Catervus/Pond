@@ -499,6 +499,10 @@ bool Pond_GetCursorToggleState(void)
 
 #pragma region Controller
 
+/// <summary>
+/// Returns the number of Controller registered.
+/// </summary>
+/// <returns> number of registered Controllers</returns>
 POND_API int Pond_GetNumberOfControllers(void) 
 {
 	return SDL_NumJoysticks();

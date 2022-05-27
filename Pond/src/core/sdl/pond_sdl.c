@@ -17,15 +17,15 @@ int InitSDL(void)
 	return 0;
 }
 
-int OpenSDLWindow(int _screenheight, int _screenwidth)
+int OpenSDLWindow(int _screenheight, int _screenwidth, char* _title)
 {
 	//The window we'll be rendering to
 	//The surface contained by the window
 	int rendererflag, windowflag;
-	rendererflag = SDL_RENDERER_ACCELERATED;
+	rendererflag = SDL_RENDERER_ACCELERATED && SDL_RENDERER_PRESENTVSYNC;
 	windowflag = 0;
 
-	app.p_window = SDL_CreateWindow("Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _screenheight, _screenwidth, windowflag);
+	app.p_window = SDL_CreateWindow(_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _screenheight, _screenwidth, windowflag);
 	if (!app.p_window)
 	{
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
