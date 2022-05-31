@@ -77,7 +77,8 @@ project "Pond"
 		postbuildcommands
 		{
 			-- copies Pond dll into Sandbox exe folder
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Metroidvania_Month")
 		}
 
 		filter "configurations:Debug"
@@ -135,6 +136,8 @@ project "Sandbox"
 			("{COPY} ../dependencies/SDL2_image/lib/x64/libwebp-7.dll $(OutDir)"),
 			("{COPY} ../dependencies/SDL2_image/lib/x64/zlib1.dll $(OutDir)"),
 			--("{COPY} ../bin/Debug-windows-x86_64/Pond/Pond.dll %{cfg.buildtarget.relpath}")
+			("{COPY} ../dependencies/SDL2_mixer/lib/x64/SDL2_mixer.dll $(OutDir)"),
+
 	}
 
 	
@@ -184,3 +187,94 @@ project "Sandbox"
 
 			
 ---------------------------------------------------------------------
+--[[
+project "Metroidvania_Month"
+
+	location "Metroidvania_Month"
+
+	kind "ConsoleApp"
+
+	language "C"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.c"
+	}
+
+	includedirs -- no includes yet
+	{
+		-- "%{prj.name}/vendor/xx/include"
+		"Pond/src",
+		--"Pond/vendor/SDL2/include",
+		"dependencies/SDL2/include",
+		"dependencies/SDL2_image/include",
+		"dependencies/SDL2_mixer/include"
+	}
+
+	postbuildcommands
+	{
+			--("{COPY} stuff") --  .. outputdir .. "/Sandbox"
+			--("{COPY} Stuff/Stuff.txt ../Stuff2")
+
+			("{COPY} assets/ $(OutDir)/assets"),
+
+			("{COPY} ../dependencies/SDL2/lib/x64/SDL2.dll $(OutDir)"),
+
+			("{COPY} ../dependencies/SDL2_image/lib/x64/SDL2_image.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/libjpeg-9.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/libpng16-16.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/libwebp-7.dll $(OutDir)"),
+			("{COPY} ../dependencies/SDL2_image/lib/x64/zlib1.dll $(OutDir)"),
+			--("{COPY} ../bin/Debug-windows-x86_64/Pond/Pond.dll %{cfg.buildtarget.relpath}")
+			("{COPY} ../dependencies/SDL2_mixer/lib/x64/SDL2_mixer.dll $(OutDir)"),
+
+	}
+
+	
+
+	libdirs
+	{
+		--"Pond/vendor/SDL2/Binaries/Debug-windows-x86_64",
+		"dependencies/SDL2/lib/x64",
+		"dependencies/SDL2_image/lib/x64",
+		"dependencies/SDL2_mixer/lib/x64"
+	}
+
+	links
+	{
+		"Pond",
+		-- "SDL2",
+		"SDL2.lib",
+		"SDL2_image.lib",
+		"SDL2_mixer.lib"
+	}
+
+	filter "system:windows"
+		-- C dialect cdialect "C bla"
+
+		staticruntime "On" --linking runtime libraries statically
+
+		systemversion "latest" -- windows sdk verion
+
+		defines
+		{
+			"POND_PLATFORM_WINDOWS"
+		}
+		
+
+		filter "configurations:Debug"
+			defines "POND_DEBUG"
+			symbols "On"
+
+		filter "configurations:Release"
+			defines "POND_RELEASE"
+			optimize "On"
+
+		filter "configurations:Dist"
+			defines "POND_DIST"
+			optimize "On"
+]]

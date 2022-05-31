@@ -6,21 +6,33 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 	ClientInit = _init;
 	ClientUpdate = _update;
 	ClientDraw = _draw;
+
+	InitSDL();
 }
 
-void Pond_Run(int _fpscap)
+void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
 {
 	engineFPS = _fpscap;
 	newEngineFPS = engineFPS;
 
-	Init_SDL(Pond_GetWindowSize().x, Pond_GetWindowSize().y);
-
-	ClientInit();
+	// Init_SDL(Pond_GetWindowSize().x, Pond_GetWindowSize().y);
+	// Init_SDL(_screenwidth, _screenheight);
 
 	atexit(Cleanup);
 
+	InitInputSystem();
+	InitRandomSystem();
+
+	OpenSDLWindow(_screenwidth, _screenheight, _title);
+
+	ClientInit();
+
+	// SDL_RenderSetScale(app.p_renderer, 2, 2);
+
 	while (1)
 	{
+		GatherSystemInput();
+
 		Uint64 start = SDL_GetPerformanceCounter();
 		// PrepareRenderingScene();
 
@@ -31,8 +43,6 @@ void Pond_Run(int _fpscap)
 
 		RenderScene();
 
-
-
 		Uint64 frametime = SDL_GetPerformanceCounter();
 		SDL_Delay(floor((1000.0 / engineFPS) - 1.0 / frametime));
 		Uint64 end = SDL_GetPerformanceCounter();
@@ -40,7 +50,16 @@ void Pond_Run(int _fpscap)
 		// printf("FPS: %f\n", 1.0 / elapsed);
 
 		engineFPS = newEngineFPS;
+		SaveInputs();
 	}
+
+}
+
+int Pond_Quit(void)
+{
+	exit(1);
+
+	return 1;
 }
 
 //void Pond_Run(int _fpscap)
@@ -77,14 +96,14 @@ void Pond_Run(int _fpscap)
 //	}
 //}
 
-
-
 static void Cleanup(void)
 {
 	printf("Cleanup!");
 
 	SDL_DestroyWindow(app.p_window);
 	SDL_DestroyRenderer(app.p_renderer);
+	Mix_CloseAudio();
+	CloseInputSystem();
 
 	SDL_Quit();
 }

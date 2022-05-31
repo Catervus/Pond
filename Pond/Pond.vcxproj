@@ -92,7 +92,8 @@
       <ImportLibrary>..\bin\Debug-windows-x86_64\Pond\Pond.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Pond\Pond.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Pond\Pond.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Pond\Pond.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Pond\Pond.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)
+IF EXIST ..\bin\Debug-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Pond\Pond.dll ..\bin\Debug-windows-x86_64\Metroidvania_Month &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Pond\Pond.dll ..\bin\Debug-windows-x86_64\Metroidvania_Month &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,7 +118,8 @@
       <ImportLibrary>..\bin\Release-windows-x86_64\Pond\Pond.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Pond\Pond.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Pond\Pond.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Release-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Pond\Pond.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Pond\Pond.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)
+IF EXIST ..\bin\Release-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Pond\Pond.dll ..\bin\Release-windows-x86_64\Metroidvania_Month &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Pond\Pond.dll ..\bin\Release-windows-x86_64\Metroidvania_Month &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -142,12 +144,16 @@
       <ImportLibrary>..\bin\Dist-windows-x86_64\Pond\Pond.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Pond\Pond.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Pond\Pond.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Pond\Pond.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Pond\Pond.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)
+IF EXIST ..\bin\Dist-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Pond\Pond.dll ..\bin\Dist-windows-x86_64\Metroidvania_Month &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Pond\Pond.dll ..\bin\Dist-windows-x86_64\Metroidvania_Month &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\modules\audio\pond_audio.h" />
     <ClInclude Include="src\core\modules\console_output\pond_console.h" />
+    <ClInclude Include="src\core\modules\input\pond_input.h" />
     <ClInclude Include="src\core\modules\misc\pond_helper_functions.h" />
+    <ClInclude Include="src\core\modules\random\pond_random.h" />
     <ClInclude Include="src\core\modules\rendering\pond_rendering.h" />
     <ClInclude Include="src\core\modules\time\pond_time.h" />
     <ClInclude Include="src\core\modules\window\pond_window.h" />
@@ -160,7 +166,10 @@
     <ClInclude Include="src\pond.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\modules\audio\pond_audio.c" />
     <ClCompile Include="src\core\modules\console_output\pond_console.c" />
+    <ClCompile Include="src\core\modules\input\pond_input.c" />
+    <ClCompile Include="src\core\modules\random\pond_random.c" />
     <ClCompile Include="src\core\modules\rendering\pond_rendering.c" />
     <ClCompile Include="src\core\modules\time\pond_time.c" />
     <ClCompile Include="src\core\modules\window\pond_window.c" />
