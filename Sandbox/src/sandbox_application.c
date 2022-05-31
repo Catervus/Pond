@@ -42,19 +42,8 @@ void Init(void)
 	p_texture = Pond_LoadTexture("assets/ledian_pixel.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
 	p_sprite = Pond_InitSprite(p_texture);
 	
-	Pond_SetJoystickDeadzoneValue(8000);
-	printf("Deadzone Value: %i\n", Pond_GetJoystickDeadzoneValue());
 
-	Pond_PlaySound(p_testSound, 0);
-
-	int i = Pond_GetNumberOfControllers();
-	printf("%i Controller(s) has/have been found\n", i);
-
-	Pond_SetWindowTitle("SKROOD SKROOD SKROOD");
-
-	printf("Window Title: %s\n", Pond_GetWindowTitle());
-
-	Pond_SetWindowResizable(true);
+	Pond_SetWindowResizable(false);
 
 }
 
@@ -64,7 +53,7 @@ void Update(void)
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
 	{
-		Pond_MinimizeWindow();
+		Pond_SetWindowPos(0, 50);
 
 	}
 
