@@ -2,14 +2,22 @@
 #include "../../pond_core.h"
 #include "../../pond_extern_includes.h"
 
-Uint16 engineFPS;
-Uint16 newEngineFPS;
+#define POND_FPS_DEFAULT 60
+#define POND_FPS_UNLIMITED -1
 
-int InitTime(Uint16 _fpscap);
 
-POND_API void Pond_ChangeFPS(Uint16 _fpscap);
 
-POND_API int Pond_GetDeltaTime(void);
+int InitTimeSystem(int _fpscap);
+
+int UpdateFrameCounter(void);
+int HandleFramerateCap(void);
+int FPSGetTicks(void);
+
+POND_API int Pond_SetFPS(int _fpscap);
+
+int UpdateDeltaTime(void);
+POND_API double Pond_GetDeltaTime(void);
+
 
 
 

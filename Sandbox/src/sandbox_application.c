@@ -22,7 +22,7 @@ int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
 	Pond_InitAudioSystem(24, 10, 20);
-	Pond_Run(60, screenWidth, screenHeight, "Pond-Sandbox!");
+	Pond_Run(20, screenWidth, screenHeight, "Pond-Sandbox!");
 
 	return 0;
 }
@@ -50,22 +50,28 @@ void Init(void)
 
 void Update(void)
 {
+	double deltatime = Pond_GetDeltaTime();
+
+	printf("DeltaTime: %f\n", deltatime);
+
+
+	if (Pond_GetKey(POND_KEYBOARD_KEY_D))
+	{
+		x += 500 * deltatime;
+	}
+	if (Pond_GetKey(POND_KEYBOARD_KEY_A))
+	{
+		x -= 500 * deltatime;
+	}
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
 	{
-		Pond_SetWindowPos(0, 50);
-
-	}
-
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_LCTRL))
-	{
-		Pond_MaximizeWindow();
+		Pond_SetFPS(120);
 	}
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_LSHIFT))
 	{
-		Pond_Vector2Int windowpos = Pond_GetWindowPos();
-		printf("Window Position:\nX: %i\nY: %i\n\n", windowpos.x, windowpos.y);
+		Pond_SetFPS(20);
 	}
 
 
@@ -89,5 +95,6 @@ void Draw(void)
 	Pond_DrawSprite(p_sprite, xOffset + x, yOffset + y, 1, 1);
 
 	Pond_DrawRectByDimensions(xOffset + 100, yOffset + 100, 50, 50, red, false);
+
 }
 
