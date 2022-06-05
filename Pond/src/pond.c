@@ -12,11 +12,14 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 
 void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
 {
+
 	atexit(Cleanup);
 
 	InitInputSystem();
 	InitRandomSystem();
 	InitTimeSystem(_fpscap);
+	UpdateDeltaTime();
+
 	//int screenticksperframe = 1000 / engineFPS;
 
 	OpenSDLWindow(_screenwidth, _screenheight, _title);
@@ -25,7 +28,6 @@ void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
 
 	// SDL_RenderSetScale(app.p_renderer, 2, 2);
 
-	UpdateDeltaTime();
 
 	while (1)
 	{
@@ -67,6 +69,7 @@ static void Cleanup(void)
 {
 	printf("Cleanup!");
 
+	ShutTimeSystem();
 	SDL_DestroyWindow(app.p_window);
 	SDL_DestroyRenderer(app.p_renderer);
 	Mix_CloseAudio();
@@ -74,6 +77,5 @@ static void Cleanup(void)
 
 	SDL_Quit();
 }
-
 
 

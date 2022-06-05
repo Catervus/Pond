@@ -14,15 +14,15 @@ Pond_Sound* p_testSound;
 Pond_Texture* p_texture;
 Pond_Sprite* p_sprite;
 
-int screenWidth = 1280;
-int screenHeight = 1024;
+int screenWidth = 1000;
+int screenHeight = 1000;
 #define VIEWPORT_DIMENSIONS 800
 
 int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
 	Pond_InitAudioSystem(24, 10, 20);
-	Pond_Run(20, screenWidth, screenHeight, "Pond-Sandbox!");
+	Pond_Run(60, screenWidth, screenHeight, "Pond-Sandbox!");
 
 	return 0;
 }
@@ -45,34 +45,26 @@ void Init(void)
 
 	Pond_SetWindowResizable(false);
 
+	Pond_SetRandomSystemSeed(0);
+
 }
 
 
+float cooldown = 1;
+
 void Update(void)
 {
-	double deltatime = Pond_GetDeltaTime();
-
-	printf("DeltaTime: %f\n", deltatime);
-
-
-	if (Pond_GetKey(POND_KEYBOARD_KEY_D))
+	if (cooldown <= 0)
 	{
-		x += 500 * deltatime;
-	}
-	if (Pond_GetKey(POND_KEYBOARD_KEY_A))
-	{
-		x -= 500 * deltatime;
-	}
+		// do stuff
 
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
-	{
-		Pond_SetFPS(120);
-	}
+		x = Pond_GetRandomInt(0, Pond_GetWindowSize().x - 100);
+		y = Pond_GetRandomInt(0, Pond_GetWindowSize().y - 100);
 
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_LSHIFT))
-	{
-		Pond_SetFPS(20);
+		cooldown = 1;
 	}
+	else
+		cooldown -= Pond_GetDeltaTime();
 
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_ESCAPE))
@@ -80,21 +72,12 @@ void Update(void)
 }
 
 
-int xOffset;
-int yOffset;
-
 void Draw(void)
 {
-	xOffset = screenWidth / 2 - VIEWPORT_DIMENSIONS / 2;
-	yOffset = screenHeight / 2 - VIEWPORT_DIMENSIONS / 2;
 
-	Pond_DrawRectByDimensions(xOffset, yOffset, VIEWPORT_DIMENSIONS, VIEWPORT_DIMENSIONS, white, 1);
+	// Pond_DrawSprite(p_sprite, xOffset + x, yOffset + y, 1, 1);
 
-	Pond_DrawLine(screenWidth / 2, 0, screenWidth / 2, screenHeight, red);
-
-	Pond_DrawSprite(p_sprite, xOffset + x, yOffset + y, 1, 1);
-
-	Pond_DrawRectByDimensions(xOffset + 100, yOffset + 100, 50, 50, red, false);
+	Pond_DrawRectByDimensions(x, y, 100, 100, red, true);
 
 }
 
