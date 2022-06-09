@@ -71,13 +71,19 @@ void Init(void)
 
 }
 
+int rotation = 0;
 
 void Update(void)
 {
 	// GenerateRandomNoise();
 
+	if (Pond_GetKey(POND_KEYBOARD_KEY_UP))
+		rotation++;
+	if (Pond_GetKey(POND_KEYBOARD_KEY_DOWN))
+		rotation--;
+
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
-		GenerateRandomNoise();
+		rotation = 0;
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_ESCAPE))
 		Pond_Quit();
@@ -106,14 +112,27 @@ void Draw(void)
 		}
 
 	}*/
+	int x = Pond_GetTextDimensions("H", p_font).x * 10;
+	int y = Pond_GetTextDimensions("H", p_font).y * 10;
 
-	char textbuffer[1024];
+	printf("Value: %i\n", x);
 
-	for (int i = 0; i < textIndex; i++)
-	{
-		textbuffer[i] = testText[i];
-	}
+	Pond_Vector2Int pos = { x / 2, y / 2};
 
-	Pond_DrawText(textbuffer, 0, 0, white, 2, 2, p_font);
+
+	Pond_DrawCircle(300 + pos.x, 300 + pos.y, 50, red, 0);
+
+	// Pond_DrawText("HELLOOOOOO", 0, 0, white, 10, 10, p_font);
+	Pond_DrawTextAdvanced("HELLOOOOOO", 300, 300, white, 10, 10, p_font, rotation, pos);
+
+	Pond_DrawPixel(300 + pos.x, 300 + pos.y, red);
+
+	// TYPEWRITER TEST
+	//char textbuffer[1024];
+	//for (int i = 0; i < textIndex; i++)
+	//{
+	//	textbuffer[i] = testText[i];
+	//}
+	//Pond_DrawText(textbuffer, 0, 0, white, 2, 2, p_font);
 }
 
