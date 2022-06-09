@@ -1,9 +1,15 @@
 #include "pond_random.h"
+#define PI 3.141592653589793
 
 int InitRandomSystem(void)
 {
 	srand(time(NULL));
 	return 1;
+}
+
+double Pond_NoiseTest(int _i)
+{
+	return sin(_i);
 }
 
 /// <summary>

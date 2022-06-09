@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>POND_PLATFORM_WINDOWS;POND_BUILD_DLL;POND_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;..\dependencies\SDL2_ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -87,8 +87,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;..\dependencies\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_ttf\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Pond\Pond.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -101,7 +101,7 @@ IF EXIST ..\bin\Debug-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\De
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>POND_PLATFORM_WINDOWS;POND_BUILD_DLL;POND_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;..\dependencies\SDL2_ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -113,8 +113,8 @@ IF EXIST ..\bin\Debug-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\De
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;..\dependencies\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_ttf\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release-windows-x86_64\Pond\Pond.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -127,7 +127,7 @@ IF EXIST ..\bin\Release-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>POND_PLATFORM_WINDOWS;POND_BUILD_DLL;POND_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\dependencies\SDL2\include;..\dependencies\SDL2_image\include;..\dependencies\SDL2_mixer\include;..\dependencies\SDL2_ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -139,8 +139,8 @@ IF EXIST ..\bin\Release-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;..\dependencies\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\SDL2_image\lib\x64;..\dependencies\SDL2_mixer\lib\x64;..\dependencies\SDL2\lib\x64;..\dependencies\SDL2_ttf\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Pond\Pond.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -155,6 +155,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\core\modules\misc\pond_helper_functions.h" />
     <ClInclude Include="src\core\modules\random\pond_random.h" />
     <ClInclude Include="src\core\modules\rendering\pond_rendering.h" />
+    <ClInclude Include="src\core\modules\text_rendering\pond_text.h" />
     <ClInclude Include="src\core\modules\time\pond_time.h" />
     <ClInclude Include="src\core\modules\window\pond_window.h" />
     <ClInclude Include="src\core\pond_basic_structs.h" />
@@ -171,6 +172,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClCompile Include="src\core\modules\input\pond_input.c" />
     <ClCompile Include="src\core\modules\random\pond_random.c" />
     <ClCompile Include="src\core\modules\rendering\pond_rendering.c" />
+    <ClCompile Include="src\core\modules\text_rendering\pond_text.c" />
     <ClCompile Include="src\core\modules\time\pond_time.c" />
     <ClCompile Include="src\core\modules\window\pond_window.c" />
     <ClCompile Include="src\core\sdl\pond_sdl.c" />

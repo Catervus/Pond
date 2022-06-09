@@ -3,8 +3,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 
 int InitRandomSystem(void);
+
+POND_API double Pond_NoiseTest(void);
 
 /// <summary>
 /// Set's the seed used by the random system to generate random values.

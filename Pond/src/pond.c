@@ -8,27 +8,23 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 	ClientDraw = _draw;
 
 	InitSDL();
+	InitInputSystem();
+	InitFontSystem();
+	InitRandomSystem();
+
+	atexit(Cleanup);
 }
 
 void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
 {
-
-	atexit(Cleanup);
-
-	InitInputSystem();
-	InitRandomSystem();
 	InitTimeSystem(_fpscap);
 	UpdateDeltaTime();
 
-	//int screenticksperframe = 1000 / engineFPS;
-
 	OpenSDLWindow(_screenwidth, _screenheight, _title);
-
-	ClientInit();
 
 	// SDL_RenderSetScale(app.p_renderer, 2, 2);
 
-
+	ClientInit();
 	while (1)
 	{
 		UpdateDeltaTime();

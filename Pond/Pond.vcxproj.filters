@@ -25,6 +25,9 @@
     <Filter Include="core\modules\rendering">
       <UniqueIdentifier>{23B8556C-0FB2-7EBE-F81E-15CFE4B7E42A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\modules\text_rendering">
+      <UniqueIdentifier>{477A38DD-B387-66C3-3C6E-62AEA87A327A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="core\modules\time">
       <UniqueIdentifier>{B42D48CB-2044-4661-69BB-D182D51017E9}</UniqueIdentifier>
     </Filter>
@@ -53,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="src\core\modules\rendering\pond_rendering.h">
       <Filter>core\modules\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\modules\text_rendering\pond_text.h">
+      <Filter>core\modules\text_rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\core\modules\time\pond_time.h">
       <Filter>core\modules\time</Filter>
@@ -95,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="src\core\modules\rendering\pond_rendering.c">
       <Filter>core\modules\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\modules\text_rendering\pond_text.c">
+      <Filter>core\modules\text_rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\core\modules\time\pond_time.c">
       <Filter>core\modules\time</Filter>

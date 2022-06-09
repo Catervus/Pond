@@ -14,9 +14,20 @@ Pond_Sound* p_testSound;
 Pond_Texture* p_texture;
 Pond_Sprite* p_sprite;
 
-int screenWidth = 1000;
-int screenHeight = 1000;
+Pond_Font* p_font;
+
+#define SCREEN_WIDTH 1000
+#define SCREEN_HEIGHT 1000
+
+int screenWidth = SCREEN_WIDTH;
+int screenHeight = SCREEN_HEIGHT;
 #define VIEWPORT_DIMENSIONS 800
+
+
+char testText[49] = "Hello Pond! I am excited to see how this goes...";
+int textIndex = 0;
+#define TEXT_COOLDOWN 0.1
+float curTextCooldown = TEXT_COOLDOWN;
 
 int main(void)
 {
@@ -27,8 +38,22 @@ int main(void)
 	return 0;
 }
 
-int x = 100;
-int y = 100;
+int positions[SCREEN_WIDTH][SCREEN_HEIGHT];
+int startingPoint = 0;
+
+int GenerateRandomNoise()
+{
+	for (int y = 0; y < SCREEN_HEIGHT; y++)
+	{
+		for (int x = 0; x < SCREEN_WIDTH; x++)
+		{
+			positions[x][y] = Pond_GetRandomInt(0,255);
+
+		}
+
+
+	}
+}
 
 void Init(void) 
 {
@@ -36,48 +61,59 @@ void Init(void)
 
 	Pond_SetRenderClearColour(black);
 
-	p_testSound = Pond_LoadSound("assets/sound.wav", POND_AUDIO_FILE_TYPE_WAV, 50);
-	p_testMusic = Pond_LoadMusic("assets/music.mp3", -1, 20, true);
-
-	p_texture = Pond_LoadTexture("assets/ledian_pixel.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
-	p_sprite = Pond_InitSprite(p_texture);
-	
-
 	Pond_SetWindowResizable(false);
 
 	Pond_SetRandomSystemSeed(0);
 
+	GenerateRandomNoise();
+
+	p_font = Pond_InitFont("assets/monogram.ttf");
+
 }
 
-
-float cooldown = 1;
 
 void Update(void)
 {
-	if (cooldown <= 0)
-	{
-		// do stuff
+	// GenerateRandomNoise();
 
-		x = Pond_GetRandomInt(0, Pond_GetWindowSize().x - 100);
-		y = Pond_GetRandomInt(0, Pond_GetWindowSize().y - 100);
-
-		cooldown = 1;
-	}
-	else
-		cooldown -= Pond_GetDeltaTime();
-
+	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
+		GenerateRandomNoise();
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_ESCAPE))
 		Pond_Quit();
-}
 
+
+	if (curTextCooldown <= 0)
+	{
+		textIndex++;
+		if (textIndex >= 49) textIndex = 49;
+		curTextCooldown = TEXT_COOLDOWN;
+	}
+	else
+		curTextCooldown -= Pond_GetDeltaTime();
+}
 
 void Draw(void)
 {
+	/*for (int y = 0; y < SCREEN_HEIGHT; y++)
+	{
+		for (int x = 0; x < SCREEN_WIDTH; x++)
+		{
+			Pond_Colour col = { positions[x][y], positions[x][y], positions[x][y], 255 };
 
-	// Pond_DrawSprite(p_sprite, xOffset + x, yOffset + y, 1, 1);
+			Pond_DrawPixel(x, y, col);
 
-	Pond_DrawRectByDimensions(x, y, 100, 100, red, true);
+		}
 
+	}*/
+
+	char textbuffer[1024];
+
+	for (int i = 0; i < textIndex; i++)
+	{
+		textbuffer[i] = testText[i];
+	}
+
+	Pond_DrawText(textbuffer, 0, 0, white, 2, 2, p_font);
 }
 
