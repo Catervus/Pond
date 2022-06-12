@@ -55,6 +55,7 @@ int GenerateRandomNoise()
 	}
 }
 
+
 void Init(void) 
 {
 	Pond_SetWindowMode(POND_WINDOW_MODE_WINDOWED);
@@ -67,7 +68,10 @@ void Init(void)
 
 	GenerateRandomNoise();
 
-	p_font = Pond_InitFont("assets/monogram.ttf");
+	p_font = Pond_LoadFont("assets/monogram.ttf");
+
+	p_texture = Pond_LoadTexture("assets/ledian.png", POND_TEXTURE_BLEND_MODE_BLENDING);
+	p_sprite = Pond_InitSprite(p_texture);
 
 }
 
@@ -83,7 +87,10 @@ void Update(void)
 		rotation--;
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
+	{
 		rotation = 0;
+	}
+
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_ESCAPE))
 		Pond_Quit();
@@ -97,35 +104,24 @@ void Update(void)
 	}
 	else
 		curTextCooldown -= Pond_GetDeltaTime();
+
 }
+
+float scaleOffset = 3;
+float myTime = 0;
 
 void Draw(void)
 {
-	/*for (int y = 0; y < SCREEN_HEIGHT; y++)
-	{
-		for (int x = 0; x < SCREEN_WIDTH; x++)
-		{
-			Pond_Colour col = { positions[x][y], positions[x][y], positions[x][y], 255 };
-
-			Pond_DrawPixel(x, y, col);
-
-		}
-
-	}*/
-	int x = Pond_GetTextDimensions("H", p_font).x * 10;
-	int y = Pond_GetTextDimensions("H", p_font).y * 10;
-
-	printf("Value: %i\n", x);
-
-	Pond_Vector2Int pos = { x / 2, y / 2};
+	if (!Pond_DrawText("Hi, how are you doing? I am doing fine and dandy myself...", 50, 0, red, 2, 2, p_font))
+		printf("Welp, that did not work...\n");
 
 
-	Pond_DrawCircle(300 + pos.x, 300 + pos.y, 50, red, 0);
+	//Pond_DrawTextAdvanced("Helloooooo", 100, 100, red, 3 + scaleOffset, 3 + scaleOffset, p_font, rotation, Pond_GetNullVector2());
 
-	// Pond_DrawText("HELLOOOOOO", 0, 0, white, 10, 10, p_font);
-	Pond_DrawTextAdvanced("HELLOOOOOO", 300, 300, white, 10, 10, p_font, rotation, pos);
+	Pond_DrawSprite(p_sprite, 300, 300, 1 + scaleOffset, 1 + scaleOffset);
 
-	Pond_DrawPixel(300 + pos.x, 300 + pos.y, red);
+	scaleOffset = sin(myTime * 0.5) * 0.1;
+	myTime += 0.1;
 
 	// TYPEWRITER TEST
 	//char textbuffer[1024];

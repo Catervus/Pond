@@ -152,6 +152,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\core\modules\audio\pond_audio.h" />
     <ClInclude Include="src\core\modules\console_output\pond_console.h" />
     <ClInclude Include="src\core\modules\input\pond_input.h" />
+    <ClInclude Include="src\core\modules\math\pond_math.h" />
     <ClInclude Include="src\core\modules\misc\pond_helper_functions.h" />
     <ClInclude Include="src\core\modules\random\pond_random.h" />
     <ClInclude Include="src\core\modules\rendering\pond_rendering.h" />
@@ -170,6 +171,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Pond\Pond.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClCompile Include="src\core\modules\audio\pond_audio.c" />
     <ClCompile Include="src\core\modules\console_output\pond_console.c" />
     <ClCompile Include="src\core\modules\input\pond_input.c" />
+    <ClCompile Include="src\core\modules\math\pond_math.c" />
     <ClCompile Include="src\core\modules\random\pond_random.c" />
     <ClCompile Include="src\core\modules\rendering\pond_rendering.c" />
     <ClCompile Include="src\core\modules\text_rendering\pond_text.c" />

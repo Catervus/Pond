@@ -70,6 +70,7 @@ static void Cleanup(void)
 	SDL_DestroyRenderer(app.p_renderer);
 	Mix_CloseAudio();
 	CloseInputSystem();
+	ShutFontSystem();
 
 	SDL_Quit();
 }

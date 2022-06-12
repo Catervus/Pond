@@ -1,5 +1,6 @@
 #include "pond_text.h"
 
+#pragma region System
 int InitFontSystem(void)
 {
 	TTF_Font* p_font;
@@ -9,18 +10,35 @@ int InitFontSystem(void)
 		printf("ERROR: Couldn't initialise SDL TTF: %s\n", SDL_GetError());
 	}
 
+	return 1;
 }
 
-Pond_Font* Pond_InitFont(char* _filename)
+int ShutFontSystem(void)
 {
+	TTF_Quit();
 
+	return 1;
+}
+#pragma endregion
+
+
+#pragma region User_Functions
+
+/// <summary>
+/// Loads the passed font file, allocates memory for a Pond_Fond variable and returns pointer to it.
+/// Free Pond_Fond pointer with Pond_DeleteFont.
+/// </summary>
+/// <param name="_filename">- filepath of the font file to load</param>
+/// <returns> pointer to a Pond_Font variable</returns>
+Pond_Font* Pond_LoadFont(char* _filepath)
+{
 	Pond_Font* p_font;
 
-	p_font = (Pond_Font*)malloc(sizeof(Pond_Font));
+	p_font = malloc(sizeof(Pond_Font));
 
 	memset(&p_font->glyphs, 0, sizeof(SDL_Rect) * POND_FONT_MAX_GLYPHS);
 
-	p_font->p_fontData = TTF_OpenFont(_filename, 16); // FONT_SIZE: 16
+	p_font->p_fontData = TTF_OpenFont(_filepath, 16); // FONT_SIZE: 16
 
 	SDL_Surface* p_surface = SDL_CreateRGBSurface(0, FONT_TEXTURE_SIZE, FONT_TEXTURE_SIZE, 32, 0, 0, 0, 0xff);
 	SDL_SetColorKey(p_surface, SDL_TRUE, SDL_MapRGBA(p_surface->format, 0, 0, 0, 0));
@@ -70,15 +88,54 @@ Pond_Font* Pond_InitFont(char* _filename)
 		dest.x += dest.w;
 	}
 
-	
+
 	p_font->p_textureData = SurfaceToTexture(p_surface, 1);
 
 
-	return p_font; 
+	return p_font;
 }
 
+/// <summary>
+/// Frees a Pond_Font from memory.
+/// Afterwards pointer pointing to that memory can be nulled.
+/// This function should to be used over using free() manually in order to free all allocated memory properly.
+/// </summary>
+/// <param name="_p_font"></param>
+/// <returns></returns>
+int Pond_DeleteFont(Pond_Font* _p_font)
+{
+
+	TTF_CloseFont(_p_font->p_fontData);
+	_p_font->p_fontData = NULL;
+
+
+	SDL_DestroyTexture(_p_font->p_textureData);
+	_p_font->p_textureData = NULL;
+
+	// free(_p_font->glyphs);
+
+	free(_p_font);
+
+	return 1;
+}
+
+/// <summary>
+/// Draws passed text with passed settings and with passed font.
+/// For more options use Pond_DrawTextAdvanced.
+/// </summary>
+/// <param name="_p_text">- text to draw</param>
+/// <param name="_x">- x-position to draw text at</param>
+/// <param name="_y">- y-position to draw text at</param>
+/// <param name="_colour">- colour to draw text with</param>
+/// <param name="_xscale">- x-scale to draw text with</param>
+/// <param name="_yscale">- y-scale to draw text with</param>
+/// <param name="_p_font">- font to draw text with</param>
+/// <returns></returns>
 int Pond_DrawText(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xscale, float _yscale, Pond_Font* _p_font)
 {
+	if (_p_font == NULL || _p_text == NULL)
+		return 0;
+
 	int i = 0;
 	int character = _p_text[i++];
 
@@ -106,8 +163,26 @@ int Pond_DrawText(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xsc
 
 		character = _p_text[i++];
 	}
+
+	return 1;
 }
 
+
+
+/// <summary>
+/// Draws passed text with passed advanced settings and with passed font.
+/// For less options use Pond_DrawText.
+/// </summary>
+/// <param name="_p_text">- text to draw</param>
+/// <param name="_x">- x-position to draw text at</param>
+/// <param name="_y">- y-position to draw text at</param>
+/// <param name="_colour">- colour to draw text with</param>
+/// <param name="_xscale">- x-scale to draw text with</param>
+/// <param name="_yscale">- y-scale to draw text with</param>
+/// <param name="_p_font">- font to draw text with</param>
+/// <param name="_rotationangle">- angle at which to draw text</param>
+/// <param name="_rotationanchor">- anchor of the rotation, 0|0 is top left of the text</param>
+/// <returns> returns 1 if successful</returns>
 int Pond_DrawTextAdvanced(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xscale, float _yscale, Pond_Font* _p_font, int _rotationangle, Pond_Vector2Int _rotationanchor)
 {
 	int i = 0;
@@ -130,8 +205,8 @@ int Pond_DrawTextAdvanced(char* _p_text, int _x, int _y, Pond_Colour _colour, fl
 	{
 		p_glyph = &_p_font->glyphs[character];
 
-		int xpoint = cos(radians) * (_x - startx) - sin(radians) * (_y - startx) + startx;
-		int ypoint = sin(radians) * (_x - startx) - cos(radians) * (_y - starty) + starty;
+		int xpoint = cos(radians) * ((double)_x - (double)startx) - sin(radians) * ((double)_y - (double)startx) + startx;
+		int ypoint = sin(radians) * ((double)_x - (double)startx) - cos(radians) * ((double)_y - (double)starty) + starty;
 
 		dest.x = xpoint;
 		dest.y = ypoint;
@@ -153,8 +228,16 @@ int Pond_DrawTextAdvanced(char* _p_text, int _x, int _y, Pond_Colour _colour, fl
 
 		character = _p_text[i++];
 	}
+
+	return 1;
 }
 
+/// <summary>
+/// Gets dimensions of passed text with passed font as Pond_Vector2Int.
+/// </summary>
+/// <param name="_p_text">- the text of which to get the dimensions from</param>
+/// <param name="_p_font">- the font of the text of which to get the dimensions from</param>
+/// <returns> dimensions of passed text with font</returns>
 Pond_Vector2Int Pond_GetTextDimensions(char* _p_text, Pond_Font* _p_font)
 {
 	int i = 0;
@@ -170,8 +253,10 @@ Pond_Vector2Int Pond_GetTextDimensions(char* _p_text, Pond_Font* _p_font)
 	}
 
 	return dimensions;
-
 }
+
+#pragma endregion
+
 
 // TODO: Should go somewhere else
 SDL_Texture* SurfaceToTexture(SDL_Surface* _p_surface, int _destroysurface)

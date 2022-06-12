@@ -85,6 +85,7 @@
       <Filter>core\sdl</Filter>
     </ClInclude>
     <ClInclude Include="src\pond.h" />
+    <ClInclude Include="src\core\modules\math\pond_math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\modules\audio\pond_audio.c">
@@ -115,5 +116,6 @@
       <Filter>core\sdl</Filter>
     </ClCompile>
     <ClCompile Include="src\pond.c" />
+    <ClCompile Include="src\core\modules\math\pond_math.c" />
   </ItemGroup>
 </Project>
