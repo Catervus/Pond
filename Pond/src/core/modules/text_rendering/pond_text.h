@@ -13,7 +13,6 @@
 #define POND_ROTATION_ANCHOR_ZERO Pond_Vector2Int stuff = { 0,0 } 
 
 
-
 typedef struct Pond_Font
 {
 	TTF_Font* p_fontData;
@@ -39,7 +38,7 @@ POND_API Pond_Font* Pond_LoadFont(char* _filepath);
 /// This function should to be used over using free() manually in order to free all allocated memory properly.
 /// </summary>
 /// <param name="_p_font"></param>
-/// <returns></returns>
+/// <returns> returns 1 if successful</returns>
 POND_API int Pond_DeleteFont(Pond_Font* _p_font);
 
 
@@ -54,7 +53,7 @@ POND_API int Pond_DeleteFont(Pond_Font* _p_font);
 /// <param name="_xscale">- x-scale to draw text with</param>
 /// <param name="_yscale">- y-scale to draw text with</param>
 /// <param name="_p_font">- font to draw text with</param>
-/// <returns></returns>
+/// <returns> 1 if successful</returns>
 POND_API int Pond_DrawText(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xscale, float _yscale, Pond_Font* _p_font);
 
 /// <summary>
@@ -74,6 +73,21 @@ POND_API int Pond_DrawText(char* _p_text, int _x, int _y, Pond_Colour _colour, f
 POND_API int Pond_DrawTextAdvanced(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xscale, float _yscale, Pond_Font* _p_font, int _rotationangle, Pond_Vector2Int _rotationanchor);
 
 /// <summary>
+/// Draws passed text with passed font and each character with corresponding angle around anchor.
+/// </summary>
+/// <param name="_p_text">- text to draw</param>
+/// <param name="_x">- x-position to draw text at</param>
+/// <param name="_y">- y-position to draw text at</param>
+/// <param name="_colour">- colour to draw text with</param>
+/// <param name="_xscale">- x-scale to draw text with</param>
+/// <param name="_yscale">- y-scale to draw text with</param>
+/// <param name="_p_font">- font to draw text with</param>
+/// <param name="_rotationangles">- angles at which to draw each character</param>
+/// <param name="_rotationanchors">- anchor at which to rotate each character</param>
+/// <returns> 1 if successful</returns>
+POND_API int Pond_DrawTextSpecial(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xscale, float _yscale, Pond_Font* _p_font, int _rotationangles[], Pond_Vector2Int _rotationanchors[]);
+
+/// <summary>
 /// Gets dimensions of passed text with passed font as Pond_Vector2Int.
 /// </summary>
 /// <param name="_p_text">- the text of which to get the dimensions from</param>
@@ -81,7 +95,6 @@ POND_API int Pond_DrawTextAdvanced(char* _p_text, int _x, int _y, Pond_Colour _c
 /// <returns> dimensions of passed text with font</returns>
 POND_API Pond_Vector2Int Pond_GetTextDimensions(char* _p_text, Pond_Font* _p_font);
 
-// TODO: A function where every character get's a different position and rotation, to make animation easier and not a hazzle with a function call for every character
 
 // TODO: Should go somewhere else
 SDL_Texture* SurfaceToTexture(SDL_Surface* _p_surface, int _destroysurface);

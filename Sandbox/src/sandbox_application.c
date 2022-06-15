@@ -73,9 +73,29 @@ void Init(void)
 	p_texture = Pond_LoadTexture("assets/ledian.png", POND_TEXTURE_BLEND_MODE_BLENDING);
 	p_sprite = Pond_InitSprite(p_texture);
 
+
 }
 
 int rotation = 0;
+Pond_Vector2Int anchors[] =
+{
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+};
+
+int angles[] =
+{
+	9,
+	3,
+	10,
+	10,
+	10,
+};
+
+float cooldown = 0.2;
 
 void Update(void)
 {
@@ -105,23 +125,36 @@ void Update(void)
 	else
 		curTextCooldown -= Pond_GetDeltaTime();
 
+	if (cooldown <= 0)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			angles[i] += Pond_GetRandomInt(-1, 1);
+		}
+		cooldown = 0.2;
+	}
+
+	cooldown -= Pond_GetDeltaTime();
+	
+
 }
 
-float scaleOffset = 3;
-float myTime = 0;
+
 
 void Draw(void)
 {
-	if (!Pond_DrawText("Hi, how are you doing? I am doing fine and dandy myself...", 50, 0, red, 2, 2, p_font))
-		printf("Welp, that did not work...\n");
+	// if (!Pond_DrawText("Hi, how are you doing? I am doing fine and dandy myself...", 50, 0, red, 2, 2, p_font))
+	// 	printf("Welp, that did not work...\n");
+	// 
+	// 
+	// //Pond_DrawTextAdvanced("Helloooooo", 100, 100, red, 3 + scaleOffset, 3 + scaleOffset, p_font, rotation, Pond_GetNullVector2());
+	// 
 
+	// char buffer[3];
 
-	//Pond_DrawTextAdvanced("Helloooooo", 100, 100, red, 3 + scaleOffset, 3 + scaleOffset, p_font, rotation, Pond_GetNullVector2());
+	// Pond_DrawText(Pond_ConvertIntToString(value, buffer, 3), 0, 0, red, 5, 5, p_font);
 
-	Pond_DrawSprite(p_sprite, 300, 300, 1 + scaleOffset, 1 + scaleOffset);
-
-	scaleOffset = sin(myTime * 0.5) * 0.1;
-	myTime += 0.1;
+	Pond_DrawTextSpecial("Hello", 100, 100, red, 4, 4, p_font, angles, anchors);
 
 	// TYPEWRITER TEST
 	//char textbuffer[1024];

@@ -101,10 +101,9 @@ Pond_Font* Pond_LoadFont(char* _filepath)
 /// This function should to be used over using free() manually in order to free all allocated memory properly.
 /// </summary>
 /// <param name="_p_font"></param>
-/// <returns></returns>
+/// <returns> returns 1 if successful</returns>
 int Pond_DeleteFont(Pond_Font* _p_font)
 {
-
 	TTF_CloseFont(_p_font->p_fontData);
 	_p_font->p_fontData = NULL;
 
@@ -130,7 +129,7 @@ int Pond_DeleteFont(Pond_Font* _p_font)
 /// <param name="_xscale">- x-scale to draw text with</param>
 /// <param name="_yscale">- y-scale to draw text with</param>
 /// <param name="_p_font">- font to draw text with</param>
-/// <returns></returns>
+/// <returns> 1 if successful</returns>
 int Pond_DrawText(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xscale, float _yscale, Pond_Font* _p_font)
 {
 	if (_p_font == NULL || _p_text == NULL)
@@ -227,6 +226,63 @@ int Pond_DrawTextAdvanced(char* _p_text, int _x, int _y, Pond_Colour _colour, fl
 		_x += p_glyph->w * _xscale;
 
 		character = _p_text[i++];
+	}
+
+	return 1;
+}
+
+// TODO: Needs renaming
+
+/// <summary>
+/// Draws passed text with passed font and each character with corresponding angle around anchor.
+/// </summary>
+/// <param name="_p_text">- text to draw</param>
+/// <param name="_x">- x-position to draw text at</param>
+/// <param name="_y">- y-position to draw text at</param>
+/// <param name="_colour">- colour to draw text with</param>
+/// <param name="_xscale">- x-scale to draw text with</param>
+/// <param name="_yscale">- y-scale to draw text with</param>
+/// <param name="_p_font">- font to draw text with</param>
+/// <param name="_rotationangles">- angles at which to draw each character</param>
+/// <param name="_rotationanchors">- anchor at which to rotate each character</param>
+/// <returns> 1 if successful</returns>
+int Pond_DrawTextSpecial(char* _p_text, int _x, int _y, Pond_Colour _colour, float _xscale, float _yscale, Pond_Font* _p_font, int _rotationangles[], Pond_Vector2Int _rotationanchors[])
+{
+	if (_p_font == NULL || _p_text == NULL)
+		return 0;
+
+	int i = 0;
+	int character = _p_text[i++];
+
+	SDL_Rect* p_glyph;
+	SDL_Rect dest;
+
+	// int w = 1 * _xscale;
+	// int h = 1 * _yscale;
+
+	SDL_SetTextureColorMod(_p_font->p_textureData, _colour.r, _colour.g, _colour.b);
+
+	int index = 0;
+	while (character)
+	{
+		p_glyph = &_p_font->glyphs[character];
+
+		dest.x = _x;
+		dest.y = _y;
+		dest.w = p_glyph->w * _xscale;
+		dest.h = p_glyph->h * _yscale;
+
+		SDL_Point point;
+		point.x = _rotationanchors[index].x;
+		point.y = _rotationanchors[index].y;
+
+		SDL_RenderCopyEx(app.p_renderer, _p_font->p_textureData, p_glyph, &dest, _rotationangles[index], &point, 0);
+
+		_x += p_glyph->w * _xscale;
+
+		character = _p_text[i++];
+
+		index++;
 	}
 
 	return 1;
