@@ -39,7 +39,8 @@ project "Pond"
 		--"%{prj.name}/vendor/SDL2/include",
 		"dependencies/SDL2/include",
 		"dependencies/SDL2_image/include",
-		"dependencies/SDL2_mixer/include"
+		"dependencies/SDL2_mixer/include",
+		"dependencies/SDL2_ttf/include"
 	}
 
 	libdirs
@@ -47,7 +48,8 @@ project "Pond"
 		--"%{prj.name}/vendor/SDL2/Binaries/Debug-windows-x86_64",
 		"dependencies/SDL2_image/lib/x64",
 		"dependencies/SDL2_mixer/lib/x64",
-		"dependencies/SDL2/lib/x64"
+		"dependencies/SDL2/lib/x64",
+		"dependencies/SDL2_ttf/lib/x64"
 
 	}
 
@@ -56,7 +58,8 @@ project "Pond"
 		--"SDL2",
 		"SDL2.lib",
 		"SDL2_image.lib",
-		"SDL2_mixer.lib"
+		"SDL2_mixer.lib",
+		"SDL2_ttf.lib"
 	}
 
 
@@ -118,7 +121,8 @@ project "Sandbox"
 		--"Pond/vendor/SDL2/include",
 		"dependencies/SDL2/include",
 		"dependencies/SDL2_image/include",
-		"dependencies/SDL2_mixer/include"
+		"dependencies/SDL2_mixer/include",
+		"dependencies/SDL2_ttf/include"
 	}
 
 	postbuildcommands
@@ -138,6 +142,8 @@ project "Sandbox"
 			--("{COPY} ../bin/Debug-windows-x86_64/Pond/Pond.dll %{cfg.buildtarget.relpath}")
 			("{COPY} ../dependencies/SDL2_mixer/lib/x64/SDL2_mixer.dll $(OutDir)"),
 
+			("{COPY} ../dependencies/SDL2_ttf/lib/x64/SDL2_ttf.dll $(OutDir)"),
+
 	}
 
 	
@@ -147,7 +153,8 @@ project "Sandbox"
 		--"Pond/vendor/SDL2/Binaries/Debug-windows-x86_64",
 		"dependencies/SDL2/lib/x64",
 		"dependencies/SDL2_image/lib/x64",
-		"dependencies/SDL2_mixer/lib/x64"
+		"dependencies/SDL2_mixer/lib/x64",
+		"dependencies/SDL2_ttf/lib/x64"
 	}
 
 	links
@@ -156,7 +163,8 @@ project "Sandbox"
 		-- "SDL2",
 		"SDL2.lib",
 		"SDL2_image.lib",
-		"SDL2_mixer.lib"
+		"SDL2_mixer.lib",
+		"SDL2_ttf.lib"
 	}
 
 	filter "system:windows"

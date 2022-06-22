@@ -14,9 +14,20 @@ Pond_Sound* p_testSound;
 Pond_Texture* p_texture;
 Pond_Sprite* p_sprite;
 
-int screenWidth = 1280;
-int screenHeight = 1024;
+Pond_Font* p_font;
+
+#define SCREEN_WIDTH 1000
+#define SCREEN_HEIGHT 1000
+
+int screenWidth = SCREEN_WIDTH;
+int screenHeight = SCREEN_HEIGHT;
 #define VIEWPORT_DIMENSIONS 800
+
+
+char testText[49] = "Hello Pond! I am excited to see how this goes...";
+int textIndex = 0;
+#define TEXT_COOLDOWN 0.1
+float curTextCooldown = TEXT_COOLDOWN;
 
 int main(void)
 {
@@ -27,8 +38,23 @@ int main(void)
 	return 0;
 }
 
-int x = 100;
-int y = 100;
+int positions[SCREEN_WIDTH][SCREEN_HEIGHT];
+int startingPoint = 0;
+
+int GenerateRandomNoise()
+{
+	for (int y = 0; y < SCREEN_HEIGHT; y++)
+	{
+		for (int x = 0; x < SCREEN_WIDTH; x++)
+		{
+			positions[x][y] = Pond_GetRandomInt(0,255);
+
+		}
+
+
+	}
+}
+
 
 void Init(void) 
 {
@@ -36,69 +62,106 @@ void Init(void)
 
 	Pond_SetRenderClearColour(black);
 
-	p_testSound = Pond_LoadSound("assets/sound.wav", POND_AUDIO_FILE_TYPE_WAV, 50);
-	p_testMusic = Pond_LoadMusic("assets/music.mp3", -1, 20, true);
+	Pond_SetWindowResizable(false);
 
-	p_texture = Pond_LoadTexture("assets/ledian_pixel.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
+	Pond_SetRandomSystemSeed(0);
+
+	GenerateRandomNoise();
+
+	p_font = Pond_LoadFont("assets/monogram.ttf");
+
+	p_texture = Pond_LoadTexture("assets/ledian.png", POND_TEXTURE_BLEND_MODE_BLENDING);
 	p_sprite = Pond_InitSprite(p_texture);
-	
-	Pond_SetJoystickDeadzoneValue(8000);
-	printf("Deadzone Value: %i\n", Pond_GetJoystickDeadzoneValue());
 
-	Pond_PlaySound(p_testSound, 0);
-
-	int i = Pond_GetNumberOfControllers();
-	printf("%i Controller(s) has/have been found\n", i);
-
-	Pond_SetWindowTitle("SKROOD SKROOD SKROOD");
-
-	printf("Window Title: %s\n", Pond_GetWindowTitle());
-
-	Pond_SetWindowResizable(true);
 
 }
 
+int rotation = 0;
+Pond_Vector2Int anchors[] =
+{
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+};
+
+int angles[] =
+{
+	9,
+	3,
+	10,
+	10,
+	10,
+};
+
+float cooldown = 0.2;
 
 void Update(void)
 {
+	// GenerateRandomNoise();
+
+	if (Pond_GetKey(POND_KEYBOARD_KEY_UP))
+		rotation++;
+	if (Pond_GetKey(POND_KEYBOARD_KEY_DOWN))
+		rotation--;
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
 	{
-		Pond_MinimizeWindow();
-
-	}
-
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_LCTRL))
-	{
-		Pond_MaximizeWindow();
-	}
-
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_LSHIFT))
-	{
-		Pond_Vector2Int windowpos = Pond_GetWindowPos();
-		printf("Window Position:\nX: %i\nY: %i\n\n", windowpos.x, windowpos.y);
+		rotation = 0;
 	}
 
 
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_ESCAPE))
 		Pond_Quit();
+
+
+	if (curTextCooldown <= 0)
+	{
+		textIndex++;
+		if (textIndex >= 49) textIndex = 49;
+		curTextCooldown = TEXT_COOLDOWN;
+	}
+	else
+		curTextCooldown -= Pond_GetDeltaTime();
+
+	if (cooldown <= 0)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			angles[i] += Pond_GetRandomInt(-1, 1);
+		}
+		cooldown = 0.2;
+	}
+
+	cooldown -= Pond_GetDeltaTime();
+	
+
 }
 
 
-int xOffset;
-int yOffset;
 
 void Draw(void)
 {
-	xOffset = screenWidth / 2 - VIEWPORT_DIMENSIONS / 2;
-	yOffset = screenHeight / 2 - VIEWPORT_DIMENSIONS / 2;
+	// if (!Pond_DrawText("Hi, how are you doing? I am doing fine and dandy myself...", 50, 0, red, 2, 2, p_font))
+	// 	printf("Welp, that did not work...\n");
+	// 
+	// 
+	// //Pond_DrawTextAdvanced("Helloooooo", 100, 100, red, 3 + scaleOffset, 3 + scaleOffset, p_font, rotation, Pond_GetNullVector2());
+	// 
 
-	Pond_DrawRectByDimensions(xOffset, yOffset, VIEWPORT_DIMENSIONS, VIEWPORT_DIMENSIONS, white, 1);
+	// char buffer[3];
 
-	Pond_DrawLine(screenWidth / 2, 0, screenWidth / 2, screenHeight, red);
+	// Pond_DrawText(Pond_ConvertIntToString(value, buffer, 3), 0, 0, red, 5, 5, p_font);
 
-	Pond_DrawSprite(p_sprite, xOffset + x, yOffset + y, 1, 1);
+	Pond_DrawTextSpecial("Hello", 100, 100, red, 4, 4, p_font, angles, anchors);
 
-	Pond_DrawRectByDimensions(xOffset + 100, yOffset + 100, 50, 50, red, false);
+	// TYPEWRITER TEST
+	//char textbuffer[1024];
+	//for (int i = 0; i < textIndex; i++)
+	//{
+	//	textbuffer[i] = testText[i];
+	//}
+	//Pond_DrawText(textbuffer, 0, 0, white, 2, 2, p_font);
 }
 

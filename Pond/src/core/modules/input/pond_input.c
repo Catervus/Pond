@@ -540,9 +540,6 @@ int Pond_ControllerRumble(int _msduration, float _lowfrequenceintensity, int _hi
 	Uint16 lstrength = l * 0xFFFF;
 	Uint16 hstrength = h * 0xFFFF;
 
-	printf("L: %d\n", lstrength);
-	printf("R: %d\n", hstrength);
-
 	if (p_controller)
 	{
 		if (SDL_GameControllerRumble(p_controller, lstrength, hstrength, _msduration) == 0)

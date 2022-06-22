@@ -8,49 +8,48 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 	ClientDraw = _draw;
 
 	InitSDL();
+	InitInputSystem();
+	InitFontSystem();
+	InitRandomSystem();
+
+	atexit(Cleanup);
 }
 
 void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
 {
-	engineFPS = _fpscap;
-	newEngineFPS = engineFPS;
-
-	// Init_SDL(Pond_GetWindowSize().x, Pond_GetWindowSize().y);
-	// Init_SDL(_screenwidth, _screenheight);
-
-	atexit(Cleanup);
-
-	InitInputSystem();
-	InitRandomSystem();
+	InitTimeSystem(_fpscap);
+	UpdateDeltaTime();
 
 	OpenSDLWindow(_screenwidth, _screenheight, _title);
 
-	ClientInit();
-
 	// SDL_RenderSetScale(app.p_renderer, 2, 2);
 
+	ClientInit();
 	while (1)
 	{
+		UpdateDeltaTime();
+
+		UpdateFrameCounter();
+
 		GatherSystemInput();
-
-		Uint64 start = SDL_GetPerformanceCounter();
-		// PrepareRenderingScene();
-
+		
 		PrepareScene();
 
 		ClientUpdate();
 		ClientDraw();
 
 		RenderScene();
-
-		Uint64 frametime = SDL_GetPerformanceCounter();
-		SDL_Delay(floor((1000.0 / engineFPS) - 1.0 / frametime));
-		Uint64 end = SDL_GetPerformanceCounter();
-		float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
-		// printf("FPS: %f\n", 1.0 / elapsed);
-
-		engineFPS = newEngineFPS;
 		SaveInputs();
+
+		/*int tickcount = FPSGetTicks();
+		if (tickcount < screenticksperframe)
+			SDL_Delay(screenticksperframe - tickcount);*/
+
+		// -----
+		HandleFramerateCap();
+		// -----
+
+
 	}
 
 }
@@ -62,51 +61,18 @@ int Pond_Quit(void)
 	return 1;
 }
 
-//void Pond_Run(int _fpscap)
-//{
-//
-//
-//	InitTime(_fpscap);
-//
-//	InitSDL();
-//
-//	EngineInit();
-//
-//	atexit(Cleanup);
-//
-//	while (1)
-//	{
-//		Uint64 start = SDL_GetPerformanceCounter();
-//		SDL_RenderClear(app.p_renderer);
-//		// PrepareRenderingScene();
-//
-//		EngineUpdate();
-//		EngineDraw();
-//
-//		RenderScene();
-//
-//
-//		Uint64 frametime = SDL_GetPerformanceCounter();
-//		SDL_Delay(floor(engineFPS - 1.0 / frametime));
-//		Uint64 end = SDL_GetPerformanceCounter();
-//		float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
-//		printf("FPS: %f\n", 1.0 / elapsed);
-//
-//		engineFPS = newEngineFPS;
-//	}
-//}
-
 static void Cleanup(void)
 {
 	printf("Cleanup!");
 
+	ShutTimeSystem();
 	SDL_DestroyWindow(app.p_window);
 	SDL_DestroyRenderer(app.p_renderer);
 	Mix_CloseAudio();
 	CloseInputSystem();
+	ShutFontSystem();
 
 	SDL_Quit();
 }
-
 
 

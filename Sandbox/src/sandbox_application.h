@@ -6,3 +6,4 @@ void Init(void);
 void Update(void);
 void Draw(void);
 
+char* Pond_ConvertIntToString(int _num);
