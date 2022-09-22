@@ -80,8 +80,7 @@ project "Pond"
 		postbuildcommands
 		{
 			-- copies Pond dll into Sandbox exe folder
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Metroidvania_Month")
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 		filter "configurations:Debug"

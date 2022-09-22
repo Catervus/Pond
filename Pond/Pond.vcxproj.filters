@@ -16,6 +16,9 @@
     <Filter Include="core\modules\input">
       <UniqueIdentifier>{D5A38933-C187-4A89-2AE8-44DC16EB340B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\modules\math">
+      <UniqueIdentifier>{EF3544CB-5B4C-4261-A4C3-CD82101913E9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="core\modules\misc">
       <UniqueIdentifier>{D15744CB-3D6E-4261-86E5-CD82F23A13E9}</UniqueIdentifier>
     </Filter>
@@ -47,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="src\core\modules\input\pond_input.h">
       <Filter>core\modules\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\modules\math\pond_math.h">
+      <Filter>core\modules\math</Filter>
     </ClInclude>
     <ClInclude Include="src\core\modules\misc\pond_helper_functions.h">
       <Filter>core\modules\misc</Filter>
@@ -85,7 +91,6 @@
       <Filter>core\sdl</Filter>
     </ClInclude>
     <ClInclude Include="src\pond.h" />
-    <ClInclude Include="src\core\modules\math\pond_math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\modules\audio\pond_audio.c">
@@ -96,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="src\core\modules\input\pond_input.c">
       <Filter>core\modules\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\modules\math\pond_math.c">
+      <Filter>core\modules\math</Filter>
     </ClCompile>
     <ClCompile Include="src\core\modules\random\pond_random.c">
       <Filter>core\modules\random</Filter>
@@ -116,6 +124,5 @@
       <Filter>core\sdl</Filter>
     </ClCompile>
     <ClCompile Include="src\pond.c" />
-    <ClCompile Include="src\core\modules\math\pond_math.c" />
   </ItemGroup>
 </Project>

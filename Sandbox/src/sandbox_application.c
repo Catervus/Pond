@@ -7,27 +7,23 @@ Pond_Colour gray = { 100, 100, 100, 255 };
 Pond_Colour red = { 255, 0, 0, 255 };
 Pond_Colour blue = { 0, 0, 255, 255 };
 
-Pond_Music* p_testMusic;
-Pond_Sound* p_testSound;
-
-
 Pond_Texture* p_texture;
 Pond_Sprite* p_sprite;
 
+
+Pond_Texture* p_tileTextures[TILE_COUNT];
+
+
 Pond_Font* p_font;
 
-#define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 1000
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 600
+
+#define MAP_DIMENSIONS 10
+#define TILE_DIMENSIONS 60
 
 int screenWidth = SCREEN_WIDTH;
 int screenHeight = SCREEN_HEIGHT;
-#define VIEWPORT_DIMENSIONS 800
-
-
-char testText[49] = "Hello Pond! I am excited to see how this goes...";
-int textIndex = 0;
-#define TEXT_COOLDOWN 0.1
-float curTextCooldown = TEXT_COOLDOWN;
 
 int main(void)
 {
@@ -36,23 +32,6 @@ int main(void)
 	Pond_Run(60, screenWidth, screenHeight, "Pond-Sandbox!");
 
 	return 0;
-}
-
-int positions[SCREEN_WIDTH][SCREEN_HEIGHT];
-int startingPoint = 0;
-
-int GenerateRandomNoise()
-{
-	for (int y = 0; y < SCREEN_HEIGHT; y++)
-	{
-		for (int x = 0; x < SCREEN_WIDTH; x++)
-		{
-			positions[x][y] = Pond_GetRandomInt(0,255);
-
-		}
-
-
-	}
 }
 
 
@@ -66,102 +45,87 @@ void Init(void)
 
 	Pond_SetRandomSystemSeed(0);
 
-	GenerateRandomNoise();
-
 	p_font = Pond_LoadFont("assets/monogram.ttf");
 
 	p_texture = Pond_LoadTexture("assets/ledian.png", POND_TEXTURE_BLEND_MODE_BLENDING);
 	p_sprite = Pond_InitSprite(p_texture);
 
+	// p_tileTextures[0] = Pond_LoadTexture("assets/tiles/grass.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
+	// p_tileTextures[1] = Pond_LoadTexture("assets/tiles/forest.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
+	// p_tileTextures[2] = Pond_LoadTexture("assets/tiles/water.png", POND_TEXTURE_BLEND_MODE_NO_BLENDING);
+
+
+	// TODO: Collapsing random Cell
 
 }
 
-int rotation = 0;
-Pond_Vector2Int anchors[] =
-{
-	{0,0},
-	{0,0},
-	{0,0},
-	{0,0},
-	{0,0},
-};
+Cell cellMap[MAP_DIMENSIONS][MAP_DIMENSIONS];
 
-int angles[] =
+void CreateCellMap(void)
 {
-	9,
-	3,
-	10,
-	10,
-	10,
-};
+	for (int row = 0; row < MAP_DIMENSIONS; row++)
+	{
+		for (int col = 0; col < MAP_DIMENSIONS; col++)
+		{
 
-float cooldown = 0.2;
+		}
+	}
+}
 
 void Update(void)
 {
-	// GenerateRandomNoise();
-
-	if (Pond_GetKey(POND_KEYBOARD_KEY_UP))
-		rotation++;
-	if (Pond_GetKey(POND_KEYBOARD_KEY_DOWN))
-		rotation--;
-
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
-	{
-		rotation = 0;
-	}
-
-
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_ESCAPE))
-		Pond_Quit();
-
-
-	if (curTextCooldown <= 0)
-	{
-		textIndex++;
-		if (textIndex >= 49) textIndex = 49;
-		curTextCooldown = TEXT_COOLDOWN;
-	}
-	else
-		curTextCooldown -= Pond_GetDeltaTime();
-
-	if (cooldown <= 0)
-	{
-		for (int i = 0; i < 5; i++)
-		{
-			angles[i] += Pond_GetRandomInt(-1, 1);
-		}
-		cooldown = 0.2;
-	}
-
-	cooldown -= Pond_GetDeltaTime();
 	
-
 }
-
-
 
 void Draw(void)
 {
-	// if (!Pond_DrawText("Hi, how are you doing? I am doing fine and dandy myself...", 50, 0, red, 2, 2, p_font))
-	// 	printf("Welp, that did not work...\n");
-	// 
-	// 
-	// //Pond_DrawTextAdvanced("Helloooooo", 100, 100, red, 3 + scaleOffset, 3 + scaleOffset, p_font, rotation, Pond_GetNullVector2());
-	// 
+	DrawMap();
+}
 
-	// char buffer[3];
+void DrawMap(void)
+{
+	for (int y = 0; y < MAP_DIMENSIONS; y++)
+	{
+		for (int x = 0; x < MAP_DIMENSIONS; x++)
+		{
+			Pond_DrawRectByDimensions(x * TILE_DIMENSIONS, y * TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, blue, false);
+			CheckToDrawCell(x, y, cellMap[y][x]);
+		}
+	}
+}
 
-	// Pond_DrawText(Pond_ConvertIntToString(value, buffer, 3), 0, 0, red, 5, 5, p_font);
+void CheckToDrawCell(int _x, int _y, Cell _cell)
+{
+	int counter = 0;
+	E_Tile tiletodraw = 0;
+	for (int i = 0; i < TILE_COUNT; i++)
+	{
+		if (_cell.possibleTiles[i] != 0)
+		{
+			tiletodraw = _cell.possibleTiles[i];
+			counter++;
+		}
+	}
 
-	Pond_DrawTextSpecial("Hello", 100, 100, red, 4, 4, p_font, angles, anchors);
+	if (counter == 1)
+	{
+		DrawTileOnCell(_x, _y, tiletodraw);
+	}
+}
 
-	// TYPEWRITER TEST
-	//char textbuffer[1024];
-	//for (int i = 0; i < textIndex; i++)
-	//{
-	//	textbuffer[i] = testText[i];
-	//}
-	//Pond_DrawText(textbuffer, 0, 0, white, 2, 2, p_font);
+void DrawTileOnCell(int _x, int _y, E_Tile _tile)
+{
+	_x *= TILE_DIMENSIONS;
+	_y *= TILE_DIMENSIONS;
+
+	switch (_tile)
+	{
+		case E_TILE_GRASS:
+			break;
+		case E_TILE_FOREST:
+			break;
+		case E_TILE_WATER:
+			break;
+	}
 }
 
