@@ -20,8 +20,8 @@ void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title, bo
 	InitTimeSystem(_fpscap);
 	UpdateDeltaTime();
 	OpenSDLWindow(_screenwidth, _screenheight, _title);
-	Pond_ToggleConsoleWindow(_showconsolewindow);
 	// SDL_RenderSetScale(app.p_renderer, 2, 2);
+	Pond_ToggleConsoleWindow(false);
 
 	ClientInit();
 	while (1)
