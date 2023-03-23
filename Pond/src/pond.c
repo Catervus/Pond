@@ -15,13 +15,12 @@ void Pond_Init(void (*_init)(void), void (*_update)(void), void (_draw)(void))
 	atexit(Cleanup);
 }
 
-void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
+void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title, bool _showconsolewindow)
 {
 	InitTimeSystem(_fpscap);
 	UpdateDeltaTime();
-
 	OpenSDLWindow(_screenwidth, _screenheight, _title);
-
+	Pond_ToggleConsoleWindow(_showconsolewindow);
 	// SDL_RenderSetScale(app.p_renderer, 2, 2);
 
 	ClientInit();
@@ -50,6 +49,23 @@ void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title)
 		// -----
 
 
+	}
+
+}
+
+
+void Pond_ToggleConsoleWindow(bool _showconsole)
+{
+	HWND hwnd = GetConsoleWindow();
+	if (!_showconsole)
+	{
+		ShowWindow(hwnd, SW_MINIMIZE);
+		ShowWindow(hwnd, SW_HIDE);
+	}
+	else
+	{
+		ShowWindow(hwnd, SW_NORMAL);
+		ShowWindow(hwnd, SW_SHOW);
 	}
 
 }
