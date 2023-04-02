@@ -10,47 +10,41 @@ Pond_Colour green = { 100, 255, 100, 255 };
 Pond_Colour yellow = { 255, 255, 100, 255 };
 
 
-Pond_Colour colours[] =
-{
-	{ 255, 0, 0, 255 }, // red
-	{ 0, 0, 255, 255 }, // blue
-	{ 255, 0, 240, 255 }, // pink
-	{ 100, 255, 100, 255 }, // green
-	{ 255, 255, 100, 255 }, // yellow
-};
-int currentColourIndex = 0;
-
 Pond_Music* p_testMusic;
 Pond_Sound* p_testSound;
+
+
+
+Pond_Sound* p_demoSounds[4];
+Pond_Music* p_demoMusic[3];
+
+
 Pond_Texture* p_texture;
 Pond_Sprite* p_sprite;
 Pond_Texture* p_texture2;
 Pond_Texture* p_texture3;
 Pond_Font* p_font;
+#define SCREEN_WIDTH 600
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define VIEWPORT_DIMENSIONS 800
 Pond_Vector2Int cameraPos;
-#define CAMERA_SPEED 1000.0
-float cameraMoveSpeed;
-
-#define JOYSTICK_THRESHOLD 0.1
-
-Pond_Vector2Float joystickInput = { 0.0, 0.0 };
+#define CAMERA_SPEED 1000
+int cameraMoveSpeed;
 
 bool isWindowResizable = false;
 
 char* screenSizeText = "800x600";
 
-Pond_Vector2Int playerPos = { 100, 100 };
-
 int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
 	Pond_InitAudioSystem(24, 10, 20);
-	Pond_Run(60, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Input Demo", false);
+	Pond_Run(100, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Rendering Demo", false);
+	Pond_Run(60, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Window Demo", false);
 	return 0;
 }
+
 void Init(void)
 {
 	Pond_SetWindowMode(POND_WINDOW_MODE_WINDOWED);
@@ -67,118 +61,78 @@ void Init(void)
 	cameraPos.x = 0;
 	cameraPos.y = 0;
 
-}
 
+	p_demoSounds[0] = Pond_LoadSound("assets/audio_demo/sound1.wav", POND_AUDIO_FILE_TYPE_WAV, 128);
+	p_demoSounds[1] = Pond_LoadSound("assets/audio_demo/sound4.wav", POND_AUDIO_FILE_TYPE_WAV, 128);
+	p_demoSounds[2] = Pond_LoadSound("assets/audio_demo/sound3.wav", POND_AUDIO_FILE_TYPE_WAV, 128);
+	p_demoSounds[3] = Pond_LoadSound("assets/audio_demo/sound2.wav", POND_AUDIO_FILE_TYPE_WAV, 128);
+
+
+	p_demoMusic[0] = Pond_LoadMusic("assets/audio_demo/music1.wav", POND_AUDIO_FILE_TYPE_WAV, 30, false);
+	p_demoMusic[1] = Pond_LoadMusic("assets/audio_demo/music2.wav", POND_AUDIO_FILE_TYPE_WAV, 30, false);
+	p_demoMusic[2] = Pond_LoadMusic("assets/audio_demo/music3.wav", POND_AUDIO_FILE_TYPE_WAV, 30, false);
+
+}
 
 void Update(void)
 {
-	cameraMoveSpeed = CAMERA_SPEED * Pond_GetDeltaTime();
-	// if (Pond_GetKey(POND_KEYBOARD_KEY_LEFT) || Pond_GetKey(POND_KEYBOARD_KEY_A))
-	// 	cameraPos.x -= cameraMoveSpeed;
-	// else if (Pond_GetKey(POND_KEYBOARD_KEY_RIGHT) || Pond_GetKey(POND_KEYBOARD_KEY_D))
-	// 	cameraPos.x += cameraMoveSpeed;
-	// if (Pond_GetKey(POND_KEYBOARD_KEY_UP) || Pond_GetKey(POND_KEYBOARD_KEY_W))
-	// 	cameraPos.y -= cameraMoveSpeed;
-	// else if (Pond_GetKey(POND_KEYBOARD_KEY_DOWN) || Pond_GetKey(POND_KEYBOARD_KEY_S))
-	// 	cameraPos.y += cameraMoveSpeed;
-	// if (Pond_GetKey(POND_KEYBOARD_KEY_SPACE))
-	// 	cameraPos.x = cameraPos.y = 0;
 
-	joystickInput.x = Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_X, POND_JOYSTICK_INDEX_MAIN);
-	joystickInput.y = Pond_GetJoystickAxis(POND_JOYSTICK_AXIS_Y, POND_JOYSTICK_INDEX_MAIN);
-
-	// UP
-	if (Pond_GetKey(POND_KEYBOARD_KEY_W) || Pond_GetKey(POND_KEYBOARD_KEY_UP) ||
-		Pond_GetControllerButton(POND_CONTROLLER_BUTTON_DPAD_UP))
+	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_1))
 	{
-		playerPos.y -= cameraMoveSpeed;
-	}
-	else if (joystickInput.y > JOYSTICK_THRESHOLD)
-	{
-		playerPos.y -= cameraMoveSpeed * joystickInput.y;
+		Pond_PlaySound(p_demoSounds[0], 0);
 	}
 
-	// DOWN
-	if (Pond_GetKey(POND_KEYBOARD_KEY_S) || Pond_GetKey(POND_KEYBOARD_KEY_DOWN) ||
-		Pond_GetControllerButton(POND_CONTROLLER_BUTTON_DPAD_DOWN))
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_2))
 	{
-		playerPos.y += cameraMoveSpeed;
-	}
-	else if (joystickInput.y < -JOYSTICK_THRESHOLD)
-	{
-		playerPos.y -= cameraMoveSpeed * joystickInput.y;
+		Pond_PlaySound(p_demoSounds[1], 0);
 	}
 
-	// LEFT
-	if (Pond_GetKey(POND_KEYBOARD_KEY_A) || Pond_GetKey(POND_KEYBOARD_KEY_LEFT) ||
-		Pond_GetControllerButton(POND_CONTROLLER_BUTTON_DPAD_LEFT))
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_3))
 	{
-		playerPos.x -= cameraMoveSpeed;
-	}
-	else if (joystickInput.x < -JOYSTICK_THRESHOLD)
-	{
-		playerPos.x += cameraMoveSpeed * joystickInput.x;
+		Pond_PlaySound(p_demoSounds[2], 1);
 	}
 
-	// RIGHT
-	if (Pond_GetKey(POND_KEYBOARD_KEY_D) || Pond_GetKey(POND_KEYBOARD_KEY_RIGHT) ||
-		Pond_GetControllerButton(POND_CONTROLLER_BUTTON_DPAD_RIGHT))
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_4))
 	{
-		playerPos.x += cameraMoveSpeed;
-	}
-	else if (joystickInput.x > JOYSTICK_THRESHOLD)
-	{
-		playerPos.x += cameraMoveSpeed * joystickInput.x;
-	}
-	
-
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE) || Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_A))
-	{
-		currentColourIndex++;
-		if (currentColourIndex >= Pond_GetArrayLength(colours))
-		{
-			currentColourIndex = 0;
-		}
+		Pond_PlaySound(p_demoSounds[3], 1);
 	}
 
-	if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_LEFTSHOULDER) ||
-		Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_LEFTSTICK) ||
-		Pond_GetKeyDown(POND_KEYBOARD_KEY_Q))
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_5))
 	{
-		currentColourIndex--;
-		if (currentColourIndex < 0)
-			currentColourIndex = Pond_GetArrayLength(colours) - 1;
+		Pond_PlayMusic(p_demoMusic[0]);
 	}
-	else if (Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_RIGHTSHOULDER) ||
-		Pond_GetControllerButtonDown(POND_CONTROLLER_BUTTON_RIGHTSTICK) ||
-		Pond_GetKeyDown(POND_KEYBOARD_KEY_E))
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_6))
 	{
-		currentColourIndex++;
-		if (currentColourIndex >= Pond_GetArrayLength(colours))
-		{
-			currentColourIndex = 0;
-		}
+		Pond_PlayMusic(p_demoMusic[1]);
 	}
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_7))
+	{
+		Pond_PlayMusic(p_demoMusic[2]);
+	}
+
+	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
+	{
+		Pond_StopAllChannels();
+		Pond_StopMusic();
+	}
+
+
 
 
 }
 
 void Draw(void)
 {
+	Pond_DrawText("1 - Play Sound 1 (in Channel 0)", 1, 10, white, 1, 1, p_font);
+	Pond_DrawText("2 - Play Sound 2 (in Channel 0)", 1, 20, white, 1, 1, p_font);
+	Pond_DrawText("3 - Play Sound 3 (in Channel 1)", 1, 30, white, 1, 1, p_font);
+	Pond_DrawText("4 - Play Sound 4 (in Channel 1)", 1, 40, white, 1, 1, p_font);
+	Pond_DrawText("5 - Play Music 1", 1, 50, white, 1, 1, p_font);
+	Pond_DrawText("6 - Play Music 2", 1, 60, white, 1, 1, p_font);
+	Pond_DrawText("7 - Play Music 3", 1, 70, white, 1, 1, p_font);
 
-	Pond_DrawCircle(playerPos.x, playerPos.y, 50, colours[currentColourIndex], 1);
-
-
-	Pond_DrawText("WASD -  move", 1, 10, white, 1, 1, p_font);
-	Pond_DrawText("Controller Dpad -  move", 1, 20, white, 1, 1, p_font);
-	Pond_DrawText("Controller Left Joystick -  move", 1, 30, white, 1, 1, p_font);
+	Pond_DrawText("SPACE - Stop all Sounds and Music", 1, 80, white, 1, 1, p_font);
 	
-	Pond_DrawText("Space - change colour", 1, 50, white, 1, 1, p_font);
-	Pond_DrawText("Controller A - change colour", 1, 60, white, 1, 1, p_font);
-
-	Pond_DrawText("Q/E - switch through colours", 1, 70, white, 1, 1, p_font);
-	Pond_DrawText("Controller LB/RB - switch through colours", 1, 80, white, 1, 1, p_font);
-
 }
 
 

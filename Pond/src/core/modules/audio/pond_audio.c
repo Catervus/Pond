@@ -608,5 +608,11 @@ POND_API int Pond_GetMusicCombinedVolume(Pond_Music* _p_music)
 
 	return volume;
 }
+
+
+POND_API int Pond_StopMusic(void)
+{
+	Mix_HaltMusic();
+}
 #pragma endregion
 
