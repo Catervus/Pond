@@ -40,8 +40,7 @@ int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
 	Pond_InitAudioSystem(24, 10, 20);
-	Pond_Run(100, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Rendering Demo", false);
-	Pond_Run(60, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Window Demo", false);
+	Pond_Run(60, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Window Demo", true);
 	return 0;
 }
 
@@ -114,6 +113,15 @@ void Update(void)
 	{
 		Pond_StopAllChannels();
 		Pond_StopMusic();
+	}
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_P))
+	{
+		Pond_PauseMusic();
+	}
+	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_R))
+	{
+		if (Pond_ResumeMusic() == false)
+			printf("NO MUSIC!\n");
 	}
 
 
