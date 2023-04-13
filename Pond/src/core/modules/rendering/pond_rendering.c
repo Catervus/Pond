@@ -16,10 +16,10 @@ int RenderScene()
 }
 
 /// <summary>
-/// Sets the Render Clear Colour.
-/// The Renderer clears the screen at the start of each frame with the Render Clear Colour.
+/// Sets the render clear colour.
+/// The Renderer clears the screen at the start of each frame with the clear colour.
 /// </summary>
-/// <param name="_col">- the colour to set as Render Clear Colour</param>
+/// <param name="_col">- the colour to set as render clear colour</param>
 /// <returns>returns 1 if successful</returns>
 int Pond_SetRenderClearColour(Pond_Colour _col)
 {
@@ -27,6 +27,7 @@ int Pond_SetRenderClearColour(Pond_Colour _col)
 
 	return 1;
 }
+
 
 int Pond_SetTextureScaleQuality(int _rendermode)
 {
@@ -64,6 +65,10 @@ Pond_Colour Pond_GetColour(int _r, int _g, int _b, int _a)
 	return col;
 }
 
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// Shapes
+
 /// <summary>
 /// Renders a pixel at x and y with colour to the screen.
 /// </summary>
@@ -96,6 +101,14 @@ int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col)
 	return 1;
 }
 
+
+/// <summary>
+/// Renders a polygon by drawing lines between passes points. 
+/// </summary>
+/// <param name="_points">- the points to be connected by lines</param>
+/// <param name="_arraysize">- the amounts of points</param>
+/// <param name="_col">- the colour of the polygon lines</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_DrawPolygon(Pond_Vector2Int _points[], int _arraysize, Pond_Colour _col)
 {
 	for (int i = 0; i < _arraysize; i++)
@@ -173,7 +186,15 @@ int Pond_DrawRectByDimensions(int _x, int _y, int _w, int _h, Pond_Colour _col, 
 	return 1;
 }
 
-
+/// <summary>
+/// Renders a circle around passed coordinate with passed radius and colour.
+/// </summary>
+/// <param name="_x">- the x pos of the circle center</param>
+/// <param name="_y">- the y pos of the circle center</param>
+/// <param name="_radius">- the radius of the circle</param>
+/// <param name="_col">- the colour of the circle</param>
+/// <param name="_fill">- true or 1 if the rectangle should be filled, false or 0 if not</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, bool _fill)
 {
 	SDL_SetRenderDrawColor(app.p_renderer, _col.r, _col.g, _col.b, _col.a);
@@ -214,8 +235,7 @@ static int DrawCircleAlgorithm(int _x, int _y, int _radius)
 		SDL_RenderDrawPoint(app.p_renderer, _x + y, _y + x);
 		SDL_RenderDrawPoint(app.p_renderer, _x - y, _y - x);
 		SDL_RenderDrawPoint(app.p_renderer, _x - y, _y + x);
-
-
+		
 		if (error > 0)
 		{
 			x--;
@@ -231,6 +251,17 @@ static int DrawCircleAlgorithm(int _x, int _y, int _radius)
 	}
 }
 
+/// <summary>
+/// Draws a texture at passed coordinates with passed scale.
+/// The texture will be drawn with its top-left corner at passed coordinates.
+/// </summary>
+/// <param name="_tex">- the Pond_Texture to draw</param>
+/// <param name="_x">- the x pos of the left side of the texture</param>
+/// <param name="_y">- the y pos of the top side of the texture</param>
+/// <param name="_xscale">- the x scale to draw the texture at</param>
+/// <param name="_yscale">- the y scale to draw the texture at</param>
+/// <param name="_alpha">- the alpha value to draw the texture with. (Ranges 0-255)</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_DrawTexture(Pond_Texture* _tex, int _x, int _y, float _xscale, float _yscale, int _alpha)
 {
 	SDL_Rect rect;
@@ -250,7 +281,19 @@ int Pond_DrawTexture(Pond_Texture* _tex, int _x, int _y, float _xscale, float _y
 	return 1;
 }
 
-int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, Pond_Colour _colour, int _rotationangle, Pond_Vector2Int _rotation)
+/// <summary>
+/// Draws a portion of a texture at passed coordinates with passed scale.
+/// The texture will be drawn with its top-left corner at passed coordinates. 
+/// </summary>
+/// <param name="_tex">- the Pond_Texture to draw</param>
+/// <param name="_portion">- the portion of the texture as a Pond_Rect</param>
+/// <param name="_x">- the x pos of the left side of the texture</param>
+/// <param name="_y">- the y pos of the top side of the texture</param>
+/// <param name="_xscale">- the x scale to draw the texture at</param>
+/// <param name="_yscale">- the y scale to draw the texture at</param>
+/// <param name="_alpha">- the alpha value to draw the texture with. (Ranges 0-255)</param>
+/// <returns>returns 1 if successful</returns>
+int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, int _alpha)
 {
 	SDL_Rect portion = { _portion.x, _portion.y, _portion.w, _portion.h };
 
@@ -259,17 +302,59 @@ int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int
 	rect.x = _x;
 	rect.y = _y;
 
-	// SDL_QueryTexture(_tex->p_texture, NULL, NULL, &rect.w, &rect.h);
+	SDL_QueryTexture(_tex->p_textureData, NULL, NULL, &rect.w, &rect.h);
 
 	rect.w = portion.w * _xscale;
 	rect.h = portion.h * _yscale;
-	SDL_SetTextureColorMod(_tex->p_textureData, _colour.r, _colour.g, _colour.b);
-	SDL_SetTextureAlphaMod(_tex->p_textureData, _colour.a);
+	SDL_SetTextureAlphaMod(_tex->p_textureData, _alpha);
 
 
-	// SDL_RenderCopyEx(app.p_renderer, _tex->p_textureData, &portion, &rect, _rotationangle, NULL, NULL);
+	SDL_RenderCopy(app.p_renderer, _tex->p_textureData, &portion, &rect);
 }
 
+/// <summary>
+/// Draws a portion of a texture at passed coordinates with passed scale and colour tint.
+/// The texture will be drawn with its top-left corner at passed coordinates.
+/// </summary>
+/// <param name="_tex">- the Pond_Texture to draw</param>
+/// <param name="_x">- the x pos of the left side of the texture</param>
+/// <param name="_y">- the y pos of the top side of the texture</param>
+/// <param name="_xscale">- the x scale to draw the texture at</param>
+/// <param name="_yscale">- the y scale to draw the texture at</param>
+/// <param name="_alpha">- the alpha value to draw the texture with. (Ranges 0-255)</param>
+/// <returns>returns 1 if successful</returns>
+int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, Pond_Colour _colourtint, int _rotationangle, Pond_Vector2Int _rotation)
+{
+	SDL_Rect portion = { _portion.x, _portion.y, _portion.w, _portion.h };
+
+	SDL_Rect rect;
+
+	rect.x = _x;
+	rect.y = _y;
+
+	SDL_QueryTexture(_tex->p_textureData, NULL, NULL, &rect.w, &rect.h);
+
+	rect.w = portion.w * _xscale;
+	rect.h = portion.h * _yscale;
+	SDL_SetTextureColorMod(_tex->p_textureData, _colourtint.r, _colourtint.g, _colourtint.b);
+	SDL_SetTextureAlphaMod(_tex->p_textureData, _colourtint.a);
+
+
+	SDL_RenderCopyEx(app.p_renderer, _tex->p_textureData, &portion, &rect, _rotationangle, NULL, NULL);
+}
+
+
+/// <summary>
+/// Draws a sprite at passed coordinates with passed scale.
+/// The Sprite will be drawn with its top-left corner at passed coordinates.
+/// It is to note that Pond_Sprite saves data such as colour, rotation, sprite portion and if its flipped at it's axes.
+/// </summary>
+/// <param name="_sprite">- the Pond_Sprite to draw</param>
+/// <param name="_x">- the x pos of the left side of the sprite</param>
+/// <param name="_y">- the y pos of the top side of the sprite</param>
+/// <param name="_xscale"></param>
+/// <param name="_yscale"></param>
+/// <returns>returns 1 if successful</returns>
 int Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, float _xscale, float _yscale)
 {
 	SDL_Rect portion = { _sprite->spriteRect.x, _sprite->spriteRect.y, _sprite->spriteRect.w, _sprite->spriteRect.h};
@@ -288,8 +373,6 @@ int Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, float _xscale, float _
 	rect.h = portion.h * _yscale;
 
 
-	// SDL_RenderCopy(app.p_renderer, _tex->p_tex, NULL, &rect);
-
 	SDL_RendererFlip flip = 0;
 
 	if (_sprite->flipX && !_sprite->flipY)
@@ -305,24 +388,6 @@ int Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, float _xscale, float _
 	return 1;
 }
 
-int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, int _alpha)
-{
-	SDL_Rect portion = { _portion.x, _portion.y, _portion.w, _portion.h };
-
-	SDL_Rect rect;
-
-	rect.x = _x;
-	rect.y = _y;
-
-	// SDL_QueryTexture(_tex->p_texture, NULL, NULL, &rect.w, &rect.h);
-
-	rect.w = portion.w * _xscale;
-	rect.h = portion.h * _yscale;
-	SDL_SetTextureAlphaMod(_tex->p_textureData, _alpha);
-
-
-	SDL_RenderCopy(app.p_renderer, _tex->p_textureData, &portion, &rect);
-}
 
 static int SetTextureBlendMode(POND_TEXTURE_BLEND_MODE _quality)
 {
@@ -343,7 +408,8 @@ static int SetTextureBlendMode(POND_TEXTURE_BLEND_MODE _quality)
 	return 1;
 }
 
-static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _quality)
+
+static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _blendmode)
 {
 	SDL_Texture* p_tex;
 
@@ -354,19 +420,32 @@ static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _qualit
 	
 }
 
-Pond_Texture* Pond_LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _quality)
+/// <summary>
+/// Loads a texture-file and returns a Pond_Texture pointer.
+/// Returned pointer is allocated in memory. (Can be freed with Pond_FreeTexture)
+/// Blendmode determines if texture should have a blur. (Pixel Art should have no blending)
+/// </summary>
+/// <param name="_filepath">- the filepath</param>
+/// <param name="_blendmode">- the blendmode of the texture</param>
+/// <returns>returns the pointer to allocated Pond_Sound</returns>
+Pond_Texture* Pond_LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _blendmode)
 {
-	SetTextureBlendMode(_quality);
+	SetTextureBlendMode(_blendmode);
 
 	Pond_Texture* p_tex = (Pond_Texture*) malloc(sizeof(Pond_Texture));
 	memset(p_tex, 0, sizeof(Pond_Texture));
 
-	p_tex->p_textureData = LoadTexture(_filepath, _quality);
+	p_tex->p_textureData = LoadTexture(_filepath, _blendmode);
 
 	return p_tex;
 
 }
 
+/// <summary>
+/// Frees passed texture from memory.
+/// </summary>
+/// <param name="_p_texture">- the Pond_Texture to free</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_FreeTexture(Pond_Texture* _p_texture)
 {
 	SDL_DestroyTexture(_p_texture->p_textureData);
@@ -376,6 +455,12 @@ int Pond_FreeTexture(Pond_Texture* _p_texture)
 	return 1;
 }
 
+/// <summary>
+/// Allocates a Pond_Sprite in memory and returns the pointer. (Can be freed with Pond_FreeTexture)
+/// Pond_Sprite has the passed texture as texture-data.
+/// </summary>
+/// <param name="_p_texture">- the texture the Pond_Sprite should have</param>
+/// <returns>returns allocated Pond_Sprite</returns>
 Pond_Sprite* Pond_InitSprite(Pond_Texture* _p_texture)
 {
 	Pond_Sprite* p_sprite = malloc(sizeof(Pond_Sprite));
@@ -394,6 +479,11 @@ Pond_Sprite* Pond_InitSprite(Pond_Texture* _p_texture)
 	return p_sprite;
 }
 
+/// <summary>
+/// Frees passed Pond_Sprite from memory.
+/// </summary>
+/// <param name="_p_texture">- the Pond_Sprite to free</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_FreeSprite(Pond_Sprite* _p_sprite)
 {
 	free(_p_sprite);
@@ -401,13 +491,19 @@ int Pond_FreeSprite(Pond_Sprite* _p_sprite)
 	return 1;
 }
 
-int Pond_SetSpriteValues(Pond_Rect _spriterect, Pond_Colour _colour, double _rotationangle, SDL_Point _rotationanchor, bool _flipx, bool _flipy)
-{
+// int Pond_SetSpriteValues(Pond_Rect _spriterect, Pond_Colour _colour, double _rotationangle, SDL_Point _rotationanchor, bool _flipx, bool _flipy)
+// {
+// 
+// 
+// 	return 1;
+// }
 
-
-	return 1;
-}
-
+/// <summary>
+/// Sets the texture-data of the passed Pond_Sprite to passed Pond_Texture.
+/// </summary>
+/// <param name="_p_sprite">- the Pond_Sprite to change the texture-data of</param>
+/// <param name="_p_texture">- the new texture-data of the Pond_Sprite</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_SetSpriteTexture(Pond_Sprite* _p_sprite, Pond_Texture* _p_texture)
 {
 	_p_sprite->p_texture = _p_texture;
@@ -419,6 +515,15 @@ int Pond_SetSpriteTexture(Pond_Sprite* _p_sprite, Pond_Texture* _p_texture)
 	return 1;
 }
 
+/// <summary>
+/// Sets the portion to draw of passed Pond_Sprite.
+/// </summary>
+/// <param name="_p_sprite">- the Pond_Sprite to change</param>
+/// <param name="_x">- the x coordinate of portion in texture</param>
+/// <param name="_y">- the y coordinate of portion in texture</param>
+/// <param name="_w">- the width of portion in texture</param>
+/// <param name="_h">- the height of portion in texture</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_SetSpriteRect(Pond_Sprite* _p_sprite, int _x, int _y, int _w, int _h)
 {
 	Pond_Rect spriterect = { _x, _y, _w, _h };
@@ -427,6 +532,15 @@ int Pond_SetSpriteRect(Pond_Sprite* _p_sprite, int _x, int _y, int _w, int _h)
 	return 1;
 }
 
+/// <summary>
+/// Sets the colour of passed Pond_Sprite.
+/// </summary>
+/// <param name="_p_sprite">- the Pond_Sprite to change</param>
+/// <param name="_r">- the red value</param>
+/// <param name="_g">- the green value</param>
+/// <param name="_b">- the blue value</param>
+/// <param name="_a">- the alpha value</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_SetSpriteColour(Pond_Sprite* _p_sprite, int _r, int _g, int _b, int _a)
 {
 	Pond_Colour col = { _r, _g, _b, _a };
@@ -435,6 +549,27 @@ int Pond_SetSpriteColour(Pond_Sprite* _p_sprite, int _r, int _g, int _b, int _a)
 	return 1;
 }
 
+/// <summary>
+/// Sets the rotation angle of passed Pond_Sprite.
+/// </summary>
+/// <param name="_p_sprite">- the Pond_Sprite to change</param>
+/// <param name="_rotationangle">- the rotation angle</param>
+/// <returns>returns 1 if successful</returns>
+int Pond_SetSpriteRotation(Pond_Sprite* _p_sprite, double _rotationangle)
+{
+	_p_sprite->rotationAngle = _rotationangle;
+
+	return 1;
+}
+
+/// <summary>
+/// Sets the rotation anchor of passed Pond_Sprite.
+/// Rotation of Pond_Sprite rotates around anchor.
+/// </summary>
+/// <param name="_p_sprite">- the Pond_Sprite to change</param>
+/// <param name="_x">- the x coordinate of the rotation anchor in texture of Pond_Sprite</param>
+/// <param name="_y">- the y coordinate of the rotation anchor in texture of Pond_Sprite</param>
+/// <returns>returns 1 if successful</returns>
 int Pond_SetSpriteRotationAnchor(Pond_Sprite* _p_sprite, int _x, int _y)
 {
 	Pond_Vector2Int pos = { _x, _y };
@@ -443,6 +578,11 @@ int Pond_SetSpriteRotationAnchor(Pond_Sprite* _p_sprite, int _x, int _y)
 	return 1;
 }
 
+/// <summary>
+/// Returns the size of passed Pond_Texture as Pond_Vector2Int.
+/// </summary>
+/// <param name="_p_texture">- the Pond_Texture</param>
+/// <returns>returns size of Pond_Texture as Pond_Vector2Int</returns>
 Pond_Vector2Int Pond_GetTextureSize(Pond_Texture* _p_texture) 
 {
 	SDL_Point size;

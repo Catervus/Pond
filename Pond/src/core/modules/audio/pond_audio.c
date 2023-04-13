@@ -47,7 +47,7 @@ int Pond_InitAudioSystem(int _soundchannelcount, int _channelvolume, int _musicc
 /// Loads a sound-file with given filetype and returns a Pond_Sound pointer.
 /// Returned pointer is allocated in memory, can be freed with Pond_FreeSound.
 /// </summary>
-/// <param name="_filepath">- the filepath </param>
+/// <param name="_filepath">- the filepath</param>
 /// <param name="_filetype">- the filetype of the sound to load (currently supports only WAV-files)</param>
 /// <returns>returns the pointer to allocated Pond_Sound</returns>
 Pond_Sound* Pond_LoadSound(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, int _volume)
