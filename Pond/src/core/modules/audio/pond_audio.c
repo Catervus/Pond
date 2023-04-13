@@ -608,5 +608,66 @@ POND_API int Pond_GetMusicCombinedVolume(Pond_Music* _p_music)
 
 	return volume;
 }
+
+/// <summary>
+/// Stops the current playing music. music cannot be resumed (use Pond_PauseMusic() to pause music).
+/// </summary>
+/// <returns>returns 1 if successful</returns>
+POND_API int Pond_StopMusic(void)
+{
+	Mix_HaltMusic();
+
+	return 1;
+}
+
+/// <summary>
+/// Pauses current playing music. music can be resumed with Pond_ResumeMusic().
+/// </summary>
+/// <returns>returns 1 if successful</returns>
+POND_API int Pond_PauseMusic(void)
+{
+	Mix_PauseMusic();
+
+	return 1;
+}
+
+/// <summary>
+/// Pauses current playing music. music can be resumed with Pond_ResumeMusic().
+/// </summary>
+/// <returns>returns 1 if successful, 0 if there is no paused music</returns>
+POND_API int Pond_ResumeMusic(void)
+{
+	if (!Mix_PlayingMusic())
+		return 0;
+
+	Mix_ResumeMusic();
+
+	return 1;
+}
+
+/// <summary>
+/// Checks if there is music playing.
+/// </summary>
+/// <returns>returns 1 if there is music playing, 0 if not</returns>
+POND_API int Pond_IsMusicPlaying(void)
+{
+	if (Mix_PlayingMusic())
+		return 1;
+
+	return 0;
+}
+
+/// <summary>
+/// Checks if there is music paused.
+/// </summary>
+/// <returns>returns 1 if there is music paused, 0 if not</returns>
+POND_API int Pond_IsMusicPaused(void)
+{
+	if (Mix_PausedMusic())
+		return 1;
+
+	return 0;
+}
+
 #pragma endregion
 

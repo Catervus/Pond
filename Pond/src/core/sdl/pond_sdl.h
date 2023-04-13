@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 int InitSDL(void);
-int OpenSDLWindow(int _screenheight, int _screenwidth);
+int OpenSDLWindow(int _screenheight, int _screenwidth, char* _title);
 
 typedef struct
 {

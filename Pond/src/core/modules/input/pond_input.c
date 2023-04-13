@@ -167,6 +167,10 @@ int GatherSystemInput(void)
 			break;
 
 		}
+		if (event.type == SDL_QUIT)
+			exit(1);
+
+
 		GetControllerButtonInputs();
 	}
 
