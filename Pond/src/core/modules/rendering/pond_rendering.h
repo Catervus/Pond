@@ -96,7 +96,7 @@ POND_API int Pond_DrawPixel(int _x, int _y, Pond_Colour _col);
 POND_API int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col);
 
 /// <summary>
-/// Renders a polygon by drawing lines between passes points. 
+/// Renders a polygon by drawing lines between passed points. 
 /// </summary>
 /// <param name="_points">- the points to be connected by lines</param>
 /// <param name="_arraysize">- the amounts of points</param>
@@ -119,7 +119,7 @@ POND_API int Pond_DrawRect(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col,
 /// <summary>
 /// Renders a rectangle by giving a coordinate, width and height values.
 /// </summary>
-/// <param name="_x">- x pos of the rectangle, corresponds to the top-left position of the rectangle</param>
+/// <param name="">- x pos of the rectangle, corresponds to the top-left position of the rectangle</param>
 /// <param name="_y">- y pos of the rectangle, corresponds to the top-left position of the rectangle</param>
 /// <param name="_w">- width of the rectangle</param>
 /// <param name="_h">- height of the rectangle</param>
@@ -135,7 +135,7 @@ POND_API int Pond_DrawRectByDimensions(int _x, int _y, int _w, int _h, Pond_Colo
 /// <param name="_y">- the y pos of the circle center</param>
 /// <param name="_radius">- the radius of the circle</param>
 /// <param name="_col">- the colour of the circle</param>
-/// <param name="_fill">- true or 1 if the rectangle should be filled, false or 0 if not</param>
+/// <param name="_fill">- true or 1 if the circle should be filled, false or 0 if not</param>
 /// <returns>returns 1 if successful</returns>
 POND_API int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, bool _fill);
 static int DrawCircleAlgorithm(int _x, int _y, int _radius);
@@ -206,9 +206,9 @@ POND_API int Pond_DrawSprite(Pond_Sprite* _tex, int _x, int _y, float _xscale, f
 /// Returned pointer is allocated in memory. (Can be freed with Pond_FreeTexture)
 /// Blendmode determines if texture should have a blur. (Pixel Art should have no blending)
 /// </summary>
-/// <param name="_filepath">- the filepath</param>
+/// <param name="_filepath">- the filepath of the texture</param>
 /// <param name="_blendmode">- the blendmode of the texture</param>
-/// <returns>returns the pointer to allocated Pond_Sound</returns>
+/// <returns>returns the pointer to allocated Pond_Texture</returns>
 POND_API Pond_Texture* Pond_LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _blendmode);
 static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _blendmode);
 

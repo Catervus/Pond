@@ -75,7 +75,6 @@ void Init(void)
 
 void Update(void)
 {
-
 	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_1))
 	{
 		Pond_PlaySound(p_demoSounds[0], 0);

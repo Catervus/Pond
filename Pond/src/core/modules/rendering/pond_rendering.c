@@ -103,7 +103,7 @@ int Pond_DrawLine(int _x1, int _y1, int _x2, int _y2, Pond_Colour _col)
 
 
 /// <summary>
-/// Renders a polygon by drawing lines between passes points. 
+/// Renders a polygon by drawing lines between passed points. 
 /// </summary>
 /// <param name="_points">- the points to be connected by lines</param>
 /// <param name="_arraysize">- the amounts of points</param>
@@ -193,7 +193,7 @@ int Pond_DrawRectByDimensions(int _x, int _y, int _w, int _h, Pond_Colour _col, 
 /// <param name="_y">- the y pos of the circle center</param>
 /// <param name="_radius">- the radius of the circle</param>
 /// <param name="_col">- the colour of the circle</param>
-/// <param name="_fill">- true or 1 if the rectangle should be filled, false or 0 if not</param>
+/// <param name="_fill">- true or 1 if the circle should be filled, false or 0 if not</param>
 /// <returns>returns 1 if successful</returns>
 int Pond_DrawCircle(int _x, int _y, int _radius, Pond_Colour _col, bool _fill)
 {
@@ -340,7 +340,7 @@ int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int
 	SDL_SetTextureAlphaMod(_tex->p_textureData, _colourtint.a);
 
 
-	SDL_RenderCopyEx(app.p_renderer, _tex->p_textureData, &portion, &rect, _rotationangle, NULL, NULL);
+	SDL_RenderCopyEx(app.p_renderer, _tex->p_textureData, &portion, &rect, _rotationangle, NULL, 0);
 }
 
 
@@ -427,7 +427,7 @@ static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _blendm
 /// </summary>
 /// <param name="_filepath">- the filepath</param>
 /// <param name="_blendmode">- the blendmode of the texture</param>
-/// <returns>returns the pointer to allocated Pond_Sound</returns>
+/// <returns>returns the pointer to allocated Pond_Texture</returns>
 Pond_Texture* Pond_LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _blendmode)
 {
 	SetTextureBlendMode(_blendmode);
