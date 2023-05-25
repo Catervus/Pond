@@ -28,7 +28,11 @@ int Pond_SetRenderClearColour(Pond_Colour _col)
 	return 1;
 }
 
-
+/// <summary>
+/// Not supported anymore.
+/// </summary>
+/// <param name="_rendermode"></param>
+/// <returns></returns>
 int Pond_SetTextureScaleQuality(int _rendermode)
 {
 	char* value = "0";
@@ -313,7 +317,7 @@ int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int _x, int 
 }
 
 /// <summary>
-/// Draws a portion of a texture at passed coordinates with passed scale and colour tint.
+/// Draws a portion of a texture at passed coordinates with passed scale, colour tint and rotation around anchor.
 /// The texture will be drawn with its top-left corner at passed coordinates.
 /// </summary>
 /// <param name="_tex">- the Pond_Texture to draw</param>
@@ -321,13 +325,17 @@ int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int _x, int 
 /// <param name="_y">- the y pos of the top side of the texture</param>
 /// <param name="_xscale">- the x scale to draw the texture at</param>
 /// <param name="_yscale">- the y scale to draw the texture at</param>
-/// <param name="_alpha">- the alpha value to draw the texture with. (Ranges 0-255)</param>
+/// <param name="_colourtint">- colour tint of the texture</param>
+/// <param name="_rotationangle">- rotation angle to draw</param>
+/// <param name="_rotationanchor">- anchor to rotate around as Pond_Vector2Int</param>
 /// <returns>returns 1 if successful</returns>
-int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, Pond_Colour _colourtint, int _rotationangle, Pond_Vector2Int _rotation)
+int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, Pond_Colour _colourtint, int _rotationangle, Pond_Vector2Int _rotationanchor)
 {
 	SDL_Rect portion = { _portion.x, _portion.y, _portion.w, _portion.h };
 
 	SDL_Rect rect;
+
+	SDL_Point anchor = { _rotationanchor.x, _rotationanchor.y };
 
 	rect.x = _x;
 	rect.y = _y;
@@ -340,7 +348,7 @@ int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int
 	SDL_SetTextureAlphaMod(_tex->p_textureData, _colourtint.a);
 
 
-	SDL_RenderCopyEx(app.p_renderer, _tex->p_textureData, &portion, &rect, _rotationangle, NULL, 0);
+	SDL_RenderCopyEx(app.p_renderer, _tex->p_textureData, &portion, &rect, _rotationangle, &anchor, 0);
 }
 
 
@@ -352,8 +360,8 @@ int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int
 /// <param name="_sprite">- the Pond_Sprite to draw</param>
 /// <param name="_x">- the x pos of the left side of the sprite</param>
 /// <param name="_y">- the y pos of the top side of the sprite</param>
-/// <param name="_xscale"></param>
-/// <param name="_yscale"></param>
+/// <param name="_xscale">- x-scale of the sprite</param>
+/// <param name="_yscale">- y-scale of the sprite</param>
 /// <returns>returns 1 if successful</returns>
 int Pond_DrawSprite(Pond_Sprite* _sprite, int _x, int _y, float _xscale, float _yscale)
 {
@@ -456,7 +464,7 @@ int Pond_FreeTexture(Pond_Texture* _p_texture)
 }
 
 /// <summary>
-/// Allocates a Pond_Sprite in memory and returns the pointer. (Can be freed with Pond_FreeTexture)
+/// Allocates a Pond_Sprite in memory and returns the pointer. (Can be freed with Pond_FreeSprite)
 /// Pond_Sprite has the passed texture as texture-data.
 /// </summary>
 /// <param name="_p_texture">- the texture the Pond_Sprite should have</param>
@@ -482,7 +490,7 @@ Pond_Sprite* Pond_InitSprite(Pond_Texture* _p_texture)
 /// <summary>
 /// Frees passed Pond_Sprite from memory.
 /// </summary>
-/// <param name="_p_texture">- the Pond_Sprite to free</param>
+/// <param name="_p_sprite">- the Pond_Sprite to free</param>
 /// <returns>returns 1 if successful</returns>
 int Pond_FreeSprite(Pond_Sprite* _p_sprite)
 {

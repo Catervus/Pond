@@ -176,7 +176,7 @@ POND_API int Pond_DrawTexture(Pond_Texture* _tex, int _x, int _y, float _xscale,
 POND_API int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, int _alpha);
 
 /// <summary>
-/// Draws a portion of a texture at passed coordinates with passed scale and colour tint.
+/// Draws a portion of a texture at passed coordinates with passed scale, colour tint and rotation around anchor.
 /// The texture will be drawn with its top-left corner at passed coordinates.
 /// </summary>
 /// <param name="_tex">- the Pond_Texture to draw</param>
@@ -184,9 +184,11 @@ POND_API int Pond_DrawTexturePortion(Pond_Texture* _tex, Pond_Rect _portion, int
 /// <param name="_y">- the y pos of the top side of the texture</param>
 /// <param name="_xscale">- the x scale to draw the texture at</param>
 /// <param name="_yscale">- the y scale to draw the texture at</param>
-/// <param name="_alpha">- the alpha value to draw the texture with. (Ranges 0-255)</param>
+/// <param name="_colourtint">- colour tint of the texture</param>
+/// <param name="_rotationangle">- rotation angle to draw</param>
+/// <param name="_rotationanchor">- anchor to rotate around as Pond_Vector2Int</param>
 /// <returns>returns 1 if successful</returns>
-POND_API int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, Pond_Colour _colourtint, int _rotationangle, Pond_Vector2Int _rotation);
+POND_API int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, int _x, int _y, float _xscale, float _yscale, Pond_Colour _colourtint, int _rotationangle, Pond_Vector2Int _rotationanchor);
 
 /// <summary>
 /// Draws a sprite at passed coordinates with passed scale.
@@ -196,8 +198,8 @@ POND_API int Pond_DrawTextureAdvanced(Pond_Texture* _tex, Pond_Rect _portion, in
 /// <param name="_sprite">- the Pond_Sprite to draw</param>
 /// <param name="_x">- the x pos of the left side of the sprite</param>
 /// <param name="_y">- the y pos of the top side of the sprite</param>
-/// <param name="_xscale"></param>
-/// <param name="_yscale"></param>
+/// <param name="_xscale">- x-scale of the sprite</param>
+/// <param name="_yscale">- y-scale of the sprite</param>
 /// <returns>returns 1 if successful</returns>
 POND_API int Pond_DrawSprite(Pond_Sprite* _tex, int _x, int _y, float _xscale, float _yscale);
 
@@ -219,12 +221,16 @@ static SDL_Texture* LoadTexture(char* _filepath, POND_TEXTURE_BLEND_MODE _blendm
 /// <returns>returns 1 if successful</returns>
 POND_API int Pond_FreeTexture(Pond_Texture* _p_texture);
 
-// TODO: comment
+/// <summary>
+/// Not supported anymore.
+/// </summary>
+/// <param name="_rendermode"></param>
+/// <returns></returns>
 POND_API int Pond_SetTextureScaleQuality(int _rendermode);
 static int SetTextureBlendMode(POND_TEXTURE_BLEND_MODE _quality);
 
 /// <summary>
-/// Allocates a Pond_Sprite in memory and returns the pointer. (Can be freed with Pond_FreeTexture)
+/// Allocates a Pond_Sprite in memory and returns the pointer. (Can be freed with Pond_FreeSprite)
 /// Pond_Sprite has the passed texture as texture-data.
 /// </summary>
 /// <param name="_p_texture">- the texture the Pond_Sprite should have</param>
@@ -236,7 +242,7 @@ POND_API Pond_Sprite* Pond_InitSprite(Pond_Texture* _p_texture);
 /// <summary>
 /// Frees passed Pond_Sprite from memory.
 /// </summary>
-/// <param name="_p_texture">- the Pond_Sprite to free</param>
+/// <param name="_p_sprite">- the Pond_Sprite to free</param>
 /// <returns>returns 1 if successful</returns>
 POND_API int Pond_FreeSprite(Pond_Sprite* _p_sprite);
 

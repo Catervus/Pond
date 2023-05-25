@@ -75,71 +75,14 @@ void Init(void)
 
 void Update(void)
 {
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_1))
-	{
-		Pond_PlaySound(p_demoSounds[0], 0);
-	}
-
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_2))
-	{
-		Pond_PlaySound(p_demoSounds[1], 0);
-	}
-
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_3))
-	{
-		Pond_PlaySound(p_demoSounds[2], 1);
-	}
-
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_4))
-	{
-		Pond_PlaySound(p_demoSounds[3], 1);
-	}
-
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_5))
-	{
-		Pond_PlayMusic(p_demoMusic[0]);
-	}
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_6))
-	{
-		Pond_PlayMusic(p_demoMusic[1]);
-	}
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_7))
-	{
-		Pond_PlayMusic(p_demoMusic[2]);
-	}
-
-	if (Pond_GetKeyDown(POND_KEYBOARD_KEY_SPACE))
-	{
-		Pond_StopAllChannels();
-		Pond_StopMusic();
-	}
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_P))
-	{
-		Pond_PauseMusic();
-	}
-	else if (Pond_GetKeyDown(POND_KEYBOARD_KEY_R))
-	{
-		if (Pond_ResumeMusic() == false)
-			printf("NO MUSIC!\n");
-	}
-
-
 
 
 }
 
 void Draw(void)
 {
-	Pond_DrawText("1 - Play Sound 1 (in Channel 0)", 1, 10, white, 1, 1, p_font);
-	Pond_DrawText("2 - Play Sound 2 (in Channel 0)", 1, 20, white, 1, 1, p_font);
-	Pond_DrawText("3 - Play Sound 3 (in Channel 1)", 1, 30, white, 1, 1, p_font);
-	Pond_DrawText("4 - Play Sound 4 (in Channel 1)", 1, 40, white, 1, 1, p_font);
-	Pond_DrawText("5 - Play Music 1", 1, 50, white, 1, 1, p_font);
-	Pond_DrawText("6 - Play Music 2", 1, 60, white, 1, 1, p_font);
-	Pond_DrawText("7 - Play Music 3", 1, 70, white, 1, 1, p_font);
-
-	Pond_DrawText("SPACE - Stop all Sounds and Music", 1, 80, white, 1, 1, p_font);
-
+	Pond_DrawTexture(p_texture2, 5, 5, 10, 10, 255);
+	Pond_DrawTexture(p_texture3, 100, 100, 10, 10, 255);
 
 }
 

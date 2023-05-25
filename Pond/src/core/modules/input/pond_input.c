@@ -343,10 +343,10 @@ bool Pond_GetKeyUp(Pond_KeyboardKey _key)
 }
 
 /// <summary>
-/// Checks if passed Mouse Button is currently pressed or not.
+/// Checks if passed mouse button is currently pressed or not.
 /// </summary>
-/// <param name="_key">- the Mouse Buttons to check</param>
-/// <returns> true if Button is pressed, false if not</returns>
+/// <param name="_button">- the mouse button to check</param>
+/// <returns> true if button is pressed, false if not</returns>
 bool Pond_GetMouseButton(Pond_MouseButton _button)
 {
 	if (mouseButtonInputs[_button])
@@ -356,11 +356,11 @@ bool Pond_GetMouseButton(Pond_MouseButton _button)
 }
 
 /// <summary>
-/// Checks if passed Mouse Button has been pressed down.
+/// Checks if passed mouse button has been pressed down.
 /// Does not check for continues pressing down.
 /// </summary>
-/// <param name="_key">- the Mouse Button to check</param>
-/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
+/// <param name="_button">- the mouse button to check</param>
+/// <returns> true if button is pressed down, false if not or when continuously pressing down</returns>
 bool Pond_GetMouseButtonDown(Pond_MouseButton _button)
 {
 	if (mouseButtonInputs[_button] && !lastFrameMouseButtonInputs[_button])
@@ -370,10 +370,10 @@ bool Pond_GetMouseButtonDown(Pond_MouseButton _button)
 }
 
 /// <summary>
-/// Checks if passed Mouse Button has been released.
+/// Checks if passed mouse button has been released.
 /// </summary>
-/// <param name="_key">- the Mouse Button to check</param>
-/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
+/// <param name="_button">- the mouse button to check</param>
+/// <returns> true if button has been released, false if not or if it has not been pressed</returns>
 bool Pond_GetMouseButtonUp(Pond_MouseButton _button)
 {
 	if (!mouseButtonInputs[_button] && lastFrameMouseButtonInputs[_button])
@@ -383,21 +383,21 @@ bool Pond_GetMouseButtonUp(Pond_MouseButton _button)
 }
 
 /// <summary>
-/// Checks if passed Controller Button is currently pressed or not.
+/// Checks if passed controller button is currently pressed or not.
 /// </summary>
-/// <param name="_key">- the Controller Button to check</param>
-/// <returns> true if Button is pressed, false if not</returns>
+/// <param name="_button">- the controller button to check</param>
+/// <returns> true if button is pressed, false if not</returns>
 bool Pond_GetControllerButton(Pond_ControllerButton _button)
 {
 	return controllerButtonInputs[_button];
 }
 
 /// <summary>
-/// Checks if passed Controller Button has been pressed down.
+/// Checks if passed controller button has been pressed down.
 /// Does not check for continues pressing down.
 /// </summary>
-/// <param name="_key">- the Controller Button to check</param>
-/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
+/// <param name="_button">- the controller button to check</param>
+/// <returns> true if button is pressed down, false if not or when continuously pressing down</returns>
 bool Pond_GetControllerButtonDown(Pond_ControllerButton _button)
 {
 	if (controllerButtonInputs[_button] && !lastFrameControllerButtonInputs[_button])
@@ -407,10 +407,10 @@ bool Pond_GetControllerButtonDown(Pond_ControllerButton _button)
 }
 
 /// <summary>
-/// Checks if passed Controller Button has been released.
+/// Checks if passed controller button has been released.
 /// </summary>
-/// <param name="_key">- the Controller Button to check</param>
-/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
+/// <param name="_button">- the controller button to check</param>
+/// <returns> true if button has been released, false if not or if it has not been pressed</returns>
 bool Pond_GetControllerButtonUp(Pond_ControllerButton _button)
 {
 	if (!controllerButtonInputs[_button] && lastFrameControllerButtonInputs[_button])
@@ -423,9 +423,9 @@ bool Pond_GetControllerButtonUp(Pond_ControllerButton _button)
 #pragma region Mouse
 
 /// <summary>
-/// Gets the current Mouse Position relative to the Game Window.
+/// Gets the current mouse position relative to the game window.
 /// </summary>
-/// <returns>returns Mouse Position as Pond_Vector2Int</returns>
+/// <returns>returns mouse position as Pond_Vector2Int</returns>
 Pond_Vector2Int Pond_GetMousePosition(void)
 {
 	SDL_GetMouseState(&mousePosition.x, &mousePosition.y);
@@ -433,10 +433,10 @@ Pond_Vector2Int Pond_GetMousePosition(void)
 }
 
 /// <summary>
-/// Gets the current Mouse Position relative to the Desktop's top-left corner.
+/// Gets the current mouse position relative to the desktop's top-left corner.
 /// (This function is less efficient than Pond_GetMousePosition)
 /// </summary>
-/// <returns> Mouse Position as Pond_Vector2Int</returns>
+/// <returns> mouse position as Pond_Vector2Int</returns>
 Pond_Vector2Int Pond_GetMousePositionDesktop(void)
 {
 	Pond_Vector2Int pos = { 0, 0 };

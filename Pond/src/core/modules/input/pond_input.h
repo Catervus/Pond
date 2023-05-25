@@ -369,85 +369,86 @@ int SaveInputs(void);
 #pragma region Input_Presses
 
 /// <summary>
-/// Checks if passed Keyboard Key is currently pressed or not.
+/// Checks if passed keyboard key is currently pressed or not.
 /// </summary>
-/// <param name="_key">- the Keyboard Key to check</param>
-/// <returns> true if Key is pressed, false if not</returns>
+/// <param name="_key">- the keyboard key to check</param>
+/// <returns> true if key is pressed, false if not</returns>
 POND_API bool Pond_GetKey(Pond_KeyboardKey _key);
 
 /// <summary>
-/// Checks if passed Keyboard Key has been pressed down.
+/// Checks if passed keyboard key has been pressed down. 
 /// Does not check for continues pressing down.
 /// </summary>
-/// <param name="_key">- the Keyboard Key to check</param>
-/// <returns> true if Key is pressed down, false if not or when continuously pressing down</returns>
+/// <param name="_key">- the keyboard key to check</param>
+/// <returns> true if key is pressed down, false if not or when continuously pressing down</returns>
 POND_API bool Pond_GetKeyDown(Pond_KeyboardKey _key);
 
 /// <summary>
-/// Checks if passed Keyboard Key has been released.
+/// Checks if passed keyboard key has been released.
 /// </summary>
-/// <param name="_key">- the Keyboard Key to check</param>
-/// <returns> true if Key has been released, false if not or if it has not been pressed</returns>
+/// <param name="_key">- the keyboard key to check</param>
+/// <returns> true if key has been released, false if not or if it has not been pressed</returns>
 POND_API bool Pond_GetKeyUp(Pond_KeyboardKey _key);
 
 /// <summary>
-/// Checks if passed Mouse Button is currently pressed or not.
+/// Checks if passed mouse button is currently pressed or not.
+/// Does not check for continues pressing down.
 /// </summary>
-/// <param name="_key">- the Mouse Buttons to check</param>
-/// <returns> true if Button is pressed, false if not</returns>
+/// <param name="_button">- the mouse button to check</param>
+/// <returns> true if button is pressed, false if not</returns>
 POND_API bool Pond_GetMouseButton(Pond_MouseButton _button);
 
 /// <summary>
-/// Checks if passed Mouse Button has been pressed down.
+/// Checks if passed mouse button has been pressed down.
 /// Does not check for continues pressing down.
 /// </summary>
-/// <param name="_key">- the Mouse Button to check</param>
-/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
+/// <param name="_button">- the mouse button to check</param>
+/// <returns> true if button is pressed down, false if not or when continuously pressing down</returns>
 POND_API bool Pond_GetMouseButtonDown(Pond_MouseButton _button);
 
 /// <summary>
-/// Checks if passed Mouse Button has been released.
+/// Checks if passed mouse button has been released.
 /// </summary>
-/// <param name="_key">- the Mouse Button to check</param>
-/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
+/// <param name="_button">- the mouse button to check</param>
+/// <returns> true if button has been released, false if not or if it has not been pressed</returns>
 POND_API bool Pond_GetMouseButtonUp(Pond_MouseButton _button);
 
 /// <summary>
-/// Checks if passed Controller Button is currently pressed or not.
+/// Checks if passed controller button is currently pressed or not.
 /// </summary>
-/// <param name="_key">- the Controller Button to check</param>
-/// <returns> true if Button is pressed, false if not</returns>
+/// <param name="_button">- the controller button to check</param>
+/// <returns> true if button is pressed, false if not</returns>
 POND_API bool Pond_GetControllerButton(Pond_ControllerButton _button);
 
 /// <summary>
-/// Checks if passed Controller Button has been pressed down.
+/// Checks if passed controller button has been pressed down.
 /// Does not check for continues pressing down.
 /// </summary>
-/// <param name="_key">- the Controller Button to check</param>
-/// <returns> true if Button is pressed down, false if not or when continuously pressing down</returns>
+/// <param name="_button">- the controller button to check</param>
+/// <returns> true if button is pressed down, false if not or when continuously pressing down</returns>
 POND_API bool Pond_GetControllerButtonDown(Pond_ControllerButton _button);
 
 /// <summary>
-/// Checks if passed Controller Button has been released.
+/// Checks if passed controller button has been released.
 /// </summary>
-/// <param name="_key">- the Controller Button to check</param>
-/// <returns> true if Button has been released, false if not or if it has not been pressed</returns>
+/// <param name="_button">- the controller button to check</param>
+/// <returns> true if button has been released, false if not or if it has not been pressed</returns>
 POND_API bool Pond_GetControllerButtonUp(Pond_ControllerButton _button);
 #pragma endregion
 
 #pragma region Mouse
 
 /// <summary>
-/// Gets the current Mouse Position relative to the Game Window's top-left corner.
+/// Gets the current mouse position relative to the game window's top-left corner.
 /// </summary>
-/// <returns> Mouse Position as Pond_Vector2Int</returns>
+/// <returns> mouse position as Pond_Vector2Int</returns>
 POND_API Pond_Vector2Int Pond_GetMousePosition(void);
 
 /// <summary>
-/// Gets the current Mouse Position relative to the Desktop's top-left corner.
+/// Gets the current mouse position relative to the desktop's top-left corner.
 /// (This function is less efficient than Pond_GetMousePosition)
 /// </summary>
-/// <returns> Mouse Position as Pond_Vector2Int</returns>
+/// <returns> mouse position as Pond_Vector2Int</returns>
 POND_API Pond_Vector2Int Pond_GetMousePositionDesktop(void);
 
 /// <summary>
