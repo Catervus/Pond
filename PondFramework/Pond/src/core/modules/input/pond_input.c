@@ -43,10 +43,8 @@ int InitInputSystem(void)
 		lastFrameControllerButtonInputs[i] = 0;
 	}
 
-	printf("POND INFO: %i joysticks were found:\n", SDL_NumJoysticks());
 	p_joystick = SDL_JoystickOpen(0);
 	SDL_JoystickEventState(SDL_ENABLE);
-
 
 	p_controller = SDL_GameControllerOpen(0);
 
