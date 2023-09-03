@@ -25,11 +25,11 @@ int InitFontSystem(void);
 int ShutFontSystem(void);
 
 /// <summary>
-/// Loads the passed font file, allocates memory for a Pond_Fond variable and returns pointer to it.
+/// Loads the passed font file, allocates memory for a Pond_Fond and returns pointer to it.
 /// Free Pond_Fond pointer with Pond_DeleteFont.
 /// </summary>
 /// <param name="_filename">- filepath of the font file to load</param>
-/// <returns> pointer to a Pond_Font variable</returns>
+/// <returns> pointer to a Pond_Font</returns>
 POND_API Pond_Font* Pond_LoadFont(char* _filepath);
 
 /// <summary>
@@ -37,7 +37,7 @@ POND_API Pond_Font* Pond_LoadFont(char* _filepath);
 /// Afterwards pointer pointing to that memory can be nulled.
 /// This function should to be used over using free() manually in order to free all allocated memory properly.
 /// </summary>
-/// <param name="_p_font"></param>
+/// <param name="_p_font">- the Pond_Font to delete</param>
 /// <returns> returns 1 if successful</returns>
 POND_API int Pond_DeleteFont(Pond_Font* _p_font);
 

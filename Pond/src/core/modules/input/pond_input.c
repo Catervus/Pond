@@ -240,33 +240,33 @@ int GetMouseInputs(void)
 #pragma region Joystick
 
 /// <summary>
-/// Gets the Angle of Joystick with passed index in degrees where 0° is up, 90° right, 180° down and 270° left.
+/// Gets the angle of joystick with passed index in degrees where 0° is up, 90° right, 180° down and 270° left.
 /// </summary>
-/// <param name="">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
-/// <returns>angle of Joystick in degrees</returns>
+/// <param name="_index">- the index of the joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns>angle of joystick in degrees</returns>
 double Pond_GetJoyStickAngle(Pond_JoystickIndex _index)
 {
 	return joystickAngles[_index];
 }
 
 /// <summary>
-/// Gets the current position of Joystick with passed index as a Pond_Vector2Float. 
+/// Gets the current position of joystick with passed index as a Pond_Vector2Float. 
 /// Returns for example {0.5, 0.75}.
 /// </summary>
-/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
-/// <returns>the current joystick axis position</returns>
+/// <param name="_index">- the index of the joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns> the current joystick's axis position</returns>
 Pond_Vector2Float Pond_GetJoystickAxisVector(Pond_JoystickIndex _index)
 {
 	return joystickInputAxes[_index];
 }
 
 /// <summary>
-/// Gets the current input (-1 to 1) on passed axis of Joystick with passed index.
+/// Gets the current input (-1 to 1) on passed axis of joystick with passed index.
 /// </summary>
 /// <param name="_axis">- the axis to get the input from (POND_JOYSTICK_AXIS_X or POND_JOYSTICK_AXIS_Y)</param>
-/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN for left Joystick or POND_JOYSTICK_INDEX_SECONDARY for right Joystick)</param>
+/// <param name="_index">- the index of the joystick (POND_JOYSTICK_INDEX_MAIN for left Joystick or POND_JOYSTICK_INDEX_SECONDARY for right Joystick)</param>
 /// <returns> the input of joystick on axis between -1 and 1</returns>
-float Pond_GetJoystickAxis(Pond_JoystickAxis _axis, Pond_JoystickIndex _index)
+float Pond_GetJoystickAxisValue(Pond_JoystickAxis _axis, Pond_JoystickIndex _index)
 {
 	if (_axis == POND_JOYSTICK_AXIS_X)
 		return joystickInputAxes[_index].x;
@@ -277,9 +277,9 @@ float Pond_GetJoystickAxis(Pond_JoystickAxis _axis, Pond_JoystickIndex _index)
 }
 
 /// <summary>
-/// Sets the current Joystick Deadzone Value. Any Input less than the Deadzone Value is not registered. Min for Deadzone Value is 0, Max is 32767 (POND_JOYSTICK_DEADZONE_MAX).
+/// Sets the current joystick deadzone value. Any input less than the deadzone value is not registered. Min for deadzone value is 0, max is 32767 (POND_JOYSTICK_DEADZONE_MAX).
 /// </summary>
-/// <param name="_value">- value to set Deadzone Value to</param>
+/// <param name="_value">- value to set deadzone value to</param>
 /// <returns> 1 if successful</returns>
 int Pond_SetJoystickDeadzoneValue(unsigned int _value)
 {
@@ -291,9 +291,9 @@ int Pond_SetJoystickDeadzoneValue(unsigned int _value)
 }
 
 /// <summary>
-/// Gets the current Joystick Deadzone Value.
+/// Gets the current joystick deadzone value.
 /// </summary>
-/// <returns> current Joystick Deadzone Value</returns>
+/// <returns> current joystick deadzone value</returns>
 unsigned int Pond_GetJoystickDeadzoneValue(void)
 {
 	return joystickDeadzone;
@@ -445,7 +445,7 @@ Pond_Vector2Int Pond_GetMousePositionDesktop(void)
 }
 
 /// <summary>
-/// Sets Mouse Position to passed coordinates relative to the Game Window.
+/// Sets mouse position to passed coordinates relative to the game window.
 /// </summary>
 /// <param name="_x">- the x coordinate to set the mouse position to</param>
 /// <param name="_y">- the y coordinate to set the mouse position to</param>
@@ -458,7 +458,7 @@ int Pond_SetMousePosition(int _x, int _y)
 }
 
 /// <summary>
-/// Sets Mouse Position to passed coordinates relative to the current Desktop.
+/// Sets mouse position to passed coordinates relative to the current desktop.
 /// </summary>
 /// <param name="_x">- the x coordinate to set the mouse position to</param>
 /// <param name="_y">- the y coordinate to set the mouse position to</param>
@@ -471,14 +471,14 @@ int Pond_SetMousePositionDesktop(int _x, int _y)
 }
 
 /// <summary>
-/// Toggles the Cursor by passed value.
-/// If true is passed the Cursor is shown, if false is passed the Cursor gets hidden.
+/// Toggles the cursor by passed value.
+/// If passed true the cursor is shown, if false the cursor is hidden.
 /// </summary>
-/// <param name="">- the boolean value deciding to set the cursor on or off</param>
+/// <param name="_toggle">- the boolean value deciding to set the cursor on or off</param>
 /// <returns>1 if successful</returns>
 int Pond_ToggleCursor(bool _toggle)
 {
-	if (_toggle > 0 || _toggle > 1)
+	if (_toggle > 0)
 		_toggle = 1;
 	mouseToggleState = _toggle;
 
@@ -488,7 +488,7 @@ int Pond_ToggleCursor(bool _toggle)
 }
 
 /// <summary>
-/// Gets the Cursors Toggle State.
+/// Gets the cursor's toggle state.
 /// True means the cursor is showing, false means the cursor is hiding.
 /// The default is true.
 /// </summary>
@@ -504,23 +504,23 @@ bool Pond_GetCursorToggleState(void)
 #pragma region Controller
 
 /// <summary>
-/// Returns the number of Controller registered.
+/// Returns the number of controller registered.
 /// </summary>
-/// <returns> number of registered Controllers</returns>
+/// <returns> number of registered controllers</returns>
 POND_API int Pond_GetNumberOfControllers(void) 
 {
 	return SDL_NumJoysticks();
 }
 
 /// <summary>
-/// When called gives feedback via Controller Rumble.
+/// When called gives feedback via controller rumble.
 /// Any successful call to this function will stop the current rumble effect.
 /// Calling this function with 0 intensity stops the current rumble effect.
 /// </summary>
 /// <param name="_msduration">- the amount of time to rumble in Milliseconds (ms), min is 0 and max is 500</param>
 /// <param name="_lowfrequenceintensity">- the intensity of the low frequence rumble, min is 0 and max is 100</param>
 /// <param name="_highfrequenceintensity">- the intensity of the high frequence rumble, min is 0 and max is 100</param>
-/// <returns>returns 1 if successful, 0 if not</returns>
+/// <returns> 1 if successful, 0 if not</returns>
 int Pond_ControllerRumble(int _msduration, float _lowfrequenceintensity, int _highfrequenceintensity)
 {
 	if (_msduration > 500)

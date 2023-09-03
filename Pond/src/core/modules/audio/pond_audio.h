@@ -34,7 +34,7 @@ typedef enum POND_AUDIO_FILE_TYPE
 #pragma region Sound
 
 /// <summary>
-/// Initialises the Pond-Audio System.
+/// Initialises the Pond Audio-System.
 /// </summary>
 /// <param name="_soundchannelcount">- amount of channels to open, can be changed later (max defined with POND_SOUND_CHANNELS_MAX)</param>
 /// <param name="_channelvolume">- default volume for all soundchannels (range is 0-128), can be changed later</param>
@@ -44,10 +44,10 @@ POND_API int Pond_InitAudioSystem(int _numberofchannels, int _channelvolume, int
 
 /// <summary>
 /// Loads a sound-file with given filetype and returns a Pond_Sound pointer.
-/// Returned pointer is allocated in memory, can be freed with Pond_FreeSound.
+/// Returned pointer is allocated in memory, and should be freed with Pond_FreeSound.
 /// </summary>
-/// <param name="_filepath">- the filepath</param>
-/// <param name="_filetype">- the filetype of the sound to load (currently supports only WAV-files)</param>
+/// <param name="_filepath">- the filepath of the sound file to load</param>
+/// <param name="_filetype">- the filetype of the sound to load (currently supports only WAV- and OGG-files)</param>
 /// <returns>returns the pointer to allocated Pond_Sound</returns>
 POND_API Pond_Sound* Pond_LoadSound(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, int _volume);
 
@@ -89,7 +89,7 @@ POND_API int Pond_SetSoundVolume(Pond_Sound* _p_sound, int _volume);
 /// <summary>
 /// Returns the volume of the passed sound.
 /// </summary>
-/// <param name="_p_sound">- the sound to get the volume from</param>
+/// <param name="_p_sound">- the sound to get the volume of</param>
 /// <returns>returns the volume of the sound, returns -1 if an error occurs</returns>
 POND_API int Pond_GetSoundVolume(Pond_Sound* _p_sound);
 
@@ -122,7 +122,7 @@ POND_API int Pond_GetChannelVolume(int _soundchannel);
 /// Increases channel's volume if a positive value gets passed and decreases it if a negative value is passed.
 /// Volume is clamped between 0 and 128.
 /// </summary>
-/// <param name="_p_sound">- the channel to change the volume of</param>
+/// <param name="_soundchannel">- the channel to change the volume of</param>
 /// <param name="_value">- the value by which amount to change the volume</param>
 /// <returns>returns 1 if successful, 0 if not (is the passed index in range of channel count?)</returns>
 POND_API int Pond_ChangeChannelVolume(int _soundchannel, int _value);
@@ -227,7 +227,7 @@ POND_API int Pond_TerminateAllChannels(void);
 /// <param name="_filepath">- the filepath </param>
 /// <param name="_filetype">- the filetype of the sound to load (currently supports only WAV-files)</param>
 /// /// <param name="_volume">- the volume of the loaded music (can be changed later)</param>
-/// /// <param name="_loop">- if the music should loop or not (can be changed later</param>
+/// /// <param name="_loop">- if the music should loop or not (can be changed later)</param>
 /// <returns>returns the pointer to allocated Pond_Music</returns>
 POND_API Pond_Music* Pond_LoadMusic(char* _filepath, POND_AUDIO_FILE_TYPE _filetype, int _volume, bool _loop);
 

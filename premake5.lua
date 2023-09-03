@@ -130,7 +130,7 @@ project "Sandbox"
 			--("{COPY} stuff") --  .. outputdir .. "/Sandbox"
 			--("{COPY} Stuff/Stuff.txt ../Stuff2")
 
-			("{COPY} assets/ $(OutDir)/assets"),
+			("{COPY} assets/$(OutDir)/assets"),
 
 			("{COPY} ../dependencies/SDL2/lib/x64/SDL2.dll $(OutDir)"),
 
@@ -151,6 +151,7 @@ project "Sandbox"
 	libdirs
 	{
 		--"Pond/vendor/SDL2/Binaries/Debug-windows-x86_64",
+		"dependencies/Pond/lib"
 		"dependencies/SDL2/lib/x64",
 		"dependencies/SDL2_image/lib/x64",
 		"dependencies/SDL2_mixer/lib/x64",

@@ -1,6 +1,6 @@
 #include "pond_window.h"
 
-static Pond_WindowMode windowMode; // current window mode
+static Pond_WindowMode windowMode = POND_WINDOW_MODE_WINDOWED; // default window mode
 
 #pragma region WINDOW_SIZE
 
@@ -33,7 +33,7 @@ Pond_Vector2Int Pond_GetWindowSize(void)
 /// <summary>
 /// Sets if the window should be resizable or not.
 /// </summary>
-/// <param name="_flag">- true to make window rezisable, false to make window NOT rezisable</param>
+/// <param name="_flag">- true to make window resizable, false to make window NOT resizable</param>
 /// <returns> 1 if successful</returns>
 int Pond_SetWindowResizable(bool _flag)
 {
@@ -47,7 +47,7 @@ int Pond_SetWindowResizable(bool _flag)
 #pragma region WINDOW_MODE
 
 /// <summary>
-/// Sets the window mode to passed mode. (POND_WINDOW_MODE_WINDOWED, POND_WINDOW_MODE_FULLSCREEN or POND_WINDOW_MODE_FULLSCREEN_WINDOWED
+/// Sets the window mode to passed mode. (POND_WINDOW_MODE_WINDOWED, POND_WINDOW_MODE_FULLSCREEN or POND_WINDOW_MODE_FULLSCREEN_WINDOWED)
 /// </summary>
 /// <param name="_windowmode">- mode to set window mode to</param>
 /// <returns> 1 if successful, 0 if not</returns>
@@ -67,11 +67,14 @@ int Pond_SetWindowMode(Pond_WindowMode _windowmode)
 			result = SDL_SetWindowFullscreen(app.p_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 			break;
 	}
-
-	return result == 0 ? 1 : 0; // convertint SDL's return System into Pond's, in SDL 0 is success and negative value a failure
+	windowMode = _windowmode;
+	return result == 0 ? 1 : 0; // convert SDL's return System into Pond's, in SDL 0 is success and negative value a failure
 }
 
-// TODO: Decide how to do this
+/// <summary>
+/// Returns current window mode. The default is POND_WINDOW_MODE_WINDOWED.
+/// </summary>
+/// <returns> Window mode as Pond_WindowMode</returns>
 Pond_WindowMode Pond_GetWindowMode(void)
 {
 	return windowMode;
@@ -80,7 +83,7 @@ Pond_WindowMode Pond_GetWindowMode(void)
 /// <summary>
 /// Minimizes the window.
 /// </summary>
-/// <returns>1 if successful</returns>
+/// <returns> 1 if successful</returns>
 int Pond_MinimizeWindow(void)
 {
 	SDL_MinimizeWindow(app.p_window);
@@ -101,7 +104,7 @@ int Pond_MaximizeWindow(void)
 #pragma region WINDOW_POSITION
 
 /// <summary>
-/// Sets the window's position on Screen to passed values.
+/// Sets the window's position on screen to passed values.
 /// Bounds of possible position are the combined bounds of all screens.
 /// </summary>
 /// <param name="_x">- the x pos to set the window's position to</param>
@@ -140,7 +143,7 @@ Pond_Vector2Int Pond_GetWindowPos(void)
 #pragma region WINDOW_MISC
 
 /// <summary>
-/// Sets the window title to passed char-array.
+/// Sets the window title to passed char pointer (array).
 /// </summary>
 /// <param name="_title">- title to set the window title to</param>
 /// <returns> 1 if sucessful</returns>

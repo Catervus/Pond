@@ -17,29 +17,6 @@
 
 typedef enum Pond_KeyboardKey
 {
-	/*POND_INPUT_KEY_Q = 0,
-	POND_INPUT_KEY_W,
-	POND_INPUT_KEY_E,
-	POND_INPUT_KEY_R,
-	POND_INPUT_KEY_T,
-	POND_INPUT_KEY_Z,
-	POND_INPUT_KEY_U,
-	POND_INPUT_KEY_I,
-	POND_INPUT_KEY_O,
-	POND_INPUT_KEY_P,
-	POND_INPUT_KEY_Ü,
-
-	POND_INPUT_KEY_A,
-	POND_INPUT_KEY_S,
-	POND_INPUT_KEY_D,
-	POND_INPUT_KEY_F,
-	POND_INPUT_KEY_G,
-	POND_INPUT_KEY_H,
-	POND_INPUT_KEY_J,
-	POND_INPUT_KEY_K,
-	POND_INPUT_KEY_L,
-	POND_INPUT_KEY_Ö,
-	POND_INPUT_KEY_Ä,*/
 	POND_KEYBOARD_KEY_UNKNOWN_0 = 0,
 	POND_KEYBOARD_KEY_UNKNOWN_1 = 1,
 	POND_KEYBOARD_KEY_UNKNOWN_2 = 2,
@@ -452,7 +429,7 @@ POND_API Pond_Vector2Int Pond_GetMousePosition(void);
 POND_API Pond_Vector2Int Pond_GetMousePositionDesktop(void);
 
 /// <summary>
-/// Sets Mouse Position to passed coordinates relative to the Game Window.
+/// Sets mouse position to passed coordinates relative to the game window.
 /// </summary>
 /// <param name="_x">- the x coordinate to set the mouse position to</param>
 /// <param name="_y">- the y coordinate to set the mouse position to</param>
@@ -460,7 +437,7 @@ POND_API Pond_Vector2Int Pond_GetMousePositionDesktop(void);
 POND_API int Pond_SetMousePosition(int _x, int _y);
 
 /// <summary>
-/// Sets Mouse Position to passed coordinates relative to the current Desktop.
+/// Sets mouse position to passed coordinates relative to the current desktop.
 /// </summary>
 /// <param name="_x">- the x coordinate to set the mouse position to</param>
 /// <param name="_y">- the y coordinate to set the mouse position to</param>
@@ -469,19 +446,19 @@ POND_API int Pond_SetMousePositionDesktop(int _x, int _y);
 
 
 /// <summary>
-/// Toggles the Cursor.
-/// If true is passed the Cursor is shown, if false is passed the Cursor gets hidden.
+/// Toggles the cursor by passed value.
+/// If passed true the cursor is shown, if false the cursor is hidden.
 /// </summary>
-/// <param name="">- the boolean value deciding to set the cursor on or off</param>
+/// <param name="_toggle">- the boolean value deciding to set the cursor on or off</param>
 /// <returns>1 if successful</returns>
 POND_API int Pond_ToggleCursor(bool _toggle);
 
 /// <summary>
-/// Gets the Cursors Toggle State.
+/// Gets the cursor's toggle state.
 /// True means the cursor is showing, false means the cursor is hiding.
 /// The default is true.
 /// </summary>
-/// <returns>if cursor is on or off</returns>
+/// <returns> if cursor is on or off</returns>
 POND_API bool Pond_GetCursorToggleState(void);
 
 #pragma endregion
@@ -489,39 +466,39 @@ POND_API bool Pond_GetCursorToggleState(void);
 #pragma region Joystick
 
 /// <summary>
-/// Gets the Angle of Joystick with passed index in degrees where 0° is up, 90° right, 180° down and 270° left.
+/// Gets the angle of joystick with passed index in degrees where 0° is up, 90° right, 180° down and 270° left.
 /// </summary>
-/// <param name="">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
-/// <returns>angle of Joystick in degrees</returns>
+/// <param name="_index">- the index of the joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns> angle of joystick in degrees</returns>
 POND_API double Pond_GetJoyStickAngle(Pond_JoystickIndex _index);
 
 /// <summary>
-/// Gets the current position of Joystick with passed index as a Pond_Vector2Float. 
+/// Gets the current position of joystick with passed index as a Pond_Vector2Float. 
 /// Returns for example {0.5, 0.75}.
 /// </summary>
-/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
-/// <returns> the current joystick axis position</returns>
+/// <param name="_index">- the index of the joystick (POND_JOYSTICK_INDEX_MAIN or POND_JOYSTICK_INDEX_SECONDARY)</param>
+/// <returns> the current joystick's axis position</returns>
 POND_API Pond_Vector2Float Pond_GetJoystickAxisVector(Pond_JoystickIndex _index);
 
 /// <summary>
-/// Gets the current input (-1 to 1) on passed axis of Joystick with passed index.
+/// Gets the current input (-1 to 1) on passed axis of joystick with passed index.
 /// </summary>
 /// <param name="_axis">- the axis to get the input from (POND_JOYSTICK_AXIS_X or POND_JOYSTICK_AXIS_Y)</param>
-/// <param name="_index">- the index of the Joystick (POND_JOYSTICK_INDEX_MAIN for left Joystick or POND_JOYSTICK_INDEX_SECONDARY for right Joystick)</param>
+/// <param name="_index">- the index of the joystick (POND_JOYSTICK_INDEX_MAIN for left Joystick or POND_JOYSTICK_INDEX_SECONDARY for right Joystick)</param>
 /// <returns> the input of joystick on axis between -1 and 1</returns>
-POND_API float Pond_GetJoystickAxis(Pond_JoystickAxis _axis, Pond_JoystickIndex _index);
+POND_API float Pond_GetJoystickAxisValue(Pond_JoystickAxis _axis, Pond_JoystickIndex _index);
 
 /// <summary>
-/// Sets the current Joystick Deadzone Value. Any Input less than the Deadzone Value is not registered. Min for Deadzone Value is 0, Max is 32767 (POND_JOYSTICK_DEADZONE_MAX).
+/// Sets the current joystick deadzone value. Any input less than the deadzone value is not registered. Min for deadzone value is 0, max is 32767 (POND_JOYSTICK_DEADZONE_MAX).
 /// </summary>
-/// <param name="_value">- value to set Deadzone Value to</param>
+/// <param name="_value">- value to set deadzone value to</param>
 /// <returns> 1 if successful</returns>
 POND_API int Pond_SetJoystickDeadzoneValue(unsigned int _value);
 
 /// <summary>
-/// Gets the current Joystick Deadzone Value.
+/// Gets the current joystick deadzone value.
 /// </summary>
-/// <returns> current Joystick Deadzone Value</returns>
+/// <returns> current joystick deadzone value</returns>
 POND_API unsigned int Pond_GetJoystickDeadzoneValue(void);
 
 #pragma endregion
@@ -529,13 +506,13 @@ POND_API unsigned int Pond_GetJoystickDeadzoneValue(void);
 #pragma region Controller
 
 /// <summary>
-/// Returns the number of Controller registered.
+/// Returns the number of controller registered.
 /// </summary>
-/// <returns> number of registered Controllers</returns>
+/// <returns> number of registered controllers</returns>
 POND_API int Pond_GetNumberOfControllers(void);
 
 /// <summary>
-/// When called gives feedback via Controller Rumble.
+/// When called gives feedback via controller rumble.
 /// Any successful call to this function will stop the current rumble effect.
 /// Calling this function with 0 intensity stops the current rumble effect.
 /// </summary>

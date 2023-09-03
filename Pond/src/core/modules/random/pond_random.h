@@ -10,7 +10,7 @@ int InitRandomSystem(void);
 POND_API double Pond_NoiseTest(void);
 
 /// <summary>
-/// Set's the seed used by the random system to generate random values.
+/// Sets the seed used by the random system to generate random values.
 /// The default seed is set with time.
 /// </summary>
 /// <param name="_seed">- the seed to use</param>
@@ -18,7 +18,7 @@ POND_API double Pond_NoiseTest(void);
 POND_API int Pond_SetRandomSystemSeed(unsigned int _seed);
 
 /// <summary>
-/// Get's a random integer value in between the passed min and max values.
+/// Gets a random integer value in between the passed min and max values.
 /// (Min and max values are INCLUSIVE)
 /// </summary>
 /// <param name="_min">- the min of the random value range (inclusive)</param>
@@ -27,7 +27,7 @@ POND_API int Pond_SetRandomSystemSeed(unsigned int _seed);
 POND_API int Pond_GetRandomInt(int _min, int _max);
 
 /// <summary>
-/// Get's a random float value in between the passed min and max values.
+/// Gets a random float value in between the passed min and max values.
 /// (Min and max values are INCLUSIVE)
 /// </summary>
 /// <param name="_min">- the min of the random value range (inclusive)</param>

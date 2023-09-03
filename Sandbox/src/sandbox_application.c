@@ -40,7 +40,7 @@ int main(void)
 {
 	Pond_Init(&Init, &Update, &Draw);
 	Pond_InitAudioSystem(24, 10, 20);
-	Pond_Run(60, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Window Demo", true);
+	Pond_Run(0, SCREEN_WIDTH, SCREEN_HEIGHT, "Pond Window Demo", true);
 	return 0;
 }
 
@@ -76,7 +76,7 @@ void Init(void)
 void Update(void)
 {
 
-
+	printf("FPS: %d\n", Pond_GetCurrentFPS());
 }
 
 void Draw(void)

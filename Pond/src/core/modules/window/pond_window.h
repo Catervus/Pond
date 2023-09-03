@@ -30,7 +30,7 @@ enum
 POND_API int Pond_SetWindowSize(int _width, int _height);
 
 /// <summary>
-/// Returns the window's current size as Pond_Vector2Int
+/// Returns the window's current size as Pond_Vector2Int.
 /// </summary>
 /// <returns> window's size as Pond_Vector2Int</returns>
 POND_API Pond_Vector2Int Pond_GetWindowSize(void);
@@ -38,7 +38,7 @@ POND_API Pond_Vector2Int Pond_GetWindowSize(void);
 /// <summary>
 /// Sets if the window should be resizable or not.
 /// </summary>
-/// <param name="_flag">- true to make window rezisable, false to make window NOT rezisable</param>
+/// <param name="_flag">- true to make window resizable, false to make window NOT resizable</param>
 /// <returns> 1 if successful</returns>
 POND_API int Pond_SetWindowResizable(bool _flag);
 
@@ -47,11 +47,16 @@ POND_API int Pond_SetWindowResizable(bool _flag);
 // Window Mode
 
 /// <summary>
-/// Sets the window mode to passed mode. (POND_WINDOW_MODE_WINDOWED, POND_WINDOW_MODE_FULLSCREEN or POND_WINDOW_MODE_FULLSCREEN_WINDOWED
+/// Sets the window mode to passed mode. (POND_WINDOW_MODE_WINDOWED, POND_WINDOW_MODE_FULLSCREEN or POND_WINDOW_MODE_FULLSCREEN_WINDOWED)
 /// </summary>
 /// <param name="_windowmode">- mode to set window mode to</param>
 /// <returns> 1 if successful, 0 if not</returns>
-POND_API int Pond_SetWindowMode(Pond_WindowMode _windowmode); // X
+POND_API int Pond_SetWindowMode(Pond_WindowMode _windowmode);
+
+/// <summary>
+/// Returns current window mode. The default is POND_WINDOW_MODE_WINDOWED.
+/// </summary>
+/// <returns> Window mode as Pond_WindowMode</returns>
 POND_API Pond_WindowMode Pond_GetWindowMode(void);
 
 /// <summary>
@@ -71,7 +76,7 @@ POND_API int Pond_MaximizeWindow(void);
 // Window Pos
 
 /// <summary>
-/// Sets the window's position on Screen to passed values.
+/// Sets the window's position on screen to passed values.
 /// Bounds of possible position are the combined bounds of all screens.
 /// </summary>
 /// <param name="_x">- the x pos to set the window's position to</param>
@@ -90,7 +95,7 @@ POND_API Pond_Vector2Int Pond_GetWindowPos(void);
 // Window Title
 
 /// <summary>
-/// Sets the window title to passed char-array.
+/// Sets the window title to passed char pointer (array).
 /// </summary>
 /// <param name="_title">- title to set the window title to</param>
 /// <returns> 1 if sucessful</returns>

@@ -100,7 +100,7 @@ int UpdateDeltaTime(void)
 #pragma endregion
 
 /// <summary>
-/// Sets the FPS cap for the next frame.
+/// Sets the FPS cap starting from the next frame.
 /// </summary>
 /// <param name="_fpscap">- value to cap FPS at</param>
 /// <returns> 1 if successful</returns>
@@ -113,7 +113,7 @@ int Pond_SetFPSCap(int _fpscap)
 
 /// <summary>
 /// Gets the current FPS cap.
-/// If fps cap is changed on the same frame, it has not updated yet and thus this function will return the old FPS cap.
+/// If FPS cap is changed on the same frame, it has not updated yet and thus this function will return the old FPS cap.
 /// </summary>
 /// <returns> FPS cap as int value</returns>
 int Pond_GetFPSCap(void)
