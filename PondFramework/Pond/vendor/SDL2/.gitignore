@@ -1,0 +1,15 @@
+# Di
+
+ories
+.vs/
+
+premake5/
+
+Binaries/
+Intermediate/
+
+# Files
+**.sln
+**.vcxproj
+**.user
+**.filters
