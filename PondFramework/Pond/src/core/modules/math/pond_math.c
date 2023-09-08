@@ -1,4 +1,7 @@
-﻿#include "pond_math.h"
+﻿
+// DISCLAIMER: This Module is currently a WIP as of v1.0 and should NOT be used!
+
+#include "pond_math.h"
 /*
 	"If all the components of x-> are zero, it is called the zero vector.
 	 If the length of a vector x-> is zero then it is called the null vector.

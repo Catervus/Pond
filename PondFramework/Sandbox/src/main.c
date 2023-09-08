@@ -36,7 +36,6 @@ void Update(void)
 		growth *= -1;
 
 	size += growth;
-	
 }
 
 void Draw(void)

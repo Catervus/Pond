@@ -12,7 +12,6 @@
 
 #define POND_ROTATION_ANCHOR_ZERO Pond_Vector2Int stuff = { 0,0 } 
 
-
 typedef struct Pond_Font
 {
 	TTF_Font* p_fontData;

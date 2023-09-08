@@ -20,7 +20,7 @@ void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title, bo
 	InitTimeSystem(_fpscap);
 	UpdateDeltaTime();
 	OpenSDLWindow(_screenwidth, _screenheight, _title);
-	// SDL_RenderSetScale(app.p_renderer, 2, 2);
+	
 	Pond_ToggleConsoleWindow(_showconsolewindow);
 
 	ClientInit();
@@ -39,14 +39,9 @@ void Pond_Run(int _fpscap, int _screenwidth, int _screenheight, char* _title, bo
 
 		RenderScene();
 		SaveInputs();
-
-		/*int tickcount = FPSGetTicks();
-		if (tickcount < screenticksperframe)
-			SDL_Delay(screenticksperframe - tickcount);*/
-
-		// -----
+	
 		HandleFramerateCap();
-		// -----
+	
 
 
 	}
@@ -79,8 +74,6 @@ int Pond_Quit(void)
 
 static void Cleanup(void)
 {
-	printf("Cleanup!");
-
 	ShutTimeSystem();
 	SDL_DestroyWindow(app.p_window);
 	SDL_DestroyRenderer(app.p_renderer);

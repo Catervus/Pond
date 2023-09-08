@@ -1,3 +1,6 @@
+
+// DISCLAIMER: This Module is currently a WIP as of v1.0 and should NOT be used!
+
 #pragma once
 #include "../../pond_core.h"
 #include "../../pond_extern_includes.h"
@@ -12,19 +15,34 @@ enum
 	E_POND_CONSOLE_COLOUR_CYAN,
 };
 
-
+/// <summary>
+/// WIP! Do not use!
+/// </summary>
 POND_API void Pond_Console_Print(char* _text);
 
 /// <summary>
-/// Print something to console. 0 for no colour configuration. Will draw with current Console Colour.
+/// WIP! Do not use!
 /// </summary>
-/// <param name="_text:">String to print.</param>
-/// <param name="_col:">Colour to print in. 0 for current Console Colour.</param>
 POND_API void Pond_Console_PrintLine();
+
+/// <summary>
+/// WIP! Do not use!
+/// </summary>
 POND_API void Pond_Console_PrintWarning(char* _text);
+
+/// <summary>
+/// WIP! Do not use!
+/// </summary>
 POND_API void Pond_Console_SetColour(int _col);
+
+/// <summary>
+/// WIP! Do not use!
+/// </summary>
 POND_API void Pond_Console_ResetColour();
 
-static char* currentConsoleColour = "\x1b[0m"; // White as default colour
+/// <summary>
+/// WIP! Do not use!
+/// </summary>
+static char* currentConsoleColour = "\x1b[0m";
 
 

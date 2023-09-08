@@ -27,6 +27,8 @@ int InitInputSystem(void)
 {
 	for (int i = 0; i < NUMBER_OF_KEYS; i++)
 	{
+
+
 		keyboardInputs[i] = 0;
 		lastFrameKeyboardInputs[i] = 0;
 	}

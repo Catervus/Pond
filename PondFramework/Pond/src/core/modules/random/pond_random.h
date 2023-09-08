@@ -7,8 +7,6 @@
 
 int InitRandomSystem(void);
 
-POND_API double Pond_NoiseTest(void);
-
 /// <summary>
 /// Sets the seed used by the random system to generate random values.
 /// The default seed is set with time.

@@ -1,3 +1,6 @@
+
+// DISCLAIMER: This Module is currently a WIP as of v1.0 and should NOT be used!
+
 #include "pond_console.h"
 
 #define CONSOLE_COLOUR_RED		"\x1b[31m"

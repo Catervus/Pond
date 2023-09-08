@@ -7,11 +7,6 @@ int InitRandomSystem(void)
 	return 1;
 }
 
-double Pond_NoiseTest(int _i)
-{
-	return sin(_i);
-}
-
 /// <summary>
 /// Sets the seed used by the random system to generate random values.
 /// The default seed is set with time.

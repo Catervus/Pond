@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 #ifdef main
-	#undef main // WHAT
+	#undef main
 #endif
 
 

@@ -1,7 +1,3 @@
-///*This source code copyrighted by Lazy Foo' Productions (2004-2020)
-//and may not be redistributed without written permission.*/
-//
-////Using SDL and standard IO
 #include "pond_sdl.h"
 
 //Screen dimension constants
@@ -10,7 +6,7 @@ int InitSDL(void)
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) != 0)
 	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		printf("ERROR! SDL could not initialise! SDL_Error: %s\n", SDL_GetError());
 		exit(1);
 	}
 
@@ -28,17 +24,17 @@ int OpenSDLWindow(int _screenheight, int _screenwidth, char* _title)
 	app.p_window = SDL_CreateWindow(_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _screenheight, _screenwidth, windowflag);
 	if (!app.p_window)
 	{
-		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+		printf("ERROR! Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		exit(1);
 	}
 	SDL_SetWindowBordered(app.p_window, SDL_ENABLE);
 	SDL_ShowCursor(SDL_ENABLE);
 
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); // ??
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 	app.p_renderer = SDL_CreateRenderer(app.p_window, -1, rendererflag);
 	if (!app.p_renderer)
 	{
-		printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+		printf("ERROR! Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
 		exit(1);
 	}
 	SDL_SetRenderDrawBlendMode(app.p_renderer, SDL_BLENDMODE_BLEND);

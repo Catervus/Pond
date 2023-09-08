@@ -7,8 +7,6 @@
 
 extern App app;
 
-// TODO: Structs kommentieren!
-
 POND_API typedef struct Pond_Texture
 {
 	SDL_Texture* p_textureData;
